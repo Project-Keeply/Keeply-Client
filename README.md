@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -73,3 +74,7 @@ export default defineConfig([
   },
 ])
 ```
+=======
+# Keeply-client
+알바 공지사항 및 물류 관리를 한 곳에서, Keeply
+>>>>>>> 70a7cf97c6e969abac956560f6d0fa1078c6260c
