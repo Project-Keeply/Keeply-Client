@@ -13,61 +13,61 @@ comments:
 labels:
   '📝 DOCS':
     include:
-      - '\bdocs?\b'
-      - '\bdocument(ation)?\b'
-      - '\breadme\b'
-      - '\bmd\b'
+      - '(?i)\bdocs?\b'
+      - '(?i)\bdocument(ation)?\b'
+      - '(?i)\breadme\b'
+      - '(?i)\bmd\b'
     exclude: []
 
   '⭐ INIT':
     include:
-      - '\binit(ial)?\b'
-      - '\bbootstrap\b'
-      - '\bsetup\b'
-      - '\bscaffold(ing)?\b'
+      - '(?i)\binit(ial)?\b'
+      - '(?i)\bbootstrap\b'
+      - '(?i)\bsetup\b'
+      - '(?i)\bscaffold(ing)?\b'
     exclude: []
 
   '🍀 CHORE':
     include:
-      - '\bchore\b'
-      - '\bmaint(enance)?\b'
-      - '\bdeps?\b'
-      - '\bci\b'
-      - '\bworkflow\b'
+      - '(?i)\bchore\b'
+      - '(?i)\bmaint(enance)?\b'
+      - '(?i)\bdeps?\b'
+      - '(?i)\bci\b'
+      - '(?i)\bworkflow\b'
     exclude: []
 
   '🎨 STYLE':
     include:
-      - '\bstyle\b'
-      - '\bui\b'
-      - '\bux\b'
-      - '\bdesign\b'
-      - '\bcss\b'
-      - '\btailwind\b'
+      - '(?i)\bstyle\b'
+      - '(?i)\bui\b'
+      - '(?i)\bux\b'
+      - '(?i)\bdesign\b'
+      - '(?i)\bcss\b'
+      - '(?i)\btailwind\b'
     exclude: []
 
   '👽 FEAT':
     include:
-      - '\bfeat\b'
-      - '\bfeature\b'
-      - '\bimplement\b'
-      - '\badd(ed|ing)?\b'
+      - '(?i)\bfeat\b'
+      - '(?i)\bfeature\b'
+      - '(?i)\bimplement\b'
+      - '(?i)\badd(ed|ing)?\b'
     exclude:
-      - '\brefactor\b'
-      - '\bfix\b'
+      - '(?i)\brefactor\b'
+      - '(?i)\bfix\b'
 
   '🔨 REFACTOR':
     include:
-      - '\brefactor(ing)?\b'
-      - '\brestructure\b'
-      - '\bcleanup\b'
-      - '\breorganize\b'
+      - '(?i)\brefactor(ing)?\b'
+      - '(?i)\brestructure\b'
+      - '(?i)\bcleanup\b'
+      - '(?i)\breorganize\b'
     exclude: []
 
   '🚨 FIX':
     include:
-      - '\bfix(ed|es|ing)?\b'
-      - '\bbug\b'
-      - '\bhotfix\b'
-      - '\berror\b'
+      - '(?i)\bfix(ed|es|ing)?\b'
+      - '(?i)\bbug\b'
+      - '(?i)\bhotfix\b'
+      - '(?i)\berror\b'
     exclude: []
