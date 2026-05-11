@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .history/
+
+# pnpm local store
+/.pnpm-store
