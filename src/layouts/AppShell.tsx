@@ -2,7 +2,7 @@ import { Outlet } from 'react-router'
 
 const AppShell = () => {
   return (
-    <div className="mx-auto flex min-h-screen max-w-[430px] flex-col">
+    <div className="mx-auto flex h-full max-w-[430px] flex-col pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
       <header className="shrink-0">Header</header>
       <main className="flex-1 overflow-y-auto">
         <Outlet />

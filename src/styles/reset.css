@@ -20,7 +20,16 @@
     overflow-wrap: break-word;
   }
 
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
   #root, #__next {
     isolation: isolate;
+    height: 100%;
   }
 }
