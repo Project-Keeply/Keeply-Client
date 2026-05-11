@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "ko-KR"
+tone_instructions: "시니어 개발자처럼 리뷰하되 원인과 개선 방향을 중심으로 설명하세요. Electron, React, TypeScript, IPC 경계, 비동기, 성능, 회귀 위험을 우선 보고 한국어로 간결하게 작성하세요."
+reviews:
+  profile: "chill" # 리뷰 강도 ('chill': 일반 / 'assertive': 꼼꼼)
+  request_changes_workflow: false # 이슈 미해결 시 PR 승인 보류 여부
+  high_level_summary: true # PR 상단에 변경사항 요약 표시
+  changed_files_summary: true # 변경된 파일별 요약 표시
+  review_status: true # 리뷰 완료 후 상태 요약 코멘트 게시
+  assess_linked_issues: false # 연결된 이슈 자동 분석
+  related_prs: false # 관련 PR 표시
+  suggested_labels: true # 변경 내용 기반 라벨 자동 추천
+  suggested_reviewers: false # 변경 내용 기반 리뷰어 추천
+  auto_assign_reviewers: false # 추천 리뷰어 자동 배정
+  sequence_diagrams: false # 시퀀스 다이어그램 자동 생성
+  poem: false # 워크스루 하단에 짧은 시 추가
+
+  auto_review:
+    enabled: true # PR 생성 시 자동 리뷰 실행
+    auto_incremental_review: true # 새 커밋 push 시 추가 리뷰 실행
+    drafts: false # Draft PR 자동 리뷰 포함 여부
+    ignore_title_keywords:
+      - "[Docs]"
+    base_branches:
+      - "develop"
+      - "main"
+
+  path_filters:
+    - "!node_modules/**"
+    - "!dist/**"
+    - "!.electron-build/**"
+    - "!pnpm-lock.yaml"
+
+  path_instructions:
+    - path: "src/main/**"
+      instructions: |
+        Electron main process 기준으로 IPC 책임, 로컬 DB 접근, 파일 시스템 접근, child process 실행 경계가 적절한지 검토해주세요.
+        renderer 에서 처리해야 할 UI 로직이 main 으로 과하게 올라오지 않았는지, 반대로 보안상 main 에 있어야 할 책임이 renderer 로 새지 않았는지 확인해주세요.
+        상태 전이와 에러 처리가 UI 반영 흐름과 일관되는지 검토해주세요.
+
+    - path: "src/preload/**"
+      instructions: |
+        preload 는 main 과 renderer 사이의 최소 브리지 역할만 담당해야 합니다.
+        불필요하게 넓은 API 노출, 보안상 위험한 브리지, 타입 계약 누락이 없는지 확인해주세요.
+        공개 API 가 renderer 사용처와 일관되는지도 함께 검토해주세요.
+
+    - path: "src/renderer/app/**"
+      instructions: |
+        앱 초기화, provider 구성, 전역 설정, 라우팅 또는 앱 셸 구성이 적절한지 검토해주세요.
+        app 레이어가 pages, features, entities, shared 를 조립하는 역할을 넘어서 비즈니스 로직을 직접 들고 있지 않은지 확인해주세요.
+
+    - path: "src/renderer/pages/**"
+      instructions: |
+        페이지는 화면 단위 조립 책임만 갖고, 세부 상호작용과 도메인 로직은 하위 레이어로 내려가 있는지 검토해주세요.
+        페이지가 feature 와 entity 를 과도하게 우회하지 않는지, 레이어 경계가 자연스러운지 확인해주세요.
+
+    - path: "src/renderer/features/**"
+      instructions: |
+        feature 레이어에는 사용자 인터랙션과 화면 동작 조합 로직이 있어야 합니다.
+        entity 나 shared 로 내려가야 할 코드가 feature 에 과도하게 남아 있지 않은지, 반대로 feature 책임이 page 로 올라가지 않았는지 검토해주세요.
+        훅, 컴포넌트, api 세그먼트 분리가 현재 프로젝트 규모에 맞게 적절한지도 확인해주세요.
+
+    - path: "src/renderer/entities/**"
+      instructions: |
+        entity 레이어에는 도메인 데이터 표현, 조회 계약, 타입, 최소한의 표현 로직만 있어야 합니다.
+        특정 화면이나 기능에 종속된 코드가 entity 로 과도하게 들어오지 않았는지 확인해주세요.
+
+    - path: "src/renderer/shared/**"
+      instructions: |
+        shared 레이어는 도메인에 독립적인 공통 요소만 포함해야 합니다.
+        실제로는 특정 feature 나 entity 에 종속적인 코드가 shared 로 과하게 올라가 있지 않은지 검토해주세요.
+
+    - path: ".github/**"
+      instructions: |
+        GitHub Actions, PR 템플릿, 이슈 템플릿, 라벨 자동화 설정은 워크플로 회귀와 브랜치 보호 규칙 충돌 가능성을 우선 검토해주세요.
+        base branch 와 working branch 차이로 발생할 수 있는 설정 누락이나 실행 컨텍스트 문제도 함께 확인해주세요.
+
+chat:
+  auto_reply: false # 멘션 없이도 자동 응답 여부
