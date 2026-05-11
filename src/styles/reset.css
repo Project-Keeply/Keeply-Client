@@ -26,6 +26,7 @@
     overscroll-behavior: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    background-color: #e5e7eb;
   }
 
   #root, #__next {
