@@ -1,0 +1,73 @@
+enable:
+  issues: true
+  prs: true
+
+comments:
+  issues: |
+    자동 라벨러가 제목/본문 패턴을 기반으로 라벨을 적용했어요.
+    필요하면 라벨을 수정해 주세요.
+  prs: |
+    자동 라벨러가 제목/본문 패턴을 기반으로 라벨을 적용했어요.
+    필요하면 라벨을 수정해 주세요.
+
+labels:
+  '📝 DOCS':
+    include:
+      - '\bdocs?\b'
+      - '\bdocument(ation)?\b'
+      - '\breadme\b'
+      - '\bmd\b'
+    exclude: []
+
+  '⭐ INIT':
+    include:
+      - '\binit(ial)?\b'
+      - '\bbootstrap\b'
+      - '\bsetup\b'
+      - '\bscaffold(ing)?\b'
+    exclude: []
+
+  '🍀 CHORE':
+    include:
+      - '\bchore\b'
+      - '\bmaint(enance)?\b'
+      - '\bdeps?\b'
+      - '\bci\b'
+      - '\bworkflow\b'
+    exclude: []
+
+  '🎨 STYLE':
+    include:
+      - '\bstyle\b'
+      - '\bui\b'
+      - '\bux\b'
+      - '\bdesign\b'
+      - '\bcss\b'
+      - '\btailwind\b'
+    exclude: []
+
+  '👽 FEAT':
+    include:
+      - '\bfeat\b'
+      - '\bfeature\b'
+      - '\bimplement\b'
+      - '\badd(ed|ing)?\b'
+    exclude:
+      - '\brefactor\b'
+      - '\bfix\b'
+
+  '🔨 REFACTOR':
+    include:
+      - '\brefactor(ing)?\b'
+      - '\brestructure\b'
+      - '\bcleanup\b'
+      - '\breorganize\b'
+    exclude: []
+
+  '🚨 FIX':
+    include:
+      - '\bfix(ed|es|ing)?\b'
+      - '\bbug\b'
+      - '\bhotfix\b'
+      - '\berror\b'
+    exclude: []
