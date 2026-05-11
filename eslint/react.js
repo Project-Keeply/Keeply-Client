@@ -39,15 +39,6 @@ export const config = [
         {
           groups: [
             ['^react$', '^@?\\w'],
-            ['^@kareer/'],
-            [
-              '^@app/',
-              '^@pages/',
-              '^@widgets/',
-              '^@features/',
-              '^@entities/',
-              '^@shared/',
-            ],
             ['^\\u0000'],
             ['^\\.'],
             ['^.+\\.css$'],
