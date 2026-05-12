@@ -1,2 +1,4 @@
 @import "./styles/reset.css";
+@import "./styles/tokens/color.css";
+@import "./styles/tokens/typography.css";
 @import "tailwindcss";
