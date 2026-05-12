@@ -27,3 +27,6 @@ dist-ssr
 # pnpm local store
 /.pnpm-store
 .vercel
+
+# Claude Code
+.claude
