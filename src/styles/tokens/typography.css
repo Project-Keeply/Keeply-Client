@@ -1,0 +1,26 @@
+@theme {
+  /* Headline */
+  --font-headline1-size: 1.8rem;
+
+  /* Title */
+  --font-title1-size: 1.8rem;
+  --font-title2-size: 1.6rem;
+  --font-title3-size: 1.4rem;
+
+  /* Subtitle */
+  --font-subtitle1-size: 1.2rem;
+
+  /* Body */
+  --font-body1-size: 1.2rem;
+  --font-body2-size: 1.4rem;
+  --font-body4-size: 1.5rem;
+
+  /* Button */
+  --font-button1-size: 1.3rem;
+
+  /* Caption / Label */
+  --font-caption1-size: 1.2rem;
+  --font-caption2-size: 1.4rem;
+  --font-label1-size: 1.1rem;
+  --font-label2-size: 1.2rem;
+}
