@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 
-import AppShell from './layouts/AppShell'
+import AppShell from './app/layouts/AppShell'
 
 const App = () => {
   return (
