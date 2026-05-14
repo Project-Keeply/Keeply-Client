@@ -5,6 +5,6 @@ export const ROUTE_PATH = {
   WORKING_SPACE: '/working-space',
   MANAGEMENT: '/management',
   MYPAGE: '/my-page',
-}
+} as const
 
 export type Routes = (typeof ROUTE_PATH)[keyof typeof ROUTE_PATH]
