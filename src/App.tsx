@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 
-import QueryProvider from './app/providers/query-provider'
 import AppShell from './app/layouts/AppShell'
+import QueryProvider from './app/providers/query-provider'
 import Home from './pages/home/home'
 
 const App = () => {
