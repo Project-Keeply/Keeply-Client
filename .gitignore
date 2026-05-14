@@ -24,6 +24,11 @@ dist-ssr
 *.sw?
 .history
 
+# Environment variables
+.env
+.env.*
+!.env.example
+
 # pnpm local store
 /.pnpm-store
 .vercel
