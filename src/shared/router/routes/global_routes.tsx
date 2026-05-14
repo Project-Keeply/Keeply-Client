@@ -1,7 +1,7 @@
-import AppShell from '@/app/layouts/AppShell'
-
 import { HomePage, LoginPage, ManagementPage, MyPage, OnboardingPage, WorkingSpacePage } from '../lazy'
 import { ROUTE_PATH } from '../path'
+
+import AppShell from '@/app/layouts/AppShell'
 
 export const globalRoutes = [
   {
