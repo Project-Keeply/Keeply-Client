@@ -1,7 +1,16 @@
-import { HomePage, LoginPage, ManagementPage, MyPage, OnboardingPage, WorkingSpacePage } from '../lazy'
-import { ROUTE_PATH } from '../path'
+import type { RouteObject } from 'react-router';
 
-import AppShell from '@/app/layouts/AppShell'
+import {
+  HomePage,
+  LoginPage,
+  ManagementPage,
+  MyPage,
+  OnboardingPage,
+  WorkingSpacePage,
+} from '../lazy';
+import { ROUTE_PATH } from '../path';
+
+import AppShell from '@/app/layouts/AppShell';
 
 export const globalRoutes = [
   {
@@ -19,6 +28,6 @@ export const globalRoutes = [
       { path: ROUTE_PATH.WORKING_SPACE, Component: WorkingSpacePage },
       { path: ROUTE_PATH.MANAGEMENT, Component: ManagementPage },
       { path: ROUTE_PATH.MYPAGE, Component: MyPage },
-    ],
+    ] satisfies RouteObject[],
   },
-]
+];
