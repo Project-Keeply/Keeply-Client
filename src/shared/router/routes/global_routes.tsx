@@ -1,5 +1,3 @@
-import type { RouteObject } from 'react-router';
-
 import {
   HomePage,
   LoginPage,
@@ -9,6 +7,7 @@ import {
   WorkingSpacePage,
 } from '@shared/router/lazy';
 import { ROUTE_PATH } from '@shared/router/path';
+import type { RouteObject } from 'react-router';
 
 import AppShell from '@/app/layouts/AppShell';
 

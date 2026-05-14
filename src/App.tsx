@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
+import { router } from '@shared/router/router'
 import { RouterProvider } from 'react-router'
 
 import QueryProvider from './app/providers/query-provider'
-import { router } from '@shared/router/router'
 
 const App = () => {
   return (
