@@ -7,8 +7,8 @@ import {
   MyPage,
   OnboardingPage,
   WorkingSpacePage,
-} from '../lazy';
-import { ROUTE_PATH } from '../path';
+} from '@shared/router/lazy';
+import { ROUTE_PATH } from '@shared/router/path';
 
 import AppShell from '@/app/layouts/AppShell';
 
