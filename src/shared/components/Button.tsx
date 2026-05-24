@@ -1,7 +1,7 @@
-import type{ ReactNode } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
-interface ButtonProps {
-  variant: 'primary' | 'gray' | 'red'
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant: 'primary' | 'gray' | 'red';
   children: ReactNode;
   onClick?: () => void;
 }
@@ -12,11 +12,13 @@ const variantStyles = {
   red: 'bg-red-500 text-white hover:bg-red-600',
 };
 
-const Button = ({ variant, children, onClick }: ButtonProps) => {
+const Button = ({ variant, children, onClick, ...rest }: ButtonProps) => {
   return (
     <button
+      type="button"
       className={`w-full py-4.5 rounded-[10px] text-button1 transition-colors cursor-pointer ${variantStyles[variant]}`}
       onClick={onClick}
+      {...rest}
     >
       {children}
     </button>
