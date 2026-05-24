@@ -3,7 +3,6 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: 'primary' | 'gray' | 'red';
   children: ReactNode;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const variantStyles = {
@@ -12,12 +11,11 @@ const variantStyles = {
   red: 'bg-red-500 text-white hover:bg-red-600',
 };
 
-const Button = ({ variant, children, onClick, ...rest }: ButtonProps) => {
+const Button = ({ variant, children, className, ...rest }: ButtonProps) => {
   return (
     <button
       type="button"
-      className={`w-full py-4.5 rounded-[10px] text-button1 transition-colors cursor-pointer ${variantStyles[variant]}`}
-      onClick={onClick}
+      className={`w-full py-4.5 rounded-[10px] text-button1 transition-colors cursor-pointer ${variantStyles[variant]} ${className ?? ''}`}
       {...rest}
     >
       {children}
