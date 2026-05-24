@@ -15,7 +15,7 @@ const Button = ({ variant, children, className, ...rest }: ButtonProps) => {
   return (
     <button
       type="button"
-      className={`w-full py-4.5 rounded-[10px] text-button1 transition-colors cursor-pointer ${variantStyles[variant]} ${className ?? ''}`}
+      className={`w-full py-4.5 rounded-[10px] text-button1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 ${variantStyles[variant]} ${className ?? ''}`}
       {...rest}
     >
       {children}
