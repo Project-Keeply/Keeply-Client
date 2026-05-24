@@ -1,10 +1,10 @@
-  ---
-  name: Task
-  about: 작업 이슈 템플릿
-  title: "[Task] "
-  labels: []
-  assignees: []
-  ---
+---
+name: Task
+about: 작업 이슈 템플릿
+title: "[Task] "
+labels: []
+assignees: []
+---
 
 ## ✅ Tasks (To-Do)
 - [ ] 
