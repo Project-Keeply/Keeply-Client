@@ -29,3 +29,14 @@
 ## Git Convention
 - Follow the Git convention(commit & PR) in `docs/rules/git-convention.md`
 - @docs/rules/git-convention.md
+
+## Work Policy
+- No code implementation or modification may proceed without explicit user approval.
+- Before starting any task, provide a brief explanation of:
+  - What work will be performed
+  - Which parts of the project may be affected
+- After completing the task, always:
+  - Verify the result
+  - Run the build process and confirm whether the build succeeds or fails
+- Exception:
+  - If the user explicitly states that all permissions are pre-approved before the task begins, subsequent work related to that specific task may proceed without additional approval requests.
