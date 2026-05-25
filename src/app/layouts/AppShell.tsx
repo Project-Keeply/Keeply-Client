@@ -1,3 +1,4 @@
+import BottomNav from '@shared/components/BottomNav'
 import { Outlet } from 'react-router'
 
 const AppShell = () => {
@@ -6,7 +7,9 @@ const AppShell = () => {
       <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>
-      <nav className="shrink-0">BottomNav</nav>
+      <div className="shrink-0">
+        <BottomNav />
+      </div>
     </div>
   )
 }
