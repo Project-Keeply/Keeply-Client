@@ -1,5 +1,11 @@
-const WorkingSpacePage = () => {
-  return <></>
-}
+import { CommonHeader } from '@shared/components';
 
-export default WorkingSpacePage
+const WorkingSpacePage = () => {
+  return (
+    <>
+      <CommonHeader title="근무일지" showBack={true} />
+    </>
+  );
+};
+
+export default WorkingSpacePage;

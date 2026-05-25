@@ -1,5 +1,11 @@
-const ManagementPage = () => {
-  return <></>
-}
+import { CommonHeader } from '@shared/components';
 
-export default ManagementPage
+const ManagementPage = () => {
+  return (
+    <>
+      <CommonHeader title="폐기관리" showBack={true} />
+    </>
+  );
+};
+
+export default ManagementPage;
