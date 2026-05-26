@@ -10,7 +10,7 @@ const variantStyles = {
 
 const Tag = ({ variant, label }: TagProps) => {
   return (
-    <span className={`inline-flex items-center rounded-[5px] px-2.25 py-1.5 ${variantStyles[variant]} text-label2 font-semibold`}>
+    <span className={`inline-flex items-center rounded-[5px] px-[9px] py-[6px] ${variantStyles[variant]} text-label2 font-semibold`}>
       {label}
     </span>
   )
