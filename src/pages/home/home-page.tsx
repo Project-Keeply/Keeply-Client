@@ -6,16 +6,16 @@ const HomePage = () => {
   const [content, setContent] = useState('');
 
   return (
-    <div className="flex flex-col gap-8 p-[25px]">
+    <div className="flex flex-col gap-8 p-10">
       <section className="flex flex-col gap-2">
-        <Input text={name} placeholder="이름" onChange={setName} />
+        <Input value={name} placeholder="이름" onChange={setName} />
       </section>
 
       <section className="flex flex-col gap-2">
         <TextArea
           title="내용"
           explanation="(상세 내용은 필수 사항이 아닙니다.)"
-          content={content}
+          value={content}
           placeholder="공지사항 내용을 남겨주세요"
           onChange={setContent}
         />
