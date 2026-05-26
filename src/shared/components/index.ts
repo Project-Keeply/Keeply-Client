@@ -3,3 +3,4 @@ export { default as CheckButton } from './CheckButton';
 export { default as CommonHeader } from './CommonHeader';
 export { default as Input } from './Input';
 export { default as Tag } from './Tag';
+export { default as TextArea } from './TextArea';
