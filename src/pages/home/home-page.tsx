@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import { BottomSheet } from '@shared/components';
+
 import ItemCard from '../../shared/components/ItemCard';
 
 const MOCK_ITEMS = [
@@ -18,11 +22,23 @@ const MOCK_ITEMS = [
 ];
 
 const HomePage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedTitle, setSelectedTitle] = useState('');
+
+  const handleItemClick = (title: string) => {
+    setSelectedTitle(title);
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="flex flex-col gap-4 p-10">
       {MOCK_ITEMS.map((item) => (
         <ItemCard
-          onClick={() => alert(`임시 아이템 클릭: ${item.title}`)}
+          onClick={() => handleItemClick(item.title)}
           key={item.id}
           imgUrl={item.imgUrl}
           tag={item.tag}
@@ -30,6 +46,19 @@ const HomePage = () => {
           date={item.date}
         />
       ))}
+      <BottomSheet open={isOpen} onClose={handleClose}>
+        <div className="flex flex-col gap-4 py-6">
+          <h2 className="text-title3 font-semibold">{selectedTitle}</h2>
+          <p className="text-body2 text-gray-300">BottomSheet 테스트 콘텐츠</p>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="py-3 bg-primary-500 text-white rounded-[10px]"
+          >
+            닫기
+          </button>
+        </div>
+      </BottomSheet>
     </div>
   );
 };
