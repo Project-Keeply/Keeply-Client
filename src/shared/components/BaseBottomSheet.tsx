@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 
 interface BottomSheetProps {
@@ -6,7 +7,20 @@ interface BottomSheetProps {
   children: ReactNode;
 }
 
-const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
+const BaseBottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
+
   return (
     <>
       <div
@@ -26,4 +40,4 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
   );
 };
 
-export default BottomSheet;
+export default BaseBottomSheet;
