@@ -13,7 +13,7 @@ const ItemCard = ({ imgUrl, tag, title, date, onClick }: ItemCardProps) => {
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-[14px] bg-white text-left"
+      className="flex w-full items-center gap-[14px] bg-white text-left cursor-pointer"
     >
       <img src={imgUrl} alt={title} className="w-[90px] h-[90px] object-cover rounded-[10px]" />
       <div className="flex flex-col items-start gap-3">
