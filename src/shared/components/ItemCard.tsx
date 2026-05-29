@@ -5,7 +5,7 @@ interface ItemCardProps {
   tag: string;
   title: string;
   date: string;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const ItemCard = ({ imgUrl, tag, title, date, onClick }: ItemCardProps) => {

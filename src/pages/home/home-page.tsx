@@ -22,6 +22,7 @@ const HomePage = () => {
     <div className="flex flex-col gap-4 p-10">
       {MOCK_ITEMS.map((item) => (
         <ItemCard
+          onClick={() => alert(`임시 아이템 클릭: ${item.title}`)}
           key={item.id}
           imgUrl={item.imgUrl}
           tag={item.tag}
