@@ -1,4 +1,4 @@
-export { default as BottomSheet } from './BaseBottomSheet';
+export { default as BaseBottomSheet } from './BaseBottomSheet';
 export { default as Button } from './Button';
 export { default as CheckButton } from './CheckButton';
 export { default as CommonHeader } from './CommonHeader';
