@@ -11,7 +11,6 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
     imgUrl: 'https://placehold.co/600x400',
     tag: '주간',
     title: '종량제 봉투 판매 수량 제한',
-    isChecked: false,
   },
   {
     id: 2,
@@ -20,13 +19,11 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
     title: '신상품 입고 안내',
     content:
       '새로운 종량제 봉투가 입고되었습니다. 환경을 생각하는 선택, 지금 바로 만나보세요!',
-    isChecked: false,
   },
 ];
 
 const HomePage = () => {
-  const [announcements, setAnnouncements] =
-    useState<Announcement[]>(MOCK_ANNOUNCEMENTS);
+  const [checkedIds, setCheckedIds] = useState<Set<number>>(new Set());
   const {
     isOpen,
     selectedItem: selectedAnnouncement,
@@ -39,21 +36,25 @@ const HomePage = () => {
   };
 
   const handleCheckToggle = (id: number) => {
-    setAnnouncements((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, isChecked: !item.isChecked } : item,
-      ),
-    );
+    setCheckedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-10 bg-lightgray">
-      {announcements.map((item) => (
+      {MOCK_ANNOUNCEMENTS.map((item) => (
         <CheckButton
           key={item.id}
           size="sm"
           hasBackground={false}
-          isChecked={item.isChecked}
+          isChecked={checkedIds.has(item.id)}
           onClick={() => open(item)}
           onCheckClick={() => handleCheckToggle(item.id)}
         >

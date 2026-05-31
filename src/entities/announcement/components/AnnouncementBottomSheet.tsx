@@ -6,7 +6,6 @@ export interface Announcement {
   tag: string;
   title: string;
   content?: string;
-  isChecked: boolean;
 }
 
 interface AnnouncementBottomSheetProps {
