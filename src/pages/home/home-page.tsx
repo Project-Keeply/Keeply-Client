@@ -61,14 +61,12 @@ const HomePage = () => {
           {item.title}
         </CheckButton>
       ))}
-      {selectedAnnouncement && (
-        <AnnouncementBottomSheet
-          open={isOpen}
-          onClose={close}
-          onDelete={handleDelete}
-          announcement={selectedAnnouncement}
-        />
-      )}
+      <AnnouncementBottomSheet
+        open={isOpen}
+        onClose={close}
+        onDelete={handleDelete}
+        announcement={selectedAnnouncement}
+      />
     </div>
   );
 };

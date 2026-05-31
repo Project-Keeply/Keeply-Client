@@ -59,20 +59,20 @@ const ManagementPage = () => {
           />
         ))}
       </div>
-      {selectedItem && (
-        <DisposalBottomSheet
-          open={isOpen}
-          onClose={close}
-          onComplete={handleComplete}
-        >
+      <DisposalBottomSheet
+        open={isOpen}
+        onClose={close}
+        onComplete={handleComplete}
+      >
+        {selectedItem && (
           <ItemCard
             imgUrl={selectedItem.imgUrl}
             tag={selectedItem.tag}
             title={selectedItem.title}
             date={selectedItem.date}
           />
-        </DisposalBottomSheet>
-      )}
+        )}
+      </DisposalBottomSheet>
     </>
   );
 };

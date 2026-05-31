@@ -11,7 +11,6 @@ const useBottomSheet = <T>() => {
 
   const close = () => {
     setIsOpen(false);
-    setSelectedItem(null);
   };
 
   return {

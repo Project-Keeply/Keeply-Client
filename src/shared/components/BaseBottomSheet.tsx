@@ -29,17 +29,23 @@ const BaseBottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
     };
   }, [open, onClose]);
 
-  if (!open) {
-    return null;
-  }
-
   return (
     <>
-      <div className="fixed inset-0 z-40 bg-black/50" onClick={onClose} />
+      <div
+        aria-hidden={!open}
+        className={`fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 ${
+          open ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={onClose}
+      />
       <div
         role="dialog"
         aria-modal="true"
-        className="fixed bottom-0 left-0 right-0 z-50 rounded-t-[20px] bg-white"
+        aria-hidden={!open}
+        inert={!open}
+        className={`fixed bottom-0 left-0 right-0 z-50 rounded-t-[20px] bg-white transition-transform duration-300 ${
+          open ? 'translate-y-0' : 'translate-y-full'
+        }`}
       >
         {children}
       </div>
