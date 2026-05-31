@@ -14,25 +14,32 @@ const BaseBottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
     }
 
     const originalOverflow = document.body.style.overflow;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
     document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleEscape);
 
     return () => {
       document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleEscape);
     };
-  }, [open]);
+  }, [open, onClose]);
+
+  if (!open) {
+    return null;
+  }
 
   return (
     <>
+      <div className="fixed inset-0 z-40 bg-black/50" onClick={onClose} />
       <div
-        className={`fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 ${
-          open ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={onClose}
-      />
-      <div
-        className={`fixed bottom-0 left-0 right-0 z-50 rounded-t-[20px] bg-white transition-transform duration-300 ${
-          open ? 'translate-y-0' : 'translate-y-full'
-        }`}
+        role="dialog"
+        aria-modal="true"
+        className="fixed bottom-0 left-0 right-0 z-50 rounded-t-[20px] bg-white"
       >
         {children}
       </div>
