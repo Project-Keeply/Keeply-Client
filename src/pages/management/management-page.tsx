@@ -2,7 +2,7 @@ import { CommonHeader } from '@shared/components';
 import ItemCard from '@shared/components/ItemCard';
 import useBottomSheet from '@shared/hooks/use-bottom-sheet';
 
-import DisposalBottomSheet from '@/entities/disposal/components/DisposalBottomSheet';
+import { DisposalBottomSheet } from '@/entities/disposal';
 
 interface DisposalItem {
   id: number;

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { CheckButton } from '@shared/components';
 import useBottomSheet from '@shared/hooks/use-bottom-sheet';
 
-import type { Announcement } from '@/entities/announcement/components/AnnouncementBottomSheet';
-import AnnouncementBottomSheet from '@/entities/announcement/components/AnnouncementBottomSheet';
+import type { Announcement } from '@/entities/announcement';
+import { AnnouncementBottomSheet } from '@/entities/announcement';
 
 const MOCK_ANNOUNCEMENTS: Announcement[] = [
   {
