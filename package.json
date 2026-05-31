@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "check-types": "tsc -b --noEmit",
     "lint": "eslint .",
+    "review:scope": "bash ./tools/branch-review/collect_scope.sh",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview"

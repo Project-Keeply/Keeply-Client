@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.tmp
 *.local
 
 # Editor directories and files
@@ -34,4 +35,6 @@ dist-ssr
 .vercel
 
 # Claude Code
-.claude
+.claude/*
+!.claude/commands/
+!.claude/commands/*.md

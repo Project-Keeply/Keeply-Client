@@ -40,3 +40,9 @@
   - Run the build process and confirm whether the build succeeds or fails
 - Exception:
   - If the user explicitly states that all permissions are pre-approved before the task begins, subsequent work related to that specific task may proceed without additional approval requests.
+
+## Local Branch Review
+- Shared pre-push review scope script: `tools/branch-review/collect_scope.sh`
+- Quick command: `pnpm review:scope`
+- For agent-driven review responses, include marker line: `[SKILL ACTIVE] branch-review`
+- Detailed usage: `docs/branch-review/README.md`
