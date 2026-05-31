@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { CommonHeader } from '@shared/components';
 import ItemCard from '@shared/components/ItemCard';
+import useBottomSheet from '@shared/hooks/use-bottom-sheet';
 
 import DisposalBottomSheet from '@/entities/disposal/components/DisposalBottomSheet';
 
@@ -37,20 +37,11 @@ const MOCK_DISPOSAL_ITEMS: DisposalItem[] = [
 ];
 
 const ManagementPage = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<DisposalItem | null>(null);
-
-  const handleItemClick = (item: DisposalItem) => {
-    setSelectedItem(item);
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  const { isOpen, selectedItem, handleItemClick, handleClose } =
+    useBottomSheet<DisposalItem>();
 
   const handleComplete = () => {
-    setIsOpen(false);
+    handleClose();
   };
 
   return (

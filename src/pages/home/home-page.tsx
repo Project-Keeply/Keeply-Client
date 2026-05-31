@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CheckButton } from '@shared/components';
+import useBottomSheet from '@shared/hooks/use-bottom-sheet';
 
 import type { Announcement } from '@/entities/announcement/components/AnnouncementBottomSheet';
 import AnnouncementBottomSheet from '@/entities/announcement/components/AnnouncementBottomSheet';
@@ -26,21 +27,15 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
 const HomePage = () => {
   const [announcements, setAnnouncements] =
     useState<Announcement[]>(MOCK_ANNOUNCEMENTS);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedAnnouncement, setSelectedAnnouncement] =
-    useState<Announcement | null>(null);
-
-  const handleItemClick = (announcement: Announcement) => {
-    setSelectedAnnouncement(announcement);
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  const {
+    isOpen,
+    selectedItem: selectedAnnouncement,
+    handleItemClick,
+    handleClose,
+  } = useBottomSheet<Announcement>();
 
   const handleDelete = () => {
-    setIsOpen(false);
+    handleClose();
   };
 
   const handleCheckToggle = (id: number) => {
