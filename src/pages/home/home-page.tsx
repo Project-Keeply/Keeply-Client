@@ -1,32 +1,37 @@
 import { useState } from 'react';
+import { CheckButton } from '@shared/components';
 
-import { BottomSheet } from '@shared/components';
+import type { Announcement } from '@/entities/announcement/components/AnnouncementBottomSheet';
+import AnnouncementBottomSheet from '@/entities/announcement/components/AnnouncementBottomSheet';
 
-import ItemCard from '../../shared/components/ItemCard';
-
-const MOCK_ITEMS = [
+const MOCK_ANNOUNCEMENTS: Announcement[] = [
   {
     id: 1,
-    imgUrl: 'https://placehold.co/90x90',
-    tag: '음료',
-    title: '스타벅스 카페라떼',
-    date: '2026.05.02 16:00 까지',
+    imgUrl: 'https://placehold.co/600x400',
+    tag: '주간',
+    title: '종량제 봉투 판매 수량 제한',
+    isChecked: false,
   },
   {
     id: 2,
-    imgUrl: 'https://placehold.co/90x90',
-    tag: '식품',
-    title: '삼각김밥 참치마요',
-    date: '2026.05.03 09:00 까지',
+    imgUrl: 'https://placehold.co/600x400',
+    tag: '주간',
+    title: '신상품 입고 안내',
+    content:
+      '새로운 종량제 봉투가 입고되었습니다. 환경을 생각하는 선택, 지금 바로 만나보세요!',
+    isChecked: false,
   },
 ];
 
 const HomePage = () => {
+  const [announcements, setAnnouncements] =
+    useState<Announcement[]>(MOCK_ANNOUNCEMENTS);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTitle, setSelectedTitle] = useState('');
+  const [selectedAnnouncement, setSelectedAnnouncement] =
+    useState<Announcement | null>(null);
 
-  const handleItemClick = (title: string) => {
-    setSelectedTitle(title);
+  const handleItemClick = (announcement: Announcement) => {
+    setSelectedAnnouncement(announcement);
     setIsOpen(true);
   };
 
@@ -34,31 +39,40 @@ const HomePage = () => {
     setIsOpen(false);
   };
 
+  const handleDelete = () => {
+    setIsOpen(false);
+  };
+
+  const handleCheckToggle = (id: number) => {
+    setAnnouncements((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, isChecked: !item.isChecked } : item,
+      ),
+    );
+  };
+
   return (
-    <div className="flex flex-col gap-4 p-10">
-      {MOCK_ITEMS.map((item) => (
-        <ItemCard
-          onClick={() => handleItemClick(item.title)}
+    <div className="flex flex-1 flex-col gap-4 p-10 bg-lightgray">
+      {announcements.map((item) => (
+        <CheckButton
           key={item.id}
-          imgUrl={item.imgUrl}
-          tag={item.tag}
-          title={item.title}
-          date={item.date}
-        />
+          size="sm"
+          hasBackground={false}
+          isChecked={item.isChecked}
+          onClick={() => handleItemClick(item)}
+          onCheckClick={() => handleCheckToggle(item.id)}
+        >
+          {item.title}
+        </CheckButton>
       ))}
-      <BottomSheet open={isOpen} onClose={handleClose}>
-        <div className="flex flex-col gap-4 py-6">
-          <h2 className="text-title3 font-semibold">{selectedTitle}</h2>
-          <p className="text-body2 text-gray-300">BottomSheet 테스트 콘텐츠</p>
-          <button
-            type="button"
-            onClick={handleClose}
-            className="py-3 bg-primary-500 text-white rounded-[10px]"
-          >
-            닫기
-          </button>
-        </div>
-      </BottomSheet>
+      {selectedAnnouncement && (
+        <AnnouncementBottomSheet
+          open={isOpen}
+          onClose={handleClose}
+          onDelete={handleDelete}
+          announcement={selectedAnnouncement}
+        />
+      )}
     </div>
   );
 };
