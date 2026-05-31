@@ -37,11 +37,11 @@ const MOCK_DISPOSAL_ITEMS: DisposalItem[] = [
 ];
 
 const ManagementPage = () => {
-  const { isOpen, selectedItem, handleItemClick, handleClose } =
+  const { isOpen, selectedItem, open, close } =
     useBottomSheet<DisposalItem>();
 
   const handleComplete = () => {
-    handleClose();
+    close();
   };
 
   return (
@@ -55,14 +55,14 @@ const ManagementPage = () => {
             tag={item.tag}
             title={item.title}
             date={item.date}
-            onClick={() => handleItemClick(item)}
+            onClick={() => open(item)}
           />
         ))}
       </div>
       {selectedItem && (
         <DisposalBottomSheet
           open={isOpen}
-          onClose={handleClose}
+          onClose={close}
           onComplete={handleComplete}
         >
           <ItemCard

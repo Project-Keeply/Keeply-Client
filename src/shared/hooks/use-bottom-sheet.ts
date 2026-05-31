@@ -4,12 +4,12 @@ const useBottomSheet = <T>() => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<T | null>(null);
 
-  const handleItemClick = (item: T) => {
+  const open = (item: T) => {
     setSelectedItem(item);
     setIsOpen(true);
   };
 
-  const handleClose = () => {
+  const close = () => {
     setIsOpen(false);
     setSelectedItem(null);
   };
@@ -17,8 +17,8 @@ const useBottomSheet = <T>() => {
   return {
     isOpen,
     selectedItem,
-    handleItemClick,
-    handleClose,
+    open,
+    close,
   };
 };
 

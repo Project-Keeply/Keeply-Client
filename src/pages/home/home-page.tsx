@@ -30,12 +30,12 @@ const HomePage = () => {
   const {
     isOpen,
     selectedItem: selectedAnnouncement,
-    handleItemClick,
-    handleClose,
+    open,
+    close,
   } = useBottomSheet<Announcement>();
 
   const handleDelete = () => {
-    handleClose();
+    close();
   };
 
   const handleCheckToggle = (id: number) => {
@@ -54,7 +54,7 @@ const HomePage = () => {
           size="sm"
           hasBackground={false}
           isChecked={item.isChecked}
-          onClick={() => handleItemClick(item)}
+          onClick={() => open(item)}
           onCheckClick={() => handleCheckToggle(item.id)}
         >
           {item.title}
@@ -63,7 +63,7 @@ const HomePage = () => {
       {selectedAnnouncement && (
         <AnnouncementBottomSheet
           open={isOpen}
-          onClose={handleClose}
+          onClose={close}
           onDelete={handleDelete}
           announcement={selectedAnnouncement}
         />
