@@ -70,7 +70,6 @@ const ManagementPage = () => {
             tag={selectedItem.tag}
             title={selectedItem.title}
             date={selectedItem.date}
-            onClick={() => {}}
           />
         </DisposalBottomSheet>
       )}
