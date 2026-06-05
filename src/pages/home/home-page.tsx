@@ -35,7 +35,7 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
 
 const HomePage = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-lightgray p-6.25">
+    <div className="flex flex-1 flex-col bg-lightgray p-6.25">
       <AnnouncementItemList date={new Date()} items={MOCK_ANNOUNCEMENTS} />
     </div>
   );
