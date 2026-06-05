@@ -9,3 +9,4 @@ export { default as IcHome } from './ic_home.svg?react';
 export { default as IcLeftArrow } from './ic_left_arrow.svg?react';
 export { default as IcMyPage } from './ic_my_page.svg?react';
 export { default as IcNote } from './ic_note.svg?react';
+export { default as IcPlus } from './ic_plus.svg?react';
