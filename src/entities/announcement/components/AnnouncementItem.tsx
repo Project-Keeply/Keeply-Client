@@ -16,7 +16,11 @@ const AnnouncementItem = ({
   onClick,
   onCheckClick,
 }: AnnouncementItemProps) => {
-  const tagVariant = tag === '주간' ? 'primary' : 'secondary';
+  const TAG_VARIANT_MAP: Record<'주간' | '일일', 'primary' | 'secondary'> = {
+    '주간': 'primary',
+    '일일': 'secondary',
+  };
+  const tagVariant = TAG_VARIANT_MAP[tag];
 
   return (
     <div className="flex w-full items-center justify-between rounded-[10px] bg-white px-4.5 py-5">
