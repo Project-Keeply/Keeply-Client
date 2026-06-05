@@ -190,8 +190,6 @@ Closes #{ISSUE_NUMBER}
 |-------|-------|
 |       |       |
 
----
-🤖 made by [claude](https://claude.ai)
 ```
 
 **스크린샷 섹션 처리:**
