@@ -23,10 +23,12 @@ const AnnouncementItem = ({
       <button
         type="button"
         onClick={onClick}
-        className="flex flex-1 items-center gap-2.5 text-left"
+        className="flex min-w-0 flex-1 items-center gap-2.5 text-left"
       >
-        <Tag variant={tagVariant} label={tag} />
-        <span className="text-body4 pl-2.75 font-medium">{title}</span>
+        <span className="shrink-0">
+          <Tag variant={tagVariant} label={tag} />
+        </span>
+        <span className="truncate pl-2.75 text-body4 font-medium">{title}</span>
       </button>
       <button
         type="button"
