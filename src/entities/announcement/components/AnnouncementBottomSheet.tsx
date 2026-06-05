@@ -1,12 +1,6 @@
 import { BaseBottomSheet, Button, Tag } from '@shared/components';
 
-export interface Announcement {
-  id: number;
-  imgUrl: string;
-  tag: string;
-  title: string;
-  content?: string;
-}
+import type { Announcement } from '../types/announcement';
 
 interface AnnouncementBottomSheetProps {
   open: boolean;

@@ -2,7 +2,6 @@ import { Tag } from '@shared/components';
 import { IcCheck, IcFillCheck } from '@shared/icons/svgs';
 
 interface AnnouncementItemProps {
-  id: number;
   tag: string;
   title: string;
   isChecked?: boolean;
