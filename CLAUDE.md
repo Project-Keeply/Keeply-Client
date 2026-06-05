@@ -35,6 +35,10 @@
 - Before starting any task, provide a brief explanation of:
   - What work will be performed
   - Which parts of the project may be affected
+- Before making any changes, show a preview of:
+  - Which files will be modified or created
+  - A summary of what will change in each file
+  - Wait for explicit approval before proceeding.
 - After completing the task, always:
   - Verify the result
   - Run the build process and confirm whether the build succeeds or fails
