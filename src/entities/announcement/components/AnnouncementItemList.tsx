@@ -1,8 +1,9 @@
-import type { Announcement } from '../types/announcement';
 import useBottomSheet from '@shared/hooks/use-bottom-sheet';
+
 import useAnnouncementChecks from '../hooks/use-announcement-checks';
-import AnnouncementItem from './AnnouncementItem';
+import type { Announcement } from '../types/announcement';
 import AnnouncementBottomSheet from './AnnouncementBottomSheet';
+import AnnouncementItem from './AnnouncementItem';
 
 const DAYS = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
 
