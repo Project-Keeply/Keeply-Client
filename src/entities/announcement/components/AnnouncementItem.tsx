@@ -2,7 +2,7 @@ import { Tag } from '@shared/components';
 import { IcCheck, IcFillCheck } from '@shared/icons/svgs';
 
 interface AnnouncementItemProps {
-  tag: string;
+  tag: '주간' | '일일';
   title: string;
   isChecked?: boolean;
   onClick?: () => void;
