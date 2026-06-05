@@ -1,5 +1,6 @@
-import { AnnouncementItemList } from '@/entities/announcement';
 import type { Announcement } from '@/entities/announcement';
+import { AnnouncementItemList } from '@/entities/announcement';
+import ManagementGuideButton from '@/shared/components/ManagementGuideButton';
 
 const MOCK_ANNOUNCEMENTS: Announcement[] = [
   {
@@ -35,8 +36,9 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
 
 const HomePage = () => {
   return (
-    <div className="flex flex-1 flex-col bg-lightgray p-6.25">
+    <div className="flex flex-1 flex-col bg-lightgray p-6.25 gap-5">
       <AnnouncementItemList date={new Date()} items={MOCK_ANNOUNCEMENTS} />
+      <ManagementGuideButton />
     </div>
   );
 };
