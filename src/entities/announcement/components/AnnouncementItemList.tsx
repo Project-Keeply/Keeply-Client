@@ -4,8 +4,16 @@ import useAnnouncementChecks from '../hooks/use-announcement-checks';
 import AnnouncementItem from './AnnouncementItem';
 import AnnouncementBottomSheet from './AnnouncementBottomSheet';
 
+const DAYS = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+
+const formatDate = (date: Date): string => {
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${month}.${day} ${DAYS[date.getDay()]}`;
+};
+
 interface AnnouncementItemListProps {
-  date: string;
+  date: Date;
   items: Announcement[];
 }
 
@@ -18,7 +26,7 @@ const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
       <div className="flex items-end gap-2 pb-2.5">
         <h2 className="text-title1 font-bold text-black">오늘의 공지사항</h2>
         <span className="text-title1 font-bold text-primary-500">{items.length}개</span>
-        <span className="text-body2 font-normal text-gray-300">{date}</span>
+        <span className="text-body2 font-normal text-gray-300">{formatDate(date)}</span>
       </div>
       <div className="flex flex-col gap-3">
         {items.map((item) => (
