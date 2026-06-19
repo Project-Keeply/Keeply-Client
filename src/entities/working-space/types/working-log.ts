@@ -1,4 +1,4 @@
-interface WorkingLog {
+export interface WorkingLog {
   id: string;
   tag: string;
   content: string;
