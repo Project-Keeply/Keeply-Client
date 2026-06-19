@@ -1,5 +1,11 @@
+import { CommonHeader } from '@shared/components';
+
 const ManagementPage = () => {
-  return <div>관리자 페이지</div>;
+  return (
+    <div>
+      <CommonHeader title='폐기 관리' />
+    </div>
+  );
 };
 
 export default ManagementPage;
