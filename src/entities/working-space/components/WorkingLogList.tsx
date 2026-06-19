@@ -23,7 +23,7 @@ const WorkingLogList = ({ logs }: WorkingLogListProps) => {
           <IcRightArrow width={24} height={24} />
         </button>
       </div>
-      <div className="flex flex-col overflow-y-auto">
+      <div className="flex flex-col flex-1 min-h-0 overflow-y-auto">
         {filteredLogs.map(log => (
           <WorkingLog
             key={log.id}
