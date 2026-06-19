@@ -27,7 +27,7 @@ const CommonHeader = ({ title, showBack, onBack, rightSlot }: CommonHeaderProps)
   };
 
   return (
-    <header className="relative flex h-[56px] items-center justify-center">
+    <header className="relative flex h-[50px] items-center justify-center">
       {showBack && (
         <button
           type="button"
@@ -41,6 +41,7 @@ const CommonHeader = ({ title, showBack, onBack, rightSlot }: CommonHeaderProps)
       {rightSlot && (
         <div className="absolute right-[19px]">{rightSlot}</div>
       )}
+      <div className="absolute bottom-0 left-5 right-5 h-px bg-gray-100" />
     </header>
   );
 };
