@@ -7,3 +7,4 @@ export const WorkingSpacePage = lazy(() => import('@/pages/working-space/working
 export const ManagementPage = lazy(() => import('@/pages/management/management-page'))
 export const MyPage = lazy(() => import('@/pages/my-page/my-page'))
 export const AnnouncementWritePage = lazy(() => import('@/pages/home/write/announcement-write-page'))
+export const ManagementWritePage = lazy(() => import('@/pages/management/write/management-write-page'))
