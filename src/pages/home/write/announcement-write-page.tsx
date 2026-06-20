@@ -1,8 +1,9 @@
+import WritePageLayout from "@shared/layouts/WritePageLayout";
+
 const AnnouncementWritePage = () => {
   return (
-    <div>
-
-    </div>
+    <WritePageLayout label="공지사항 등록" onSubmit={() => {}}>
+    </WritePageLayout>
   )
 }
 
