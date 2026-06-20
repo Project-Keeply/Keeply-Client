@@ -1,4 +1,5 @@
 import {
+  AnnouncementWritePage,
   HomePage,
   LoginPage,
   ManagementPage,
@@ -19,6 +20,10 @@ export const globalRoutes = [
   {
     path: ROUTE_PATH.ONBOARDING,
     Component: OnboardingPage,
+  },
+  {
+    path: ROUTE_PATH.ANNOUNCEMENT_WRITE,
+    Component: AnnouncementWritePage,
   },
   {
     Component: AppShell,
