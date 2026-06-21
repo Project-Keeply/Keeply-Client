@@ -1,4 +1,4 @@
-import WritePageLayout from "@shared/layouts/WritePageLayout";
+import WritePageLayout from '@shared/layouts/WritePageLayout';
 
 const AnnouncementWritePage = () => {
   return (

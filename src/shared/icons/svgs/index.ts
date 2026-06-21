@@ -11,3 +11,4 @@ export { default as IcMyPage } from './ic_my_page.svg?react';
 export { default as IcNote } from './ic_note.svg?react';
 export { default as IcPlus } from './ic_plus.svg?react';
 export { default as IcRightArrow } from './ic_right_arrow.svg?react';
+export { default as IcUploadArrow } from './ic_upload_arrow.svg?react';
