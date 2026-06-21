@@ -1,5 +1,7 @@
-import { useRef, useState, useEffect } from 'react';
+import { useEffect,useRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
+
+import { WritePageTitle } from '@/shared/components';
 import { IcUploadArrow } from '@/shared/icons';
 
 interface ImgUploadButtonProps {
@@ -31,13 +33,21 @@ const ImgUploadButton = ({ onChange }: ImgUploadButtonProps) => {
 
   return (
     <>
+      <WritePageTitle
+        title="이미지"
+        explanation="(이미지 첨부는 필수 사항이 아닙니다.)"
+      />
       <button
         type="button"
         onClick={handleButtonClick}
         className="h-[150px] w-[150px] cursor-pointer overflow-hidden rounded-2xl bg-primary-100"
       >
         {previewUrl ? (
-          <img src={previewUrl} alt="업로드 이미지 미리보기" className="h-full w-full object-cover" />
+          <img
+            src={previewUrl}
+            alt="업로드 이미지 미리보기"
+            className="h-full w-full object-cover"
+          />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <IcUploadArrow />

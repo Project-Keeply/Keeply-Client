@@ -1,16 +1,14 @@
 import { useId } from 'react';
 
+import { WritePageTitle } from '@/shared/components';
+
 interface TextAreaProps {
-  title: string;
-  explanation?: string;
   value: string;
   placeholder?: string;
   onChange: (value: string) => void;
 }
 
 const TextArea = ({
-  title,
-  explanation,
   value,
   placeholder,
   onChange,
@@ -18,13 +16,10 @@ const TextArea = ({
   const id = useId();
   return (
     <div>
-      <label htmlFor={id} className="flex items-baseline gap-1.5 pb-5">
-        <span className="text-title3 text-gray-800 font-semibold">{title}</span>
-        <span className="relative text-body1 font-light text-gray-200">
-          {explanation}
-          <span className="absolute -top-0.5 -right-2 w-1.5 h-1.5 rounded-full bg-orange-500" />
-        </span>
-      </label>
+      <WritePageTitle
+        title="내용"
+        explanation="(상세 내용은 필수 사항이 아닙니다.)"
+      />
       <textarea
         id={id}
         value={value}
