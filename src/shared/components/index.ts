@@ -7,4 +7,5 @@ export { default as Input } from './Input';
 export {default as ItemCard} from './ItemCard';
 export { default as Tag } from './Tag';
 export { default as TextArea } from './TextArea';
+export { default as TagButton } from './TagButton';
 export { default as WritePageTitle } from './WritePageTitle';
