@@ -20,6 +20,9 @@ const ImgUploadButton = ({ onChange }: ImgUploadButtonProps) => {
   }, [previewUrl]);
 
   const handleButtonClick = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
     inputRef.current?.click();
   };
 
