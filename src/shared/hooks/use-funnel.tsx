@@ -20,7 +20,7 @@ interface StepProps<Name extends string = string> {
 
 interface FunnelProps<Name extends string = string> {
   currentStep: Name;
-  children: ReactElement<StepProps<Name>>[];
+  children: ReactNode;
 }
 
 const Step = <Name extends string>({ children }: StepProps<Name>) => {
