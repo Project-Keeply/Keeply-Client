@@ -6,7 +6,10 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useNavigate } from 'react-router';
+
+interface UseFunnelOptions {
+  onComplete?: () => void;
+}
 
 interface StepProps<Name extends string = string> {
   name: Name;
@@ -35,10 +38,8 @@ const Funnel = <Name extends string>({
   return <>{targetStep}</>;
 };
 
-const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, completePath: string) => {
+const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, options?: UseFunnelOptions) => {
   type StepName = Steps[number];
-
-  const navigate = useNavigate();
 
   const [currentStep, setCurrentStep] = useState<StepName>(steps[0]);
   const currentStepIndex = steps.indexOf(currentStep);
@@ -67,7 +68,7 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, c
       window.history.pushState({ step: nextStep }, '');
       setCurrentStep(nextStep);
     } else {
-      navigate(completePath);
+      options?.onComplete?.();
     }
   };
 
