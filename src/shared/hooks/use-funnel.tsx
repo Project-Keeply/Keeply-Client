@@ -79,6 +79,7 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, o
   const currentStepIndex = steps.indexOf(currentStep);
 
   useEffect(() => {
+    setCurrentStep((prev) => (isValidStep(prev, steps) ? prev : steps[0]));
     if (!isValidStep(getFunnelStepFromHistory(), steps)) {
       writeFunnelStepToHistory(steps[0], 'replace');
     }
