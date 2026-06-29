@@ -39,28 +39,28 @@ const OnboardingLayout = ({
       <div className="shrink-0 px-5 py-10">
         {showSecondaryCta ? (
           <div className="flex gap-3">
-            <button
-              type="button"
+            <Button
+              variant="secondary"
               onClick={onSecondaryCtaClick}
-              className="text-button1 flex-1 cursor-pointer rounded-[10px] bg-gray-200 py-4.5 text-gray-400"
+              className="flex-1"
             >
               {secondaryCtaLabel}
-            </button>
-            <div className="flex-1">
-              <Button
-                variant="primary"
-                onClick={onCtaClick}
-                disabled={isCtaDisabled}
-              >
-                {ctaLabel}
-              </Button>
-            </div>
+            </Button>
+            <Button
+              variant="primary"
+              onClick={onCtaClick}
+              disabled={isCtaDisabled}
+              className="flex-1"
+            >
+              {ctaLabel}
+            </Button>
           </div>
         ) : (
           <Button
             variant="primary"
             onClick={onCtaClick}
             disabled={isCtaDisabled}
+            className="w-full"
           >
             {ctaLabel}
           </Button>
