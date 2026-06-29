@@ -18,7 +18,7 @@ const WritePageLayout = ({ title = '글쓰기', label, onSubmit, disabled, child
         {children}
       </div>
       <div className="shrink-0 px-5 py-10">
-        <Button variant="primary" onClick={onSubmit} disabled={disabled}>{label}</Button>
+        <Button variant="primary" onClick={onSubmit} disabled={disabled} className="w-full">{label}</Button>
       </div>
     </div>
   );
