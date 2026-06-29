@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
 import Button from '@shared/components/Button';
+import type { ReactNode } from 'react';
+
 import { IcLogo } from '@/shared/icons';
 
 interface OnboardingLayoutProps {

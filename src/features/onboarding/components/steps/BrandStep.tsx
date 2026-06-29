@@ -1,11 +1,11 @@
-import { useFormContext, useWatch } from 'react-hook-form';
 import { CheckButton } from '@shared/components';
-
-import { BRAND, BRAND_LABEL } from '@/features/onboarding/constants';
-import type { Brand } from '@/features/onboarding/constants';
-import type { OnboardingFormDraft } from '@/features/onboarding/schemas';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import OnboardingLayout from '../OnboardingLayout';
+
+import type { Brand } from '@/features/onboarding/constants';
+import { BRAND, BRAND_LABEL } from '@/features/onboarding/constants';
+import type { OnboardingFormDraft } from '@/features/onboarding/schemas';
 
 interface BrandStepProps {
   onNext: () => void;

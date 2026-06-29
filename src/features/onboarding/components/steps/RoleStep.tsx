@@ -1,10 +1,10 @@
-import { useFormContext, useWatch } from 'react-hook-form';
 import { CheckButton } from '@shared/components';
+import { useFormContext, useWatch } from 'react-hook-form';
+
+import OnboardingLayout from '../OnboardingLayout';
 
 import { ONBOARDING_ROLE } from '@/features/onboarding/constants';
 import type { OnboardingFormDraft } from '@/features/onboarding/schemas';
-
-import OnboardingLayout from '../OnboardingLayout';
 
 interface RoleStepProps {
   onNext: () => void;

@@ -1,14 +1,5 @@
-import { FormProvider, useForm } from 'react-hook-form';
 import useFunnel from '@shared/hooks/use-funnel';
-
-import {
-  ONBOARDING_ROLE,
-  ONBOARDING_STEP,
-  PART_TIMER_STEPS,
-  STORE_MANAGER_STEPS,
-} from '@/features/onboarding/constants';
-import { onboardingSchema } from '@/features/onboarding/schemas';
-import type { OnboardingFormDraft } from '@/features/onboarding/schemas';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import {
   BrandStep,
@@ -16,6 +7,15 @@ import {
   StoreNameStep,
   WorkspaceCodeStep,
 } from './steps';
+
+import {
+  ONBOARDING_ROLE,
+  ONBOARDING_STEP,
+  PART_TIMER_STEPS,
+  STORE_MANAGER_STEPS,
+} from '@/features/onboarding/constants';
+import type { OnboardingFormDraft } from '@/features/onboarding/schemas';
+import { onboardingSchema } from '@/features/onboarding/schemas';
 
 const OnboardingFunnel = () => {
   const methods = useForm<OnboardingFormDraft>({

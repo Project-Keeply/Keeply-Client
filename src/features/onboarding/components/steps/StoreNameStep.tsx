@@ -1,10 +1,10 @@
-import { useFormContext, useWatch } from 'react-hook-form';
 import { Input } from '@shared/components';
-
-import { storeNameSchema } from '@/features/onboarding/schemas';
-import type { OnboardingFormDraft } from '@/features/onboarding/schemas';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import OnboardingLayout from '../OnboardingLayout';
+
+import type { OnboardingFormDraft } from '@/features/onboarding/schemas';
+import { storeNameSchema } from '@/features/onboarding/schemas';
 
 interface StoreNameStepProps {
   onNext: () => void;
