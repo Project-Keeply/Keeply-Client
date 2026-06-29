@@ -78,6 +78,9 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, o
     }
   };
 
+  const canGoPrev = currentStepIndex > 0;
+  const canGoNext = currentStepIndex < steps.length - 1;
+
   return {
     Funnel: Funnel as (props: FunnelProps<StepName>) => ReactElement,
     Step: Step as (props: StepProps<StepName>) => ReactElement,
@@ -86,6 +89,8 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, o
     currentStep,
     currentStepIndex,
     steps,
+    canGoPrev,
+    canGoNext,
   };
 };
 
