@@ -87,8 +87,6 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, o
     goToNextStep,
     goToPrevStep,
     currentStep,
-    currentStepIndex,
-    steps,
     canGoPrev,
     canGoNext,
   };
