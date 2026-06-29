@@ -72,10 +72,8 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, c
   };
 
   const goToPrevStep = () => {
-    const prevStep = steps[currentStepIndex - 1] as StepName | undefined;
-    if (prevStep) {
-      window.history.pushState({ step: prevStep }, '');
-      setCurrentStep(prevStep);
+    if(currentStepIndex > 0) {
+      window.history.back();
     }
   };
 
