@@ -7,6 +7,8 @@ import {
   useState,
 } from 'react';
 
+const FUNNEL_STATE_KEY = 'funnel';
+
 interface UseFunnelOptions {
   onComplete?: () => void;
 }
@@ -38,24 +40,55 @@ const Funnel = <Name extends string>({
   return <>{targetStep}</>;
 };
 
+const isValidStep = <Steps extends readonly string[]>(
+  candidate: unknown,
+  steps: Steps,
+): candidate is Steps[number] => {
+  return (
+    typeof candidate === 'string' &&
+    (steps as readonly string[]).includes(candidate)
+  );
+};
+
+const getFunnelStepFromHistory = (): unknown => {
+  return window.history.state?.[FUNNEL_STATE_KEY]?.step;
+};
+
+const writeFunnelStepToHistory = (
+  step: string,
+  mode: 'push' | 'replace',
+) => {
+  const nextState = {
+    ...window.history.state,
+    [FUNNEL_STATE_KEY]: { step },
+  };
+  if (mode === 'push') {
+    window.history.pushState(nextState, '');
+  } else {
+    window.history.replaceState(nextState, '');
+  }
+};
+
 const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, options?: UseFunnelOptions) => {
   type StepName = Steps[number];
 
-  const [currentStep, setCurrentStep] = useState<StepName>(steps[0]);
+  const [currentStep, setCurrentStep] = useState<StepName>(() => {
+    const stored = getFunnelStepFromHistory();
+    return isValidStep(stored, steps) ? stored : steps[0];
+  });
   const currentStepIndex = steps.indexOf(currentStep);
 
   useEffect(() => {
-    if (!window.history.state?.step) {
-      window.history.replaceState({ step: steps[0] }, '');
+    if (!isValidStep(getFunnelStepFromHistory(), steps)) {
+      writeFunnelStepToHistory(steps[0], 'replace');
     }
   }, [steps]);
 
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
-      if (event.state?.step) {
-        setCurrentStep(event.state.step as StepName);
-      } else {
-        setCurrentStep(steps[0]);
+      const candidate = event.state?.[FUNNEL_STATE_KEY]?.step;
+      if (isValidStep(candidate, steps)) {
+        setCurrentStep(candidate);
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -65,7 +98,7 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, o
   const goToNextStep = () => {
     const nextStep = steps[currentStepIndex + 1] as StepName | undefined;
     if (nextStep) {
-      window.history.pushState({ step: nextStep }, '');
+      writeFunnelStepToHistory(nextStep, 'push');
       setCurrentStep(nextStep);
     } else {
       options?.onComplete?.();
@@ -73,7 +106,7 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, o
   };
 
   const goToPrevStep = () => {
-    if(currentStepIndex > 0) {
+    if (currentStepIndex > 0) {
       window.history.back();
     }
   };
