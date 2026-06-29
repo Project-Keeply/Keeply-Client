@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-import { BRAND,ONBOARDING_ROLE } from '@/features/onboarding/constants'
+import type { Brand, OnboardingRole } from '@/features/onboarding/constants'
+import { BRAND, ONBOARDING_ROLE } from '@/features/onboarding/constants'
 
 export const workspaceCodeSchema = z
   .string()
@@ -24,3 +25,10 @@ export const onboardingSchema = z.discriminatedUnion('role', [
 ]);
 
 export type OnboardingFormValues = z.infer<typeof onboardingSchema>;
+
+export interface OnboardingFormDraft {
+  role?: OnboardingRole;
+  workspaceCode?: string;
+  brand?: Brand;
+  storeName?: string;
+}
