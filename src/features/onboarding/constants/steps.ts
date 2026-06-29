@@ -12,23 +12,23 @@ export const BRAND = {
   EMART24: 'EMART24',
 } as const
 
-export type BRAND = (typeof BRAND)[keyof typeof BRAND]
+export type Brand = (typeof BRAND)[keyof typeof BRAND]
 
-export const BRAND_LABEL: Record<BRAND, string> = {
+export const BRAND_LABEL: Record<Brand, string> = {
   GS25: 'GS25',
   CU: 'CU',
   SEVEN_ELEVEN: '세븐일레븐',
   EMART24: '이마트 24',
-};
-
-export type BRAND_LABEL = (typeof BRAND_LABEL)[keyof typeof BRAND_LABEL]
+}
 
 export const ONBOARDING_STEP = {
   ROLE: 'role',
   WORKSPACE_CODE: 'workspaceCode',
   BRAND: 'brand',
-  STORE_NAME: 'storeName'
+  STORE_NAME: 'storeName',
 } as const
+
+export type OnboardingStepName = (typeof ONBOARDING_STEP)[keyof typeof ONBOARDING_STEP]
 
 export const PART_TIMER_STEPS = [
   ONBOARDING_STEP.ROLE,
