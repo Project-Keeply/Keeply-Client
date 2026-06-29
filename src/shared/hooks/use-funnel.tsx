@@ -14,11 +14,22 @@ interface StepProps {
 }
 
 interface FunnelProps {
+  currentStep: string;
   children: ReactElement<StepProps>[];
 }
 
 const Step = ({ children }: StepProps) => {
   return <>{children}</>;
+};
+
+const Funnel = ({ currentStep, children }: FunnelProps) => {
+  const targetStep = Children.toArray(children).find((child) => {
+    if (!isValidElement<StepProps>(child)) {
+      return false;
+    }
+    return child.props.name === currentStep;
+  });
+  return <>{targetStep}</>;
 };
 
 const useFunnel = (steps: readonly string[], completePath: string) => {
@@ -61,16 +72,6 @@ const useFunnel = (steps: readonly string[], completePath: string) => {
       window.history.pushState({ step: prevStep }, '');
       setCurrentStep(prevStep);
     }
-  };
-
-  const Funnel = ({ children }: FunnelProps) => {
-    const targetStep = Children.toArray(children).find((child) => {
-      if (!isValidElement<StepProps>(child)) {
-        return false;
-      }
-      return child.props.name === currentStep;
-    });
-    return <>{targetStep}</>;
   };
 
   return {
