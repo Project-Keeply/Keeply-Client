@@ -8,23 +8,26 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router';
 
-interface StepProps {
-  name: string;
+interface StepProps<Name extends string = string> {
+  name: Name;
   children: ReactNode;
 }
 
-interface FunnelProps {
-  currentStep: string;
-  children: ReactElement<StepProps>[];
+interface FunnelProps<Name extends string = string> {
+  currentStep: Name;
+  children: ReactElement<StepProps<Name>>[];
 }
 
-const Step = ({ children }: StepProps) => {
+const Step = <Name extends string>({ children }: StepProps<Name>) => {
   return <>{children}</>;
 };
 
-const Funnel = ({ currentStep, children }: FunnelProps) => {
+const Funnel = <Name extends string>({
+  currentStep,
+  children,
+}: FunnelProps<Name>) => {
   const targetStep = Children.toArray(children).find((child) => {
-    if (!isValidElement<StepProps>(child)) {
+    if (!isValidElement<StepProps<Name>>(child)) {
       return false;
     }
     return child.props.name === currentStep;
@@ -32,10 +35,12 @@ const Funnel = ({ currentStep, children }: FunnelProps) => {
   return <>{targetStep}</>;
 };
 
-const useFunnel = (steps: readonly string[], completePath: string) => {
+const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, completePath: string) => {
+  type StepName = Steps[number];
+
   const navigate = useNavigate();
 
-  const [currentStep, setCurrentStep] = useState(steps[0] ?? '');
+  const [currentStep, setCurrentStep] = useState<StepName>(steps[0]);
   const currentStepIndex = steps.indexOf(currentStep);
 
   useEffect(() => {
@@ -47,9 +52,9 @@ const useFunnel = (steps: readonly string[], completePath: string) => {
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       if (event.state?.step) {
-        setCurrentStep(event.state.step);
+        setCurrentStep(event.state.step as StepName);
       } else {
-        setCurrentStep(steps[0] ?? '');
+        setCurrentStep(steps[0]);
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -57,7 +62,7 @@ const useFunnel = (steps: readonly string[], completePath: string) => {
   }, [steps]);
 
   const goToNextStep = () => {
-    const nextStep = steps[currentStepIndex + 1];
+    const nextStep = steps[currentStepIndex + 1] as StepName | undefined;
     if (nextStep) {
       window.history.pushState({ step: nextStep }, '');
       setCurrentStep(nextStep);
@@ -67,7 +72,7 @@ const useFunnel = (steps: readonly string[], completePath: string) => {
   };
 
   const goToPrevStep = () => {
-    const prevStep = steps[currentStepIndex - 1];
+    const prevStep = steps[currentStepIndex - 1] as StepName | undefined;
     if (prevStep) {
       window.history.pushState({ step: prevStep }, '');
       setCurrentStep(prevStep);
@@ -75,8 +80,8 @@ const useFunnel = (steps: readonly string[], completePath: string) => {
   };
 
   return {
-    Funnel,
-    Step,
+    Funnel: Funnel as (props: FunnelProps<StepName>) => ReactElement,
+    Step: Step as (props: StepProps<StepName>) => ReactElement,
     goToNextStep,
     goToPrevStep,
     currentStep,
