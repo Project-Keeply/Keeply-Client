@@ -41,6 +41,7 @@ const OnboardingLayout = ({
           <div className="flex gap-3">
             <Button
               variant="secondary"
+              size="large"
               onClick={onSecondaryCtaClick}
               className="flex-1"
             >
@@ -48,6 +49,7 @@ const OnboardingLayout = ({
             </Button>
             <Button
               variant="primary"
+              size="large"
               onClick={onCtaClick}
               disabled={isCtaDisabled}
               className="flex-1"
@@ -58,6 +60,7 @@ const OnboardingLayout = ({
         ) : (
           <Button
             variant="primary"
+            size="large"
             onClick={onCtaClick}
             disabled={isCtaDisabled}
             className="w-full"

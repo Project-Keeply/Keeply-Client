@@ -2,6 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: 'primary' | 'red' | 'secondary';
+  size?: 'default' | 'large';
   children: ReactNode;
 }
 
@@ -12,12 +13,23 @@ const variantStyles = {
   red: 'bg-red-500 text-white hover:bg-red-600 cursor-pointer ',
 };
 
-const Button = ({ variant, children, className, ...rest }: ButtonProps) => {
+const sizeStyles = {
+  default: 'py-4.5 text-button1',
+  large: 'py-5.5 text-title3',
+};
+
+const Button = ({
+  variant,
+  size = 'default',
+  children,
+  className,
+  ...rest
+}: ButtonProps) => {
   return (
     <button
       type="button"
       disabled={rest.disabled}
-      className={`py-4.5 rounded-[10px] text-button1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 ${rest.disabled ? variantStyles.disabled : variantStyles[variant]} ${className ?? ''}`}
+      className={`rounded-[10px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 ${sizeStyles[size]} ${rest.disabled ? variantStyles.disabled : variantStyles[variant]} ${className ?? ''}`}
       {...rest}
     >
       {children}
