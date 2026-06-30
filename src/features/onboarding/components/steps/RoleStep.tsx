@@ -24,7 +24,7 @@ const RoleStep = ({ onNext }: RoleStepProps) => {
 
   return (
     <OnboardingLayout
-      title={'근무자 유형을\n선택해주세요'}
+      title={'근무자 유형을 선택해주세요.'}
       ctaLabel="다음"
       onCtaClick={onNext}
       isCtaDisabled={!role}

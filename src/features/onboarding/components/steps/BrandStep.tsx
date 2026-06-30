@@ -25,7 +25,7 @@ const BrandStep = ({ onNext, onPrev }: BrandStepProps) => {
 
   return (
     <OnboardingLayout
-      title={'운영중인 브랜드를\n선택해주세요'}
+      title={'운영중인 브랜드를 선택해주세요.'}
       ctaLabel="다음"
       onCtaClick={onNext}
       isCtaDisabled={!brand}

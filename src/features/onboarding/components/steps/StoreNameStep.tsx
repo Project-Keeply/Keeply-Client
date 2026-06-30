@@ -23,7 +23,7 @@ const StoreNameStep = ({ onNext, onPrev }: StoreNameStepProps) => {
 
   return (
     <OnboardingLayout
-      title={'매장 별명을\n설정해주세요'}
+      title={'매장 별명을 설정해주세요.'}
       ctaLabel="가입 완료"
       onCtaClick={onNext}
       isCtaDisabled={!isValid}

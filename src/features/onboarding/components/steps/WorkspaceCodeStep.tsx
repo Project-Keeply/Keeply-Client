@@ -30,7 +30,7 @@ const WorkspaceCodeStep = ({ onNext, onPrev }: WorkspaceCodeStepProps) => {
 
   return (
     <OnboardingLayout
-      title={'근무지 코드를\n입력해주세요'}
+      title={'근무지 코드를 입력해주세요.'}
       ctaLabel="가입 완료"
       onCtaClick={onNext}
       isCtaDisabled={!isValid}
