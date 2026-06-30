@@ -1,5 +1,5 @@
 import useFunnel from '@shared/hooks/use-funnel';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
 import {
   BrandStep,
@@ -28,7 +28,7 @@ const OnboardingFunnel = () => {
     mode: 'onChange',
   });
 
-  const role = methods.watch('role');
+  const role = useWatch({control: methods.control, name: 'role'})
   const steps =
     role === ONBOARDING_ROLE.STORE_MANAGER
       ? STORE_MANAGER_STEPS

@@ -30,7 +30,7 @@ const OnboardingLayout = ({
         <IcLogo className="h-[47px] w-auto" />
       </header>
 
-      <div className="flex-1 overflow-y-auto px-5 pt-6]">
+      <div className="flex-1 overflow-y-auto px-5 pt-6">
         <h1 className="text-headline2 mb-6 pb-[45px] font-semibold whitespace-pre-line leading-[1.4]">
           {title}
         </h1>
