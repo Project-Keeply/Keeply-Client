@@ -37,10 +37,7 @@ const WorkspaceCodeStep = ({ onNext, onPrev }: WorkspaceCodeStepProps) => {
       showSecondaryCta
       onSecondaryCtaClick={onPrev}
     >
-      <Input
-        value={workspaceCode}
-        onChange={handleChange}
-      />
+      <Input value={workspaceCode} onChange={handleChange} />
     </OnboardingLayout>
   );
 };

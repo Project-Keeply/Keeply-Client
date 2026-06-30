@@ -1,7 +1,7 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
-import type { Brand, OnboardingRole } from '@/features/onboarding/constants'
-import { BRAND, ONBOARDING_ROLE } from '@/features/onboarding/constants'
+import type { Brand, OnboardingRole } from '@/features/onboarding/constants';
+import { BRAND, ONBOARDING_ROLE } from '@/features/onboarding/constants';
 
 export const workspaceCodeSchema = z
   .string()
@@ -10,7 +10,7 @@ export const workspaceCodeSchema = z
 export const storeNameSchema = z
   .string()
   .min(1, '매장 별명을 입력해주세요.')
-  .max(20, '매장 별명은 20자 이내로 입력해주세요.')
+  .max(20, '매장 별명은 20자 이내로 입력해주세요.');
 
 export const onboardingSchema = z.discriminatedUnion('role', [
   z.object({
