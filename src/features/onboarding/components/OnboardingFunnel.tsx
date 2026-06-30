@@ -39,7 +39,6 @@ const OnboardingFunnel = ({ onSuccess }: OnboardingFunnelProps) => {
       onComplete: async () => {
         const result = onboardingSchema.safeParse(methods.getValues());
         if (!result.success) {
-          console.error('Onboarding validation failed', result.error);
           return;
         }
         // TODO: await signupApi(result.data);
