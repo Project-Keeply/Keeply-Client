@@ -27,8 +27,7 @@ const StoreNameStep = ({ onNext, onPrev }: StoreNameStepProps) => {
       ctaLabel="가입 완료"
       onCtaClick={onNext}
       isCtaDisabled={!isValid}
-      showSecondaryCta
-      onSecondaryCtaClick={onPrev}
+      secondaryCta={{ onClick: onPrev }}
     >
       <Input
         value={storeName}

@@ -29,8 +29,7 @@ const BrandStep = ({ onNext, onPrev }: BrandStepProps) => {
       ctaLabel="다음"
       onCtaClick={onNext}
       isCtaDisabled={!brand}
-      showSecondaryCta
-      onSecondaryCtaClick={onPrev}
+      secondaryCta={{ onClick: onPrev }}
     >
       <div className="flex flex-col gap-3">
         {BRAND_OPTIONS.map((option) => (

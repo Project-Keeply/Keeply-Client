@@ -9,9 +9,10 @@ interface OnboardingLayoutProps {
   ctaLabel: string;
   onCtaClick: () => void;
   isCtaDisabled?: boolean;
-  showSecondaryCta?: boolean;
-  secondaryCtaLabel?: string;
-  onSecondaryCtaClick?: () => void;
+  secondaryCta?: {
+    label?: string;
+    onClick: () => void;
+  };
 }
 
 const OnboardingLayout = ({
@@ -20,9 +21,7 @@ const OnboardingLayout = ({
   ctaLabel,
   onCtaClick,
   isCtaDisabled,
-  showSecondaryCta,
-  secondaryCtaLabel = '이전',
-  onSecondaryCtaClick,
+  secondaryCta,
 }: OnboardingLayoutProps) => {
   return (
     <div className="mx-auto flex h-[100dvh] max-w-[430px] flex-col bg-white pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]">
@@ -38,15 +37,15 @@ const OnboardingLayout = ({
       </div>
 
       <div className="shrink-0 px-5 py-10">
-        {showSecondaryCta ? (
+        {secondaryCta ? (
           <div className="flex gap-3">
             <Button
               variant="secondary"
               size="large"
-              onClick={onSecondaryCtaClick}
+              onClick={secondaryCta.onClick}
               className="flex-1"
             >
-              {secondaryCtaLabel}
+              {secondaryCta.label ?? '이전'}
             </Button>
             <Button
               variant="primary"

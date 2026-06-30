@@ -34,8 +34,7 @@ const WorkspaceCodeStep = ({ onNext, onPrev }: WorkspaceCodeStepProps) => {
       ctaLabel="가입 완료"
       onCtaClick={onNext}
       isCtaDisabled={!isValid}
-      showSecondaryCta
-      onSecondaryCtaClick={onPrev}
+      secondaryCta={{ onClick: onPrev }}
     >
       <Input value={workspaceCode} onChange={handleChange} />
     </OnboardingLayout>
