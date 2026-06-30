@@ -12,7 +12,11 @@ import {
 import type { OnboardingFormDraft } from '@/features/onboarding/schemas';
 import { onboardingSchema } from '@/features/onboarding/schemas';
 
-const OnboardingFunnel = () => {
+interface OnboardingFunnelProps {
+  onSuccess: () => void;
+}
+
+const OnboardingFunnel = ({ onSuccess }: OnboardingFunnelProps) => {
   const methods = useForm<OnboardingFormDraft>({
     defaultValues: {
       role: undefined,
@@ -32,14 +36,14 @@ const OnboardingFunnel = () => {
   const { Funnel, Step, currentStep, goToNextStep, goToPrevStep } = useFunnel(
     steps,
     {
-      onComplete: () => {
+      onComplete: async () => {
         const result = onboardingSchema.safeParse(methods.getValues());
         if (!result.success) {
           console.error('Onboarding validation failed', result.error);
           return;
         }
-        // TODO: 가입 API 호출 후 /onboarding/welcome 으로 replace 이동
-        console.log('Onboarding submit', result.data);
+        // TODO: await signupApi(result.data);
+        onSuccess();
       },
     },
   );
