@@ -18,7 +18,7 @@ const DisposalBottomSheet = ({
     <BaseBottomSheet open={open} onClose={onClose}>
       <div className="flex flex-col gap-6 p-6.25">
         {children}
-        <Button variant="primary" onClick={onComplete}>
+        <Button variant="primary" onClick={onComplete} className="w-full">
           폐기 완료
         </Button>
       </div>
