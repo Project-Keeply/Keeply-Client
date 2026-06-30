@@ -1,4 +1,4 @@
-import { OnboardingFunnel } from '@/features/onboarding/components';
+import { OnboardingFunnel } from '@/features/onboarding';
 
 const OnboardingPage = () => {
   return <OnboardingFunnel />;
