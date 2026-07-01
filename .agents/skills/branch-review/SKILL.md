@@ -1,6 +1,6 @@
 ---
 name: branch-review
-description: Diff-based local branch review before push. Use for "code review", "pre-push review", or when focus-point review is requested (DX, base component reusability, FSD fit, hook extraction).
+description: 현재 브랜치의 diff를 focus point 기준으로 리뷰하는 스킬. "리뷰해줘", "코드 리뷰", "브랜치 리뷰", "push 전 확인해줘", "focus point 리뷰", "branch-review" 등의 요청에 반드시 이 스킬을 사용한다.
 ---
 
 # branch-review command

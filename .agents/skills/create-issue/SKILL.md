@@ -1,3 +1,8 @@
+---
+name: create-issue
+description: 사용자 인터뷰를 통해 이슈 내용을 채우고 gh CLI로 GitHub 이슈를 생성하는 스킬. "이슈 만들어줘", "GitHub 이슈 생성", "이슈 올려야 해", "create-issue" 등의 요청에 반드시 이 스킬을 사용한다.
+---
+
 # create-issue 스킬
 
 사용자 인터뷰를 통해 이슈 내용을 채우고, gh CLI로 GitHub 이슈를 생성한다.
