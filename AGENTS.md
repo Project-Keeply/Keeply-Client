@@ -26,6 +26,7 @@ Use the following skills based on task type. Natural language triggers auto-matc
 
 | Task Type | Skill | Trigger Examples |
 |---|---|---|
+| Start Notion task (Notion → GitHub) | [`start-notion-task`](.agents/skills/start-notion-task/SKILL.md) | "Notion 태스크 시작해줘", "이 태스크 시작하자" |
 | Create GitHub issue | [`create-issue`](.agents/skills/create-issue/SKILL.md) | "이슈 만들어줘", "이슈 올려야 해" |
 | Design implementation | [`logic-design`](.agents/skills/logic-design/SKILL.md) | "설계 좀 해줘", "구현 계획 세워줘" |
 | Review branch (pre-push) | [`branch-review`](.agents/skills/branch-review/SKILL.md) | "리뷰해줘", "push 전 확인해줘" |
@@ -44,16 +45,21 @@ Every skill invocation follows this flight protocol:
 
 ## Standard Workflow
 
-Typical feature development order:
+Typical feature development order (Notion-first hybrid):
 
 ```
-1. Create issue          → create-issue
-2. Create branch         → docs/rules/git-convention.md
+1. Create Notion task    → (create manually in Notion "Task 관리" DB)
+2. Start Notion task     → start-notion-task
+                           (auto: GitHub Issue + branch + Notion → "진행 중")
 3. Design implementation → logic-design
 4. Implement
 5. Review branch         → branch-review
 6. Create PR             → create-pr
+                           (manually update Notion "리뷰 중" / PR URL; auto sync TBD)
 ```
+
+**Note**: Notion is the source of truth for tasks. GitHub Issues are auto-mirrored
+for PR linking. Steps 6+ Notion sync automation is planned but not yet implemented.
 
 ## Skill Specification
 
@@ -89,7 +95,8 @@ keeply-client/
 │       ├── branch-review/SKILL.md
 │       ├── create-issue/SKILL.md
 │       ├── create-pr/SKILL.md
-│       └── logic-design/SKILL.md
+│       ├── logic-design/SKILL.md
+│       └── start-notion-task/SKILL.md
 │
 └── .claude/
     └── commands/                ← Claude Code slash commands (symlinks → .agents/skills)
