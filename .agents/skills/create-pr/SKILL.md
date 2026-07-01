@@ -159,7 +159,7 @@ git diff ${BASE_BRANCH}...HEAD --name-only | wc -l
 `.github/pull_request_template.md`의 구조를 그대로 사용한다.
 
 **작성 원칙:**
-- **Summary:** `PR_TITLE`의 목적을 기반으로 한 줄 요약. `ISSUE_NUMBER`가 있으면 첫 줄에 `Closes #{ISSUE_NUMBER}` 추가.
+- **Summary:** `PR_TITLE`의 목적을 기반으로 한 줄 요약. `ISSUE_NUMBER`가 있으면 첫 줄에 `Closes #{ISSUE_NUMBER}` 추가. **`ISSUE_NUMBER=null`이면 `Closes #...` 줄 전체를 제거하여 `Closes #null` 같은 잘못된 이슈 참조가 생기지 않게 한다.**
 - **Tasks:** `PR_TITLE`의 목적을 달성하기 위한 항목을 기능/의도 단위로 나열. 파일/함수 단위 금지.
 - **To Reviewer:** `PR_FOCUS`가 있으면 최우선으로 상세 기술. diff에서 추론한 설계 결정, 리뷰어가 집중할 부분 포함. 없으면 섹션 삭제.
 - **Screenshot:** diff에서 UI 변경(컴포넌트, 스타일, 레이아웃) 감지 시 섹션 유지 + 사용자에게 요청. 감지 안 되면 섹션 삭제.
@@ -171,7 +171,7 @@ git diff ${BASE_BRANCH}...HEAD --name-only | wc -l
 ```markdown
 ## 📌 Summary
 
-Closes #{ISSUE_NUMBER}
+Closes #{ISSUE_NUMBER}   <!-- ISSUE_NUMBER가 null이면 이 줄 전체를 제거할 것 -->
 
 {PR_TITLE 기반 한 줄 요약}
 
