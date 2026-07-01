@@ -50,6 +50,7 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, o
     return isValidStep(stored, steps) ? stored : steps[0];
   });
 
+  // steps prop이 바뀌어 currentStep이 무효해진 경우 렌더 중 보정 (React 권장 패턴)
   if (!isValidStep(currentStep, steps)) {
     setCurrentStep(steps[0]);
   }
