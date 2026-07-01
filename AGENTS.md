@@ -31,6 +31,17 @@ Use the following skills based on task type. Natural language triggers auto-matc
 | Review branch (pre-push) | [`branch-review`](.agents/skills/branch-review/SKILL.md) | "리뷰해줘", "push 전 확인해줘" |
 | Create / update PR | [`create-pr`](.agents/skills/create-pr/SKILL.md) | "PR 올려줘", "PR 설명 써줘" |
 
+## Standard Skill Execution
+
+Every skill invocation follows this flight protocol:
+
+1. **Preflight** — [`.agents/checklists/preflight.md`](.agents/checklists/preflight.md) — verify context, branch, issue, and get user approval
+2. **Flight** — Execute skill-specific steps (from the skill's SKILL.md)
+3. **Postflight** — [`.agents/checklists/postflight.md`](.agents/checklists/postflight.md) — lint / typecheck / build / convention checks
+4. **Debrief** — Report using [`.agents/checklists/debrief.md`](.agents/checklists/debrief.md) format
+
+**Exception**: Trivial fixes (typo, missing semicolon, 1 file & ≤5 lines) may skip preflight steps 3-5, but must be explicitly declared upfront.
+
 ## Standard Workflow
 
 Typical feature development order:
@@ -70,6 +81,10 @@ keeply-client/
 │   └── branch-review/
 │
 ├── .agents/                     ← AI execution harness
+│   ├── checklists/              ← flight protocol (preflight / postflight / debrief)
+│   │   ├── preflight.md
+│   │   ├── postflight.md
+│   │   └── debrief.md
 │   └── skills/                  ← actual skill files
 │       ├── branch-review/SKILL.md
 │       ├── create-issue/SKILL.md
