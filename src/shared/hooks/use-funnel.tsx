@@ -1,44 +1,17 @@
+import { type ReactElement, useEffect, useState } from 'react';
+
 import {
-  Children,
-  isValidElement,
-  type ReactElement,
-  type ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+  Funnel,
+  type FunnelProps,
+  Step,
+  type StepProps,
+} from './funnel-components';
 
 const FUNNEL_STATE_KEY = 'funnel';
 
 interface UseFunnelOptions {
   onComplete?: () => void;
 }
-
-interface StepProps<Name extends string = string> {
-  name: Name;
-  children: ReactNode;
-}
-
-interface FunnelProps<Name extends string = string> {
-  currentStep: Name;
-  children: ReactNode;
-}
-
-const Step = <Name extends string>({ children }: StepProps<Name>) => {
-  return <>{children}</>;
-};
-
-const Funnel = <Name extends string>({
-  currentStep,
-  children,
-}: FunnelProps<Name>) => {
-  const targetStep = Children.toArray(children).find((child) => {
-    if (!isValidElement<StepProps<Name>>(child)) {
-      return false;
-    }
-    return child.props.name === currentStep;
-  });
-  return <>{targetStep}</>;
-};
 
 const isValidStep = <Steps extends readonly string[]>(
   candidate: unknown,
@@ -76,10 +49,15 @@ const useFunnel = <Steps extends readonly [string, ...string[]]>(steps: Steps, o
     const stored = getFunnelStepFromHistory();
     return isValidStep(stored, steps) ? stored : steps[0];
   });
+
+  // steps prop이 바뀌어 currentStep이 무효해진 경우 렌더 중 보정 (React 권장 패턴)
+  if (!isValidStep(currentStep, steps)) {
+    setCurrentStep(steps[0]);
+  }
+
   const currentStepIndex = steps.indexOf(currentStep);
 
   useEffect(() => {
-    setCurrentStep((prev) => (isValidStep(prev, steps) ? prev : steps[0]));
     if (!isValidStep(getFunnelStepFromHistory(), steps)) {
       writeFunnelStepToHistory(steps[0], 'replace');
     }
