@@ -1,0 +1,11 @@
+<svg width="390" height="90" viewBox="0 0 390 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="390" height="90" fill="#F3C6B3"/>
+  <text x="24" y="40" fill="#7A3D2A" font-family="'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700">후기 작성하고 선물받자!</text>
+  <text x="24" y="64" fill="#A5624C" font-family="'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="400">최대 5만원 상품권 당첨 기회</text>
+  <g transform="translate(302 20)">
+    <rect x="10" y="24" width="44" height="30" rx="4" fill="#FFD86B"/>
+    <rect x="10" y="18" width="44" height="10" rx="3" fill="#FFC94D"/>
+    <rect x="29" y="18" width="6" height="36" fill="#E86A4A"/>
+    <path d="M32 18c-6-10-16-4-8 2M32 18c6-10 16-4 8 2" stroke="#E86A4A" stroke-width="3" fill="none"/>
+  </g>
+</svg>

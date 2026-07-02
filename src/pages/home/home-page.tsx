@@ -1,5 +1,10 @@
+import BannerCarousel from './ui/banner-carousel';
+
 import type { Announcement } from '@/entities/announcement';
 import { AnnouncementItemList } from '@/entities/announcement';
+import banner1 from '@/shared/assets/images/banners/banner-1.svg';
+import banner2 from '@/shared/assets/images/banners/banner-2.svg';
+import banner3 from '@/shared/assets/images/banners/banner-3.svg';
 import ManagementGuideButton from '@/shared/components/ManagementGuideButton';
 
 const MOCK_ANNOUNCEMENTS: Announcement[] = [
@@ -37,6 +42,7 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
 const HomePage = () => {
   return (
     <div className="flex flex-1 flex-col bg-lightgray p-6.25 gap-5">
+      <BannerCarousel images={[banner1, banner2, banner3]} />
       <AnnouncementItemList date={new Date()} items={MOCK_ANNOUNCEMENTS} />
       <ManagementGuideButton />
     </div>
