@@ -52,7 +52,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col bg-lightgray p-6.25 gap-5">
+    <div className="flex flex-1 flex-col bg-lightgray">
       <CommonHeader
         className="bg-white"
         leftSlot={<IcLogo className="h-7.5 w-auto" />}
@@ -66,9 +66,11 @@ const HomePage = () => {
         }
         showDivider={false}
       />
-      <BannerCarousel images={[banner1, banner2, banner3]} />
-      <AnnouncementItemList date={new Date()} items={MOCK_ANNOUNCEMENTS} />
-      <ManagementGuideButton />
+      <div className="flex flex-col gap-5 p-6.25">
+        <BannerCarousel images={[banner1, banner2, banner3]} />
+        <AnnouncementItemList date={new Date()} items={MOCK_ANNOUNCEMENTS} />
+        <ManagementGuideButton />
+      </div>
     </div>
   );
 };
