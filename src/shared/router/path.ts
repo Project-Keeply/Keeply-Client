@@ -11,6 +11,6 @@ export const ROUTE_PATH = {
   MYPAGE_PROFILE: '/my-page/profile',
   MYPAGE_WITHDRAW: '/my-page/withdraw',
   MYPAGE_TERMS: '/my-page/terms',
-} as const
+} as const;
 
-export type Routes = (typeof ROUTE_PATH)[keyof typeof ROUTE_PATH]
+export type Routes = (typeof ROUTE_PATH)[keyof typeof ROUTE_PATH];

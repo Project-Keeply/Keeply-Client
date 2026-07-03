@@ -1,15 +1,15 @@
 import { type Routes } from '@shared/router/path';
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router';
 
 const useRouteNavigation = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleNavigate = (path: Routes) => {
-    navigate(path)
-  }
+    navigate(path);
+  };
   return {
-    handleNavigate
-  }
-}
+    handleNavigate,
+  };
+};
 
-export default useRouteNavigation
+export default useRouteNavigation;
