@@ -8,9 +8,12 @@ interface CommonHeaderProps {
   title?: string;
   showBack?: boolean;
   onBack?: () => void;
+  /** 지정 시 showBack/onBack보다 우선하며, 좌측 영역을 이 노드로 대체한다. */
   leftSlot?: ReactNode;
   rightSlot?: ReactNode;
   showDivider?: boolean;
+  /** true면 스크롤 시 헤더를 상단에 고정한다(불투명 배경 포함). */
+  isSticky?: boolean;
   className?: string;
 }
 
@@ -21,6 +24,7 @@ const CommonHeader = ({
   leftSlot,
   rightSlot,
   showDivider = true,
+  isSticky = false,
   className,
 }: CommonHeaderProps) => {
   const navigate = useNavigate();
@@ -39,7 +43,7 @@ const CommonHeader = ({
 
   return (
     <header
-      className={`relative flex h-[50px] items-center justify-center ${className ?? ''}`}
+      className={`relative flex h-[50px] items-center justify-center ${isSticky ? 'sticky top-0 z-10 bg-white' : ''} ${className ?? ''}`}
     >
       {leftSlot ? (
         <div className="absolute left-[19px]">{leftSlot}</div>
