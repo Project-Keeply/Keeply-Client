@@ -54,12 +54,13 @@ const HomePage = () => {
   return (
     <div className="flex flex-1 flex-col bg-lightgray p-6.25 gap-5">
       <CommonHeader
-        leftSlot={<IcLogo />}
+        className="bg-white"
+        leftSlot={<IcLogo className="h-7.5 w-auto" />}
         rightSlot={
           <button
             type="button"
             aria-label="프로필"
-            className="size-9 rounded-full bg-gray-200"
+            className="size-7.5 rounded-full bg-gray-200"
             onClick={handleProfileClick}
           />
         }

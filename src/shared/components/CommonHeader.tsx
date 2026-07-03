@@ -11,6 +11,7 @@ interface CommonHeaderProps {
   leftSlot?: ReactNode;
   rightSlot?: ReactNode;
   showDivider?: boolean;
+  className?: string;
 }
 
 const CommonHeader = ({
@@ -20,6 +21,7 @@ const CommonHeader = ({
   leftSlot,
   rightSlot,
   showDivider = true,
+  className,
 }: CommonHeaderProps) => {
   const navigate = useNavigate();
 
@@ -36,7 +38,9 @@ const CommonHeader = ({
   };
 
   return (
-    <header className="relative flex h-[50px] items-center justify-center">
+    <header
+      className={`relative flex h-[50px] items-center justify-center ${className ?? ''}`}
+    >
       {leftSlot ? (
         <div className="absolute left-[19px]">{leftSlot}</div>
       ) : (
