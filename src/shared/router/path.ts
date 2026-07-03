@@ -8,6 +8,9 @@ export const ROUTE_PATH = {
   ANNOUNCEMENT_WRITE: '/announcement/write',
   MANAGEMENT_WRITE: '/management/write',
   WORKING_SPACE_WRITE: '/working-space/write',
-} as const
+  MYPAGE_PROFILE: '/my-page/profile',
+  MYPAGE_WITHDRAW: '/my-page/withdraw',
+  MYPAGE_TERMS: '/my-page/terms',
+} as const;
 
-export type Routes = (typeof ROUTE_PATH)[keyof typeof ROUTE_PATH]
+export type Routes = (typeof ROUTE_PATH)[keyof typeof ROUTE_PATH];
