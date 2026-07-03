@@ -54,7 +54,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-1 flex-col bg-lightgray">
       <CommonHeader
-        className="bg-white"
+        className="sticky top-0 z-10 bg-white"
         leftSlot={<IcLogo className="h-10 w-auto" />}
         rightSlot={
           <button
