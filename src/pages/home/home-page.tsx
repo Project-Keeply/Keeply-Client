@@ -55,18 +55,18 @@ const HomePage = () => {
     <div className="flex flex-1 flex-col bg-lightgray">
       <CommonHeader
         className="bg-white"
-        leftSlot={<IcLogo className="h-7.5 w-auto" />}
+        leftSlot={<IcLogo className="h-10 w-auto" />}
         rightSlot={
           <button
             type="button"
             aria-label="프로필"
-            className="size-7.5 rounded-full bg-gray-200"
+            className="size-10 rounded-full bg-gray-200"
             onClick={handleProfileClick}
           />
         }
         showDivider={false}
       />
-      <div className="flex flex-col gap-5 p-6.25">
+      <div className="flex flex-col gap-5 px-6.25 pb-6.25">
         <BannerCarousel images={[banner1, banner2, banner3]} />
         <AnnouncementItemList date={new Date()} items={MOCK_ANNOUNCEMENTS} />
         <ManagementGuideButton />
