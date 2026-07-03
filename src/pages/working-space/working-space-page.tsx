@@ -5,7 +5,7 @@ import WorkingLogList from '@/entities/working-space/components/WorkingLogList';
 const WorkingSpacePage = () => {
   return (
     <>
-      <CommonHeader title="근무일지" />
+      <CommonHeader title="근무일지" isSticky />
       <WorkingLogList logs={[]} />
     </>
   );
