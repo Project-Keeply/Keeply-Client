@@ -6,6 +6,9 @@ import {
   ManagementWritePage,
   MyPage,
   OnboardingPage,
+  ProfilePage,
+  TermsPage,
+  WithdrawPage,
   WorkingSpacePage,
 } from '@shared/router/lazy';
 import { ROUTE_PATH } from '@shared/router/path';
@@ -29,6 +32,18 @@ export const globalRoutes = [
   {
     path: ROUTE_PATH.MANAGEMENT_WRITE,
     Component: ManagementWritePage,
+  },
+  {
+    path: ROUTE_PATH.MYPAGE_PROFILE,
+    Component: ProfilePage,
+  },
+  {
+    path: ROUTE_PATH.MYPAGE_WITHDRAW,
+    Component: WithdrawPage,
+  },
+  {
+    path: ROUTE_PATH.MYPAGE_TERMS,
+    Component: TermsPage,
   },
   {
     Component: AppShell,
