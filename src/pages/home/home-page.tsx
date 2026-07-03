@@ -1,3 +1,7 @@
+import { CommonHeader } from '@shared/components';
+import { ROUTE_PATH } from '@shared/router/path';
+import { useNavigate } from 'react-router';
+
 import BannerCarousel from './ui/banner-carousel';
 
 import type { Announcement } from '@/entities/announcement';
@@ -6,6 +10,7 @@ import banner1 from '@/shared/assets/images/banners/banner-1.svg';
 import banner2 from '@/shared/assets/images/banners/banner-2.svg';
 import banner3 from '@/shared/assets/images/banners/banner-3.svg';
 import ManagementGuideButton from '@/shared/components/ManagementGuideButton';
+import { IcLogo } from '@/shared/icons';
 
 const MOCK_ANNOUNCEMENTS: Announcement[] = [
   {
@@ -40,8 +45,26 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
 ];
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+    navigate(ROUTE_PATH.MYPAGE);
+  };
+
   return (
     <div className="flex flex-1 flex-col bg-lightgray p-6.25 gap-5">
+      <CommonHeader
+        leftSlot={<IcLogo />}
+        rightSlot={
+          <button
+            type="button"
+            aria-label="프로필"
+            className="size-9 rounded-full bg-gray-200"
+            onClick={handleProfileClick}
+          />
+        }
+        showDivider={false}
+      />
       <BannerCarousel images={[banner1, banner2, banner3]} />
       <AnnouncementItemList date={new Date()} items={MOCK_ANNOUNCEMENTS} />
       <ManagementGuideButton />
