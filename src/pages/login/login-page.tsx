@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import kakaoLoginButton from '@shared/assets/images/login/kakao-login-button.svg';
 import slide1 from '@shared/assets/images/login/slide-1.png';
+import slide2 from '@shared/assets/images/login/slide-2.png';
+import slide3 from '@shared/assets/images/login/slide-3.png';
 import { IcLogo } from '@shared/icons';
 
 import LoginCarousel from './ui/login-carousel';
 
-// TODO: slide-2, slide-3 에셋 추가 시 image 교체 (현재 slide-1 임시 반복)
 const LOGIN_SLIDES = [
   {
     image: slide1,
@@ -18,7 +19,7 @@ const LOGIN_SLIDES = [
     ),
   },
   {
-    image: slide1,
+    image: slide2,
     title: (
       <>
         {'폐기 물품 등록 및 관리를, \n'}
@@ -27,7 +28,7 @@ const LOGIN_SLIDES = [
     ),
   },
   {
-    image: slide1,
+    image: slide3,
     title: (
       <>
         {'매장 운영 기록,\n'}
@@ -48,9 +49,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="mx-auto flex h-[100dvh] max-w-[430px] flex-col bg-white pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]">
-      <header className="flex items-center px-5 py-[40px]">
-        <IcLogo className="h-[47px] w-auto" />
+    <div className="mx-auto flex h-[100dvh] max-w-[26.875rem] flex-col bg-white pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]">
+      <header className="flex items-center px-5 py-[2.5rem]">
+        <IcLogo className="h-[2.9375rem] w-auto" />
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col justify-center px-5">
