@@ -18,6 +18,7 @@ const useAnnouncementWriteForm = () => {
     mode: 'onChange',
     defaultValues: {
       title: '',
+      tag: undefined,
       content: '',
     },
   });
