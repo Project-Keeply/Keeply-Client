@@ -1,12 +1,45 @@
+import { useState } from 'react';
 import kakaoLoginButton from '@shared/assets/images/login/kakao-login-button.svg';
 import slide1 from '@shared/assets/images/login/slide-1.png';
 import { IcLogo } from '@shared/icons';
 
 import LoginCarousel from './ui/login-carousel';
 
-const LOGIN_SLIDES = [slide1];
+// TODO: slide-2, slide-3 에셋 추가 시 image 교체 (현재 slide-1 임시 반복)
+const LOGIN_SLIDES = [
+  {
+    image: slide1,
+    title: (
+      <>
+        {'알바 공지사항을\n'}
+        <span className="text-primary-500 font-semibold">Keeply</span>로
+        확인해보세요
+      </>
+    ),
+  },
+  {
+    image: slide1,
+    title: (
+      <>
+        {'폐기 물품 등록 및 관리를, \n'}
+        <span className="text-primary-500 font-semibold">Keeply</span>로 한번에!
+      </>
+    ),
+  },
+  {
+    image: slide1,
+    title: (
+      <>
+        {'매장 운영 기록,\n'}
+        <span className="text-primary-500 font-semibold">Keeply</span>로 한눈에!
+      </>
+    ),
+  },
+];
 
 const LoginPage = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const handleKakaoLoginClick = () => {
     // TODO: 카카오 로그인 API 연동
   };
@@ -18,10 +51,12 @@ const LoginPage = () => {
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col justify-center px-5">
-        <LoginCarousel images={LOGIN_SLIDES} />
-        <h1 className="text-headline2 mt-10 text-center leading-[1.4] font-light whitespace-pre-line">
-          {'알바 공지사항을\n'}
-          <span className="text-primary-500 font-semibold">Keeply</span>로 확인해보세요
+        <LoginCarousel
+          images={LOGIN_SLIDES.map((slide) => slide.image)}
+          onActiveIndexChange={setActiveIndex}
+        />
+        <h1 className="text-headline2 mt-10 text-center leading-[1.4] font-normal whitespace-pre-line">
+          {LOGIN_SLIDES[activeIndex].title}
         </h1>
       </div>
 
