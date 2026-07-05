@@ -26,7 +26,7 @@ const useDisposalWriteForm = () => {
   const submit = handleSubmit(() => {
     // TODO: API 연동 (values 로 payload 조립 후 전송)
   });
-    return { control, isVaild: formState.isValid, submit };
+  return { control, isValid: formState.isValid, submit };
 };
 
 export default useDisposalWriteForm;
