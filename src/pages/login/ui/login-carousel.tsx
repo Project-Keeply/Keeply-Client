@@ -6,11 +6,20 @@ import 'swiper/css';
 
 interface LoginCarouselProps {
   images: string[];
+  onActiveIndexChange?: (index: number) => void;
 }
 
-const LoginCarousel = ({ images }: LoginCarouselProps) => {
+const LoginCarousel = ({
+  images,
+  onActiveIndexChange,
+}: LoginCarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const hasMultiple = images.length > 1;
+
+  const handleSlideChange = (index: number) => {
+    setActiveIndex(index);
+    onActiveIndexChange?.(index);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -18,9 +27,9 @@ const LoginCarousel = ({ images }: LoginCarouselProps) => {
         modules={[Autoplay]}
         loop={hasMultiple}
         autoplay={
-          hasMultiple ? { delay: 4000, disableOnInteraction: false } : false
+          hasMultiple ? { delay: 3000, disableOnInteraction: false } : false
         }
-        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        onSlideChange={(swiper) => handleSlideChange(swiper.realIndex)}
         className="w-full"
       >
         {images.map((image, index) => (
