@@ -22,9 +22,8 @@ const useAnnouncementWriteForm = () => {
     },
   });
 
-  const submit = handleSubmit((values) => {
+  const submit = handleSubmit(() => {
     // TODO: API 연동 (values 로 payload 조립 후 전송)
-    console.log(values);
   });
 
   return { control, isValid: formState.isValid, submit };
