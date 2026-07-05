@@ -4,5 +4,15 @@
  * - 태그 값은 @/entities/announcement 의 ANNOUNCEMENT_CATEGORIES 를 재사용.
  */
 
-// TODO: zod 스키마 및 AnnouncementWriteFormValues 타입 구현
-export {};
+import { z } from 'zod';
+
+import { ANNOUNCEMENT_CATEGORIES } from '@/entities/announcement';
+
+export const announcementWriteSchema = z.object({
+  title: z.string().min(1, '제목을 입력해주세요.'),
+  tag: z.enum(ANNOUNCEMENT_CATEGORIES, '태그를 선택해주세요.'),
+  content: z.string().optional(),
+  image: z.instanceof(File).optional(),
+});
+
+export type AnnouncementWriteFormValues = z.infer<typeof announcementWriteSchema>;
