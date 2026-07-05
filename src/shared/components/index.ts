@@ -8,5 +8,6 @@ export {default as ItemCard} from './ItemCard';
 export { default as MenuRow } from './MenuRow';
 export { default as Tag } from './Tag';
 export { default as TagButton } from './TagButton';
+export { default as TagGroup } from './TagGroup';
 export { default as TextArea } from './TextArea';
 export { default as WritePageTitle } from './WritePageTitle';
