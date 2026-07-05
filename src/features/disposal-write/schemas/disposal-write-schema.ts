@@ -11,7 +11,7 @@ import { DISPOSAL_CATEGORIES } from '@/entities/disposal';
 export const disposalWriteSchema = z.object({
   title: z.string().min(1, '상품명을 입력해주세요.'),
   category: z.enum(DISPOSAL_CATEGORIES, '카테고리를 선택해주세요.'),
-  date: z.string().optional(),
+  date: z.string().min(1, '유통기한을 입력해주세요.'),
   image: z.instanceof(File).optional(),
 })
 
