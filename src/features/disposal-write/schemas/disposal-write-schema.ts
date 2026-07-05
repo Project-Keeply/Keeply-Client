@@ -4,5 +4,15 @@
  * - 카테고리 값은 @/entities/disposal 의 DISPOSAL_CATEGORIES 를 재사용.
  */
 
+import { z } from 'zod';
+
+import { DISPOSAL_CATEGORIES } from '@/entities/disposal';
 // TODO: zod 스키마 및 DisposalWriteFormValues 타입 구현
-export {};
+export const disposalWriteSchema = z.object({
+  title: z.string().min(1, '상품명을 입력해주세요.'),
+  category: z.enum(DISPOSAL_CATEGORIES, '카테고리를 선택해주세요.'),
+  date: z.string().optional(),
+  image: z.instanceof(File).optional(),
+})
+
+export type DisposalWriteFormValues = z.infer<typeof disposalWriteSchema>;
