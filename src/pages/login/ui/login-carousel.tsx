@@ -7,11 +7,13 @@ import 'swiper/css';
 interface LoginCarouselProps {
   images: string[];
   onActiveIndexChange?: (index: number) => void;
+  autoplayDelay?: number;
 }
 
 const LoginCarousel = ({
   images,
   onActiveIndexChange,
+  autoplayDelay = 3000,
 }: LoginCarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const hasMultiple = images.length > 1;
@@ -27,7 +29,9 @@ const LoginCarousel = ({
         modules={[Autoplay]}
         loop={hasMultiple}
         autoplay={
-          hasMultiple ? { delay: 3000, disableOnInteraction: false } : false
+          hasMultiple
+            ? { delay: autoplayDelay, disableOnInteraction: false }
+            : false
         }
         onSlideChange={(swiper) => handleSlideChange(swiper.realIndex)}
         className="w-full"
