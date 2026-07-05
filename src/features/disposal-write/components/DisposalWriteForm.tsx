@@ -25,7 +25,7 @@ const DisposalWriteForm = () => {
             name="title"
             control={control}
             render={({ field }) => (
-              <Input placeholder="상품명을 입력해주세요" value={field.value} onChange={field.onChange} />
+              <Input size="md" placeholder="상품명을 입력해주세요" value={field.value} onChange={field.onChange} />
             )}
           />
         </section>
@@ -58,6 +58,7 @@ const DisposalWriteForm = () => {
             render={({ field }) => (
               <Input
                 type="date"
+                size="md"
                 placeholder="유통기한을 입력하세요"
                 value={field.value ?? ''}
                 onChange={field.onChange}

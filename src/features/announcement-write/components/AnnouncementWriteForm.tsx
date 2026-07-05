@@ -25,7 +25,7 @@ const AnnouncementWriteForm = () => {
             name="title"
             control={control}
             render={({ field }) => (
-              <Input placeholder="제목을 입력해주세요" value={field.value} onChange={field.onChange} />
+              <Input size="md" placeholder="제목을 입력해주세요" value={field.value} onChange={field.onChange} />
             )}
           />
         </section>
