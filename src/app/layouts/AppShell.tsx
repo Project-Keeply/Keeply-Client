@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react';
 import BottomNav from '@shared/components/BottomNav';
 import FloatingButton from '@shared/components/FloatingButton';
 import { ROUTE_PATH } from '@shared/router/path';
@@ -11,8 +12,13 @@ const FLOATING_BUTTON_MAP: Partial<Record<string, string>> = {
 const AppShell = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const mainRef = useRef<HTMLElement>(null);
 
   const writeRoute = FLOATING_BUTTON_MAP[pathname];
+
+  useLayoutEffect(() => {
+    mainRef.current?.scrollTo({ top: 0, left: 0 });
+  }, [pathname]);
 
   const handleFloatingButtonClick = () => {
     navigate(writeRoute!);
@@ -20,7 +26,10 @@ const AppShell = () => {
 
   return (
     <div className="mx-auto flex h-screen h-[100dvh] max-w-[430px] flex-col bg-white pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]">
-      <main className="flex flex-1 flex-col min-h-0 overflow-y-auto">
+      <main
+        ref={mainRef}
+        className="flex flex-1 flex-col min-h-0 overflow-y-auto"
+      >
         <Outlet />
       </main>
       <div className="shrink-0">
