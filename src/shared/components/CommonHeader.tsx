@@ -43,7 +43,7 @@ const CommonHeader = ({
 
   return (
     <header
-      className={`relative flex h-[50px] items-center justify-center ${isSticky ? 'sticky top-0 z-10 bg-white' : ''} ${className ?? ''}`}
+      className={`relative flex h-[50px] shrink-0 items-center justify-center ${isSticky ? 'sticky top-0 z-10 bg-white' : ''} ${className ?? ''}`}
     >
       {leftSlot ? (
         <div className="absolute left-[19px]">{leftSlot}</div>
