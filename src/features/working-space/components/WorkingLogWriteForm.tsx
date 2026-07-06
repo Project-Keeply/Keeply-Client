@@ -19,7 +19,7 @@ const WorkingLogWriteForm = ({content, isValid, onChange, onSubmit, onCancel}: W
 
   return (
     <form
-      className="flex items-center gap-3 px-5 py-2 bg-white"
+      className="flex items-center gap-3 px-5 py-2 mb-3 bg-white"
       onSubmit={handleSubmit}
     >
       <Input
