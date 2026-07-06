@@ -20,9 +20,11 @@ const ItemCard = ({ imgUrl, tag, title, date, onClick }: ItemCardProps) => {
       ) : (
         <div className="w-[90px] h-[90px] rounded-[10px] bg-gray-100 shrink-0" />
       )}
-      <div className="flex flex-col items-start gap-3">
+      <div className="flex min-w-0 flex-1 flex-col items-start gap-3">
         <Tag variant="primary" label={tag} />
-        <h3 className="text-title3 text-black font-semibold">{title}</h3>
+        <h3 className="text-title3 text-black font-semibold truncate w-full">
+          {title}
+        </h3>
         <p className="text-body2 text-gray-300">{date}</p>
       </div>
     </>
