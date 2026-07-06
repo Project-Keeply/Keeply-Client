@@ -1,8 +1,10 @@
 import { CommonHeader, ItemCard } from '@shared/components';
 
-import { DisposalBottomSheet } from '@/entities/disposal';
-import DisposalList from '@/entities/disposal/components/DisposalList';
-import useDisposalList from '@/entities/disposal/hooks/use-disposal-list';
+import {
+  DisposalBottomSheet,
+  DisposalList,
+  useDisposalList,
+} from '@/entities/disposal';
 
 const ManagementPage = () => {
   const { sortedItems, selectedItem, isOpen, handleCardClick, handleClose, handleComplete } = useDisposalList();
