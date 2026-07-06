@@ -29,6 +29,9 @@ const WorkingSpacePage = () => {
   } = useWorkingLogWrite();
 
   const handleWriteOpen = () => {
+    if (isWriting) {
+      return;
+    }
     goToToday();
     openWrite();
   };
