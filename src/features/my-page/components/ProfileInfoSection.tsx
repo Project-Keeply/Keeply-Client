@@ -1,9 +1,9 @@
-import { Button, Input } from '@shared/components';
 import useRouteNavigation from '@shared/hooks/use-route-navigation';
 import { ROUTE_PATH } from '@shared/router/path';
 
 const USER_NAME = '홍길동';
 const STORE_NAME = 'Keeply 편의점';
+const KAKAO_PROFILE_IMAGE_URL = '';
 
 const ProfileInfoSection = () => {
   const { handleNavigate } = useRouteNavigation();
@@ -14,41 +14,36 @@ const ProfileInfoSection = () => {
   };
 
   return (
-    <section className="flex h-full flex-col justify-between py-6">
-      <div>
-        <div className="space-y-8">
-          <label className="block">
-            <span className="text-body4 font-medium text-gray-500">이름</span>
-            <Input
-              value={USER_NAME}
-              size="md"
-              disabled
-              className="mt-2 border-b-0"
-              inputClassName="text-gray-900"
-            />
-          </label>
-
-          <div>
-            <span className="text-body4 font-medium text-gray-500">
-              매장 이름
-            </span>
-            <p className="mt-2 text-title3 font-normal text-gray-900">
-              {STORE_NAME}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="pt-8">
-        <Button
-          variant="secondary"
-          size="large"
-          className="w-full"
-          onClick={handleLogoutClick}
+    <section className="flex items-center gap-6 px-5 py-7">
+      {KAKAO_PROFILE_IMAGE_URL ? (
+        <img
+          src={KAKAO_PROFILE_IMAGE_URL}
+          alt={`${USER_NAME} 프로필 이미지`}
+          className="size-[52px] shrink-0 rounded-full object-cover"
+        />
+      ) : (
+        <div
+          aria-hidden
+          className="flex size-[52px] shrink-0 items-center justify-center rounded-full bg-primary-100"
         >
-          로그아웃
-        </Button>
+          <span className="text-title2 font-bold text-primary-500">
+            {USER_NAME.charAt(0)}
+          </span>
+        </div>
+      )}
+
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-title1 font-bold text-black">{USER_NAME}</p>
+        <p className="mt-2.5 truncate text-body2 text-gray-300">{STORE_NAME}</p>
       </div>
+
+      <button
+        type="button"
+        className="shrink-0 cursor-pointer text-label2 font-medium text-gray-300"
+        onClick={handleLogoutClick}
+      >
+        로그아웃
+      </button>
     </section>
   );
 };
