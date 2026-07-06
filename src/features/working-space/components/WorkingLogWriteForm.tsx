@@ -38,7 +38,7 @@ const WorkingLogWriteForm = ({content, isValid, onChange, onSubmit, onCancel}: W
       <button
         type="submit"
         disabled={!isValid}
-        className="shrink-0 text-body2 text-primary-500 disabled:opacity-30"
+        className="shrink-0 text-body2 text-primary-500 disabled:opacity-50"
       >
         등록
       </button>
