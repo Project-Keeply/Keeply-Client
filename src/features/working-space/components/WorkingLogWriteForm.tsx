@@ -1,6 +1,5 @@
-import {Input} from '@shared/components';
-import type {FormEvent} from 'react';
-
+import { Input } from '@shared/components';
+import type { FormEvent } from 'react';
 
 interface WorkingLogWriteFormProps {
   content: string;
@@ -10,8 +9,13 @@ interface WorkingLogWriteFormProps {
   onCancel: () => void;
 }
 
-const WorkingLogWriteForm = ({content, isValid, onChange, onSubmit, onCancel}: WorkingLogWriteFormProps) => {
-  
+const WorkingLogWriteForm = ({
+  content,
+  isValid,
+  onChange,
+  onSubmit,
+  onCancel,
+}: WorkingLogWriteFormProps) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onSubmit();
@@ -44,6 +48,6 @@ const WorkingLogWriteForm = ({content, isValid, onChange, onSubmit, onCancel}: W
       </button>
     </form>
   );
-}
+};
 
 export default WorkingLogWriteForm;

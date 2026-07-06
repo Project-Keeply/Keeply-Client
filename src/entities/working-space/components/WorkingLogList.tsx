@@ -26,17 +26,27 @@ const WorkingLogList = ({
   return (
     <div className="flex flex-col flex-1 min-h-0 pt-5">
       <div className="shrink-0 flex items-center justify-center gap-4 pb-6">
-        <button type="button" onClick={onPrevClick} disabled={isAtMin} className="outline-none disabled:opacity-30">
+        <button
+          type="button"
+          onClick={onPrevClick}
+          disabled={isAtMin}
+          className="outline-none disabled:opacity-30"
+        >
           <IcLeftArrow width={24} height={24} />
         </button>
         <span className="text-title2">{displayDate}</span>
-        <button type="button" onClick={onNextClick} disabled={isAtMax} className="outline-none disabled:opacity-30">
+        <button
+          type="button"
+          onClick={onNextClick}
+          disabled={isAtMax}
+          className="outline-none disabled:opacity-30"
+        >
           <IcRightArrow width={24} height={24} />
         </button>
       </div>
       <div className="flex flex-col flex-1 min-h-0 overflow-y-auto">
         {writeSlot}
-        {filteredLogs.map(log => (
+        {filteredLogs.map((log) => (
           <WorkingLog
             key={log.id}
             tag={log.tag}

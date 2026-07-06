@@ -8,7 +8,7 @@ const useWorkingLogWrite = () => {
 
   const openWrite = () => {
     setIsWriting(true);
-  }
+  };
 
   const closeWrite = () => {
     setIsWriting(false);
@@ -17,14 +17,14 @@ const useWorkingLogWrite = () => {
 
   const handleContentChange = (value: string) => {
     setContent(value);
-  }
+  };
 
   const submit = () => {
-    if(!isValid) {
+    if (!isValid) {
       return;
     }
     closeWrite();
-  }
+  };
   return {
     isWriting,
     content,
@@ -32,8 +32,8 @@ const useWorkingLogWrite = () => {
     openWrite,
     closeWrite,
     handleContentChange,
-    submit
-  }
-}
+    submit,
+  };
+};
 
 export default useWorkingLogWrite;
