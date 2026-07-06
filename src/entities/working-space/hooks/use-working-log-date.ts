@@ -49,6 +49,10 @@ const useWorkingLogDate = (logs: WorkingLog[]) => {
 
   const filteredLogs = logs.filter(log => log.date === formatKeyDate(selectedDate));
 
+  const goToToday = () => {
+    setSelectedDate(new Date());
+  };
+
   return {
     displayDate: formatDisplayDate(selectedDate),
     isAtMin,
@@ -56,6 +60,7 @@ const useWorkingLogDate = (logs: WorkingLog[]) => {
     handlePrevClick,
     handleNextClick,
     filteredLogs,
+    goToToday,
   };
 };
 
