@@ -5,7 +5,6 @@ import { Outlet, useLocation, useNavigate } from 'react-router';
 
 const FLOATING_BUTTON_MAP: Partial<Record<string, string>> = {
   [ROUTE_PATH.HOME]: ROUTE_PATH.ANNOUNCEMENT_WRITE,
-  [ROUTE_PATH.WORKING_SPACE]: ROUTE_PATH.WORKING_SPACE_WRITE,
   [ROUTE_PATH.MANAGEMENT]: ROUTE_PATH.MANAGEMENT_WRITE,
 };
 
