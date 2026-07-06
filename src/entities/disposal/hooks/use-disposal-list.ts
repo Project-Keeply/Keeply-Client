@@ -8,10 +8,11 @@ const useDisposalList = () => {
   const [selectedItem, setSelectedItem] = useState<DisposalItem | null>(null);
 
   // 유통기한 임박순 정렬
-  const sortedItems = useMemo(() =>
-    [...items].sort((a, b) =>
-      a.expirationDate.localeCompare(b.expirationDate)
-    ),
+  const sortedItems = useMemo(
+    () =>
+      [...items].sort((a, b) =>
+        a.expirationDate.localeCompare(b.expirationDate),
+      ),
     [items],
   );
 
@@ -21,12 +22,12 @@ const useDisposalList = () => {
   };
   const handleClose = () => {
     setSelectedItem(null);
-  }
+  };
 
   const handleComplete = () => {
     setItems((prev) => prev.filter((item) => item.id !== selectedItem?.id));
     setSelectedItem(null);
-  }
+  };
   return {
     sortedItems,
     selectedItem,
@@ -34,7 +35,7 @@ const useDisposalList = () => {
     handleCardClick,
     handleClose,
     handleComplete,
-  }
-}
+  };
+};
 
 export default useDisposalList;

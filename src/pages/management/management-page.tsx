@@ -7,11 +7,18 @@ import {
 } from '@/entities/disposal';
 
 const ManagementPage = () => {
-  const { sortedItems, selectedItem, isOpen, handleCardClick, handleClose, handleComplete } = useDisposalList();
+  const {
+    sortedItems,
+    selectedItem,
+    isOpen,
+    handleCardClick,
+    handleClose,
+    handleComplete,
+  } = useDisposalList();
 
   return (
     <>
-      <CommonHeader title='폐기 관리' isSticky />
+      <CommonHeader title="폐기 관리" isSticky />
       <DisposalList items={sortedItems} onCardClick={handleCardClick} />
       <DisposalBottomSheet
         open={isOpen}

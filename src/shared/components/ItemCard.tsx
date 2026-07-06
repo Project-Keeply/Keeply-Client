@@ -31,7 +31,11 @@ const ItemCard = ({ imgUrl, tag, title, date, onClick }: ItemCardProps) => {
   );
 
   if (!onClick) {
-    return <div className="flex w-full items-center gap-[14px] bg-white text-left">{content}</div>;
+    return (
+      <div className="flex w-full items-center gap-[14px] bg-white text-left">
+        {content}
+      </div>
+    );
   }
 
   return (
