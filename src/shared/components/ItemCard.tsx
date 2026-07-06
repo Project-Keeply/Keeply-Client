@@ -11,11 +11,15 @@ interface ItemCardProps {
 const ItemCard = ({ imgUrl, tag, title, date, onClick }: ItemCardProps) => {
   const content = (
     <>
-      <img
-        src={imgUrl}
-        alt={title}
-        className="w-[90px] h-[90px] object-cover rounded-[10px]"
-      />
+      {imgUrl ? (
+        <img
+          src={imgUrl}
+          alt={title}
+          className="w-[90px] h-[90px] object-cover rounded-[10px] shrink-0"
+        />
+      ) : (
+        <div className="w-[90px] h-[90px] rounded-[10px] bg-gray-100 shrink-0" />
+      )}
       <div className="flex flex-col items-start gap-3">
         <Tag variant="primary" label={tag} />
         <h3 className="text-title3 text-black font-semibold">{title}</h3>

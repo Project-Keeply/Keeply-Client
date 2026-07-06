@@ -9,7 +9,7 @@ interface DisposalListProps {
 
 const DisposalList = ({ items, onCardClick }: DisposalListProps) => {
   return (
-    <ul className="flex flex-col gap-10 px-15 py-4">
+    <ul className="flex flex-col gap-5 px-5 py-4">
       {items.map((item) => (
         <li key={item.id}>
           <ItemCard
