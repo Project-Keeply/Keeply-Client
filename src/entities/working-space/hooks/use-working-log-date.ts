@@ -2,7 +2,15 @@ import { useState } from 'react';
 
 import type { WorkingLog } from '../types/working-log';
 
-const DAYS = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+const DAYS = [
+  '일요일',
+  '월요일',
+  '화요일',
+  '수요일',
+  '목요일',
+  '금요일',
+  '토요일',
+];
 
 const formatDisplayDate = (date: Date): string => {
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -30,8 +38,10 @@ const useWorkingLogDate = (logs: WorkingLog[]) => {
   const isAtMax = formatKeyDate(selectedDate) === formatKeyDate(today);
 
   const handlePrevClick = () => {
-    if (isAtMin) {return;}
-    setSelectedDate(prev => {
+    if (isAtMin) {
+      return;
+    }
+    setSelectedDate((prev) => {
       const next = new Date(prev);
       next.setDate(next.getDate() - 1);
       return next;
@@ -39,15 +49,23 @@ const useWorkingLogDate = (logs: WorkingLog[]) => {
   };
 
   const handleNextClick = () => {
-    if (isAtMax) {return;}
-    setSelectedDate(prev => {
+    if (isAtMax) {
+      return;
+    }
+    setSelectedDate((prev) => {
       const next = new Date(prev);
       next.setDate(next.getDate() + 1);
       return next;
     });
   };
 
-  const filteredLogs = logs.filter(log => log.date === formatKeyDate(selectedDate));
+  const filteredLogs = logs.filter(
+    (log) => log.date === formatKeyDate(selectedDate),
+  );
+
+  const goToToday = () => {
+    setSelectedDate(new Date());
+  };
 
   return {
     displayDate: formatDisplayDate(selectedDate),
@@ -56,6 +74,7 @@ const useWorkingLogDate = (logs: WorkingLog[]) => {
     handlePrevClick,
     handleNextClick,
     filteredLogs,
+    goToToday,
   };
 };
 
