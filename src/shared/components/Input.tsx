@@ -3,10 +3,22 @@ interface InputProps {
   placeholder?: string;
   type?: 'text' | 'date';
   size?: 'lg' | 'md';
-  onChange: (value: string) => void;
+  disabled?: boolean;
+  className?: string;
+  inputClassName?: string;
+  onChange?: (value: string) => void;
 }
 
-const Input = ({ value, placeholder, type = 'text', size = 'lg', onChange }: InputProps) => {
+const Input = ({
+  value,
+  placeholder,
+  type = 'text',
+  size = 'lg',
+  disabled = false,
+  className,
+  inputClassName,
+  onChange,
+}: InputProps) => {
   const isFilled = value.length > 0;
 
   // lg: 온보딩(포커스/입력색 토글) / md: 글쓰기(정적 밑줄, TextArea 와 통일)
@@ -21,13 +33,14 @@ const Input = ({ value, placeholder, type = 'text', size = 'lg', onChange }: Inp
   } as const;
 
   return (
-    <div className={`w-full border-0 ${wrapperStyle[size]}`}>
+    <div className={`w-full border-0 ${wrapperStyle[size]} ${className ?? ''}`}>
       <input
         type={type}
         value={value}
         placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
-        className={`w-full bg-transparent outline-none placeholder:text-gray-200 ${textStyle[size]} font-normal pb-2`}
+        disabled={disabled}
+        onChange={(e) => onChange?.(e.target.value)}
+        className={`w-full bg-transparent outline-none placeholder:text-gray-200 ${textStyle[size]} font-normal pb-2 disabled:text-gray-800 ${inputClassName ?? ''}`}
       />
     </div>
   )
