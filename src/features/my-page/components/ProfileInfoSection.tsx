@@ -1,11 +1,10 @@
 import useRouteNavigation from '@shared/hooks/use-route-navigation';
 import { ROUTE_PATH } from '@shared/router/path';
 
-const USER_NAME = '홍길동';
-const STORE_NAME = 'Keeply 편의점';
-const KAKAO_PROFILE_IMAGE_URL = '';
+import { useUser } from '@/entities/user';
 
 const ProfileInfoSection = () => {
+  const { user } = useUser();
   const { handleNavigate } = useRouteNavigation();
 
   const handleLogoutClick = () => {
@@ -15,10 +14,10 @@ const ProfileInfoSection = () => {
 
   return (
     <section className="flex items-center gap-6 px-5 py-7">
-      {KAKAO_PROFILE_IMAGE_URL ? (
+      {user.profileImageUrl ? (
         <img
-          src={KAKAO_PROFILE_IMAGE_URL}
-          alt={`${USER_NAME} 프로필 이미지`}
+          src={user.profileImageUrl}
+          alt={`${user.name} 프로필 이미지`}
           className="size-[52px] shrink-0 rounded-full object-cover"
         />
       ) : (
@@ -27,14 +26,18 @@ const ProfileInfoSection = () => {
           className="flex size-[52px] shrink-0 items-center justify-center rounded-full bg-primary-100"
         >
           <span className="text-title2 font-bold text-primary-500">
-            {USER_NAME.charAt(0)}
+            {user.name.charAt(0)}
           </span>
         </div>
       )}
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-title1 font-bold text-black">{USER_NAME}</p>
-        <p className="mt-2.5 truncate text-body2 text-gray-300">{STORE_NAME}</p>
+        <p className="truncate text-title1 font-bold text-black">
+          {user.name}
+        </p>
+        <p className="mt-2.5 truncate text-body2 text-gray-300">
+          {user.storeName}
+        </p>
       </div>
 
       <button
