@@ -49,9 +49,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="mx-auto flex h-[100dvh] max-w-[26.875rem] flex-col bg-white pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]">
-      <header className="flex items-center px-5 py-[2.5rem]">
-        <IcLogo className="h-[2.9375rem] w-auto" />
+    <div className="mx-auto flex h-[100dvh] max-w-[430px] flex-col bg-white pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]">
+      <header className="flex items-center px-5 py-[40px]">
+        <IcLogo className="h-[47px] w-auto" />
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col justify-center px-5">

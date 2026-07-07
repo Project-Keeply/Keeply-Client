@@ -7,7 +7,6 @@ export const ROUTE_PATH = {
   MYPAGE: '/my-page',
   ANNOUNCEMENT_WRITE: '/announcement/write',
   MANAGEMENT_WRITE: '/management/write',
-  MYPAGE_PROFILE: '/my-page/profile',
   MYPAGE_WITHDRAW: '/my-page/withdraw',
   MYPAGE_TERMS: '/my-page/terms',
 } as const;

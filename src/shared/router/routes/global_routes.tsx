@@ -6,7 +6,6 @@ import {
   ManagementWritePage,
   MyPage,
   OnboardingPage,
-  ProfilePage,
   TermsPage,
   WithdrawPage,
   WorkingSpacePage,
@@ -32,10 +31,6 @@ export const globalRoutes = [
   {
     path: ROUTE_PATH.MANAGEMENT_WRITE,
     Component: ManagementWritePage,
-  },
-  {
-    path: ROUTE_PATH.MYPAGE_PROFILE,
-    Component: ProfilePage,
   },
   {
     path: ROUTE_PATH.MYPAGE_WITHDRAW,
