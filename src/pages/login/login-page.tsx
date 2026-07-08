@@ -7,6 +7,8 @@ import { IcLogo } from '@shared/icons';
 
 import LoginCarousel from './ui/login-carousel';
 
+import { getKakaoAuthUrl } from '@/features/auth';
+
 const LOGIN_SLIDES = [
   {
     image: slide1,
@@ -45,7 +47,7 @@ const LoginPage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleKakaoLoginClick = () => {
-    // TODO: 카카오 로그인 API 연동
+    window.location.href = getKakaoAuthUrl();
   };
 
   return (
