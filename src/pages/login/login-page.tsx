@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import kakaoLoginButton from '@shared/assets/images/login/kakao-login-button.svg';
 import slide1 from '@shared/assets/images/login/slide-1.png';
 import slide2 from '@shared/assets/images/login/slide-2.png';
 import slide3 from '@shared/assets/images/login/slide-3.png';
@@ -7,7 +6,7 @@ import { IcLogo } from '@shared/icons';
 
 import LoginCarousel from './ui/login-carousel';
 
-import { getKakaoAuthUrl } from '@/features/auth';
+import { KakaoLoginButton } from '@/features/auth';
 
 const LOGIN_SLIDES = [
   {
@@ -46,10 +45,6 @@ const SLIDE_INTERVAL = 3000; // ms, 슬라이드 자동 전환 간격
 const LoginPage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleKakaoLoginClick = () => {
-    window.location.href = getKakaoAuthUrl();
-  };
-
   return (
     <div className="mx-auto flex h-[100dvh] max-w-[430px] flex-col bg-white pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]">
       <header className="flex items-center px-5 py-[40px]">
@@ -68,13 +63,7 @@ const LoginPage = () => {
       </div>
 
       <div className="shrink-0 px-5 py-10">
-        <button
-          type="button"
-          onClick={handleKakaoLoginClick}
-          className="w-full cursor-pointer"
-        >
-          <img src={kakaoLoginButton} alt="카카오 로그인" className="w-full" />
-        </button>
+        <KakaoLoginButton />
       </div>
     </div>
   );
