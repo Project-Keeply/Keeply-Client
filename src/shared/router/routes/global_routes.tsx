@@ -1,6 +1,7 @@
 import {
   AnnouncementWritePage,
   HomePage,
+  LoginCallbackPage,
   LoginPage,
   ManagementPage,
   ManagementWritePage,
@@ -19,6 +20,10 @@ export const globalRoutes = [
   {
     path: ROUTE_PATH.LOGIN,
     Component: LoginPage,
+  },
+  {
+    path: ROUTE_PATH.LOGIN_CALLBACK,
+    Component: LoginCallbackPage,
   },
   {
     path: ROUTE_PATH.ONBOARDING,
