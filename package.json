@@ -9,6 +9,7 @@
     "check-types": "tsc -b --noEmit",
     "lint": "eslint . --max-warnings 0",
     "review:scope": "bash ./tools/branch-review/collect_scope.sh",
+    "generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/shared/types/schema.d.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview"
@@ -45,6 +46,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "globals": "^17.5.0",
+    "openapi-typescript": "^7.13.0",
     "prettier": "^3.8.3",
     "tailwindcss": "^4.3.0",
     "typescript": "~6.0.2",
