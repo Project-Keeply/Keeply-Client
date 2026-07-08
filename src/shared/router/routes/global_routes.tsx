@@ -31,24 +31,24 @@ export const globalRoutes = [
     Component: OnboardingPage,
   },
   {
-    path: ROUTE_PATH.ANNOUNCEMENT_WRITE,
-    Component: AnnouncementWritePage,
-  },
-  {
-    path: ROUTE_PATH.MANAGEMENT_WRITE,
-    Component: ManagementWritePage,
-  },
-  {
-    path: ROUTE_PATH.MYPAGE_WITHDRAW,
-    Component: WithdrawPage,
-  },
-  {
-    path: ROUTE_PATH.MYPAGE_TERMS,
-    Component: TermsPage,
-  },
-  {
     Component: AuthGuards,
     children: [
+      {
+        path: ROUTE_PATH.ANNOUNCEMENT_WRITE,
+        Component: AnnouncementWritePage,
+      },
+      {
+        path: ROUTE_PATH.MANAGEMENT_WRITE,
+        Component: ManagementWritePage,
+      },
+      {
+        path: ROUTE_PATH.MYPAGE_WITHDRAW,
+        Component: WithdrawPage,
+      },
+      {
+        path: ROUTE_PATH.MYPAGE_TERMS,
+        Component: TermsPage,
+      },
       {
         Component: AppShell,
         children: [
