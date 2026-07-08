@@ -1,3 +1,4 @@
+import AuthGuards from '@shared/router/guards/auth-guards';
 import {
   AnnouncementWritePage,
   HomePage,
@@ -46,12 +47,17 @@ export const globalRoutes = [
     Component: TermsPage,
   },
   {
-    Component: AppShell,
+    Component: AuthGuards,
     children: [
-      { path: ROUTE_PATH.HOME, Component: HomePage },
-      { path: ROUTE_PATH.WORKING_SPACE, Component: WorkingSpacePage },
-      { path: ROUTE_PATH.MANAGEMENT, Component: ManagementPage },
-      { path: ROUTE_PATH.MYPAGE, Component: MyPage },
-    ] satisfies RouteObject[],
+      {
+        Component: AppShell,
+        children: [
+          { path: ROUTE_PATH.HOME, Component: HomePage },
+          { path: ROUTE_PATH.WORKING_SPACE, Component: WorkingSpacePage },
+          { path: ROUTE_PATH.MANAGEMENT, Component: ManagementPage },
+          { path: ROUTE_PATH.MYPAGE, Component: MyPage },
+        ] satisfies RouteObject[],
+      },
+    ],
   },
 ];
