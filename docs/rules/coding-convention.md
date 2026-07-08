@@ -65,3 +65,16 @@
   - ❌ `React.ReactNode`
   - ✅ `import { ReactNode } from 'react'`
 - React Compiler is enabled; avoid unnecessary `useMemo` / `useCallback`
+
+## API Types (openapi-typescript)
+- Generated schema lives in `src/shared/types/schema.d.ts`
+  - Regenerate with `pnpm run generate:types`; never edit it manually
+- Access types through the `paths` interface, aliased **per domain** in that domain's `types/` folder (not in `shared/types/`)
+  - `shared/types/` holds only the generated schema + global common wrappers (e.g. `ApiResponse<T>`)
+- Unwrap to `data`; suffix with `Response` / `Request`
+  - e.g. `type NoticeResponse = paths['/groups/{groupId}/notices']['get']['responses']['200']['content']['*/*']['data']`
+
+## Query Keys
+- Use the `queryKeys` factory in `src/shared/query/query-keys.ts`; never hardcode key strings
+- Hierarchy: `all → lists() / list() / detail()` so a parent key invalidates its children
+- Add new domains as entries on the factory object
