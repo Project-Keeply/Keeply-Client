@@ -5,6 +5,6 @@ export const getKakaoAuthUrl = (): string => {
     client_id: import.meta.env.VITE_KAKAO_REST_API_KEY,
     redirect_uri: import.meta.env.VITE_KAKAO_REDIRECT_URI,
     response_type: 'code',
-  })
-  return `${KAKAO_AUTH_BASE}?${params.toString}`
-}
+  });
+  return `${KAKAO_AUTH_BASE}?${params.toString()}`;
+};
