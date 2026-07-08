@@ -11,9 +11,11 @@ export const useKakaoLogin = () => {
   return useMutation({
     mutationFn: (code: string) => postKakaoLogin(code),
     onSuccess({ accessToken, refreshToken }) {
-      if (accessToken) {
-        setAccessToken(accessToken);
+      if (!accessToken) {
+        navigate(ROUTE_PATH.LOGIN, { replace: true });
+        return;
       }
+      setAccessToken(accessToken);
       if (refreshToken) {
         setRefreshToken(refreshToken);
       }
