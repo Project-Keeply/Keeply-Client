@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@shared/apis';
-import { apiInstance, unwrapResponse } from '@shared/apis';
+import { apiInstance, unwrapDataResponse } from '@shared/apis';
 
 import type { LoginResponse } from '../types/auth';
 
@@ -8,5 +8,5 @@ export const postKakaoLogin = async (code: string): Promise<LoginResponse> => {
     '/auth/kakao/callback',
     { code },
   );
-  return unwrapResponse(res);
+  return unwrapDataResponse(res);
 };

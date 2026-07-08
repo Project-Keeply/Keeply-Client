@@ -9,4 +9,4 @@ export {
   setRefreshToken,
 } from './token';
 export type { ApiResponse } from './types'
-export { unwrapResponse } from './unwrap'
+export { unwrapDataResponse } from './unwrap'

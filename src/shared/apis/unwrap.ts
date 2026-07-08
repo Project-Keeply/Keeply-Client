@@ -3,7 +3,7 @@ import type { AxiosResponse } from 'axios';
 import { ApiError} from './api-error'
 import type { ApiResponse } from './types';
 
-export const unwrapResponse = <T>(res: AxiosResponse<ApiResponse<T>>): T => {
+export const unwrapDataResponse = <T>(res: AxiosResponse<ApiResponse<T>>): T => {
   const {success, data, message} = res.data;
 
   if(!success || data == undefined){
