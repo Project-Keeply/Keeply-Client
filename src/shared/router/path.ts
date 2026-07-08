@@ -1,6 +1,7 @@
 export const ROUTE_PATH = {
   HOME: '/',
   LOGIN: '/login',
+  LOGIN_CALLBACK: '/login/callback',
   ONBOARDING: '/onboarding',
   WORKING_SPACE: '/working-space',
   MANAGEMENT: '/management',

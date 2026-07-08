@@ -1,6 +1,8 @@
+import AuthGuards from '@shared/router/guards/auth-guards';
 import {
   AnnouncementWritePage,
   HomePage,
+  LoginCallbackPage,
   LoginPage,
   ManagementPage,
   ManagementWritePage,
@@ -21,32 +23,41 @@ export const globalRoutes = [
     Component: LoginPage,
   },
   {
+    path: ROUTE_PATH.LOGIN_CALLBACK,
+    Component: LoginCallbackPage,
+  },
+  {
     path: ROUTE_PATH.ONBOARDING,
     Component: OnboardingPage,
   },
   {
-    path: ROUTE_PATH.ANNOUNCEMENT_WRITE,
-    Component: AnnouncementWritePage,
-  },
-  {
-    path: ROUTE_PATH.MANAGEMENT_WRITE,
-    Component: ManagementWritePage,
-  },
-  {
-    path: ROUTE_PATH.MYPAGE_WITHDRAW,
-    Component: WithdrawPage,
-  },
-  {
-    path: ROUTE_PATH.MYPAGE_TERMS,
-    Component: TermsPage,
-  },
-  {
-    Component: AppShell,
+    Component: AuthGuards,
     children: [
-      { path: ROUTE_PATH.HOME, Component: HomePage },
-      { path: ROUTE_PATH.WORKING_SPACE, Component: WorkingSpacePage },
-      { path: ROUTE_PATH.MANAGEMENT, Component: ManagementPage },
-      { path: ROUTE_PATH.MYPAGE, Component: MyPage },
-    ] satisfies RouteObject[],
+      {
+        path: ROUTE_PATH.ANNOUNCEMENT_WRITE,
+        Component: AnnouncementWritePage,
+      },
+      {
+        path: ROUTE_PATH.MANAGEMENT_WRITE,
+        Component: ManagementWritePage,
+      },
+      {
+        path: ROUTE_PATH.MYPAGE_WITHDRAW,
+        Component: WithdrawPage,
+      },
+      {
+        path: ROUTE_PATH.MYPAGE_TERMS,
+        Component: TermsPage,
+      },
+      {
+        Component: AppShell,
+        children: [
+          { path: ROUTE_PATH.HOME, Component: HomePage },
+          { path: ROUTE_PATH.WORKING_SPACE, Component: WorkingSpacePage },
+          { path: ROUTE_PATH.MANAGEMENT, Component: ManagementPage },
+          { path: ROUTE_PATH.MYPAGE, Component: MyPage },
+        ] satisfies RouteObject[],
+      },
+    ],
   },
 ];
