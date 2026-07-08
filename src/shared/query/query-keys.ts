@@ -14,7 +14,7 @@ export const queryKeys = {
     all: ['notice'] as const,
     lists: () => [...queryKeys.notice.all, 'list'] as const,
     list: (groupId: number) => [...queryKeys.notice.lists(), groupId] as const,
-    detail: (noticeId: number) =>
-      [...queryKeys.notice.all, 'detail', noticeId] as const,
+    detail: (groupId: number, noticeId: number) =>
+      [...queryKeys.notice.all, 'detail', groupId, noticeId] as const,
   },
 } as const;

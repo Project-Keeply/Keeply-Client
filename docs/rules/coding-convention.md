@@ -78,3 +78,6 @@
 - Use the `queryKeys` factory in `src/shared/query/query-keys.ts`; never hardcode key strings
 - Hierarchy: `all → lists() / list() / detail()` so a parent key invalidates its children
 - Add new domains as entries on the factory object
+- Detail/param keys must include **every** path & query identifier the API requires
+  - ✅ `detail: (groupId, noticeId) => [...]`
+  - ❌ `detail: (noticeId) => [...]` — different groups' same `noticeId` collide
