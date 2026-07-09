@@ -573,6 +573,7 @@ export interface components {
             id?: number;
             name?: string;
             profileImageUrl?: string;
+            groupName?: string;
         };
         UpdateWorkLogRequest: {
             /**
@@ -580,8 +581,8 @@ export interface components {
              * @example 냉장고 점검 완료, 현재 온도 정상입니다.
              */
             content?: string;
-            contentNotBlank?: boolean;
             updateFieldPresent?: boolean;
+            contentNotBlank?: boolean;
         };
         UpdateNoticeRequest: {
             /**
@@ -610,9 +611,9 @@ export interface components {
              * @example false
              */
             removeImage?: boolean;
-            imageConflictFree?: boolean;
             updateFieldPresent?: boolean;
             fieldNotBlank?: boolean;
+            imageConflictFree?: boolean;
         };
         UpdateExpiryItemRequest: {
             /**

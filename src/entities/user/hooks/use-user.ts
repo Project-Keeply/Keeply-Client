@@ -1,8 +1,21 @@
-import { USER_MOCK } from '../configs/user-mock';
+import { queryKeys } from '@shared/query/query-keys';
+import { useSuspenseQuery } from '@tanstack/react-query'
+
+import { getMe } from '../apis/user-api';
+import type { User } from '../types/user';
 
 const useUser = () => {
-  // TODO: 사용자 조회 API 연동 후 mock 데이터를 대체한다.
-  return { user: USER_MOCK };
+  const { data } = useSuspenseQuery({
+    queryKey: queryKeys.user.me(),
+    queryFn: getMe,
+  });
+
+  const user: User = {
+    name: data.name ?? '',
+    profileImageUrl: data.profileImageUrl ?? '',
+    groupName: data.groupName ?? '',
+  };
+  return {user}
 };
 
 export default useUser;

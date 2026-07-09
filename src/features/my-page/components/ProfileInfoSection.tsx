@@ -1,16 +1,9 @@
-import useRouteNavigation from '@shared/hooks/use-route-navigation';
-import { ROUTE_PATH } from '@shared/router/path';
-
 import { useUser } from '@/entities/user';
+import { useLogout } from '@/features/auth';
 
 const ProfileInfoSection = () => {
   const { user } = useUser();
-  const { handleNavigate } = useRouteNavigation();
-
-  const handleLogoutClick = () => {
-    // TODO: 로그아웃 API 연동 후 토큰/사용자 상태를 초기화한다.
-    handleNavigate(ROUTE_PATH.LOGIN);
-  };
+  const { mutate: handleLogout, isPending } = useLogout();
 
   return (
     <section className="flex items-center gap-6 px-5 py-7">
@@ -32,18 +25,17 @@ const ProfileInfoSection = () => {
       )}
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-title1 font-bold text-black">
-          {user.name}
-        </p>
+        <p className="truncate text-title1 font-bold text-black">{user.name}</p>
         <p className="mt-2.5 truncate text-body2 text-gray-300">
-          {user.storeName}
+          {user.groupName}
         </p>
       </div>
 
       <button
         type="button"
         className="shrink-0 cursor-pointer text-label2 font-medium text-gray-300"
-        onClick={handleLogoutClick}
+        disabled={isPending}
+        onClick={() => handleLogout()}
       >
         로그아웃
       </button>
