@@ -9,5 +9,5 @@ export type StaffOnboardingResponse =
 export type OwnerOnbaordingRequest =
   components['schemas']['OwnerOnboardingRequest'];
 
-export type OwnerOnbaordingResponse =
+export type OwnerOnboardingResponse =
   components['schemas']['OwnerOnboardingResponse'];
