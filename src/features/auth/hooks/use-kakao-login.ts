@@ -1,6 +1,6 @@
 import { ApiError, setAccessToken, setRefreshToken } from '@shared/apis';
 import { ROUTE_PATH } from '@shared/router/path';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 
 import { postKakaoLogin } from '../apis/auth-api';
@@ -9,6 +9,7 @@ import { getMyGroup } from '@/entities/group';
 
 export const useKakaoLogin = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (code: string) => postKakaoLogin(code),
@@ -17,6 +18,7 @@ export const useKakaoLogin = () => {
         navigate(ROUTE_PATH.LOGIN, { replace: true });
         return;
       }
+      queryClient.clear();
       setAccessToken(accessToken);
       if (refreshToken) {
         setRefreshToken(refreshToken);
