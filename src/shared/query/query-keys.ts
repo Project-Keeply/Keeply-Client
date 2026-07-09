@@ -17,4 +17,8 @@ export const queryKeys = {
     detail: (groupId: number, noticeId: number) =>
       [...queryKeys.notice.all, 'detail', groupId, noticeId] as const,
   },
+  user: {
+    all: ['user'] as const,
+    me: () => [...queryKeys.user.all, 'me'] as const,
+  }
 } as const;
