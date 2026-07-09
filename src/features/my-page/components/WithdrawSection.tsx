@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BaseBottomSheet, Button, CheckButton } from '@shared/components';
-import useRouteNavigation from '@shared/hooks/use-route-navigation';
-import { ROUTE_PATH } from '@shared/router/path';
+
+import { useWithdraw } from '../hooks/use-withdraw';
 
 const WITHDRAW_NOTICES = [
   '탈퇴 시 카카오 계정 연결이 해제되고, 개인정보는 지체 없이 파기됩니다.',
@@ -12,7 +12,7 @@ const WITHDRAW_NOTICES = [
 const WithdrawSection = () => {
   const [isAgreed, setIsAgreed] = useState(false);
   const [isConfirmSheetOpen, setIsConfirmSheetOpen] = useState(false);
-  const { handleNavigate } = useRouteNavigation();
+  const { mutate: handleWithdraw, isPending } = useWithdraw();
 
   const handleAgreeClick = () => {
     setIsAgreed((prev) => !prev);
@@ -27,10 +27,9 @@ const WithdrawSection = () => {
   };
 
   const handleWithdrawConfirmClick = () => {
-    // TODO: 회원 탈퇴 API 연동 후 토큰/사용자 상태를 초기화
-    setIsConfirmSheetOpen(false);
-    handleNavigate(ROUTE_PATH.LOGIN);
-  };
+    handleWithdraw();
+  }
+
 
   return (
     <>
@@ -99,6 +98,7 @@ const WithdrawSection = () => {
               variant="red"
               className="flex-1"
               onClick={handleWithdrawConfirmClick}
+              disabled={isPending}
             >
               탈퇴하기
             </Button>
