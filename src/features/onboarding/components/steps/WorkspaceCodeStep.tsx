@@ -9,6 +9,7 @@ import { workspaceCodeSchema } from '@/features/onboarding/schemas';
 interface WorkspaceCodeStepProps {
   onNext: () => void;
   onPrev: () => void;
+  isPending: boolean;
 }
 
 const sanitizeWorkspaceCode = (value: string) => {
@@ -18,7 +19,11 @@ const sanitizeWorkspaceCode = (value: string) => {
     .slice(0, 6);
 };
 
-const WorkspaceCodeStep = ({ onNext, onPrev }: WorkspaceCodeStepProps) => {
+const WorkspaceCodeStep = ({
+  onNext,
+  onPrev,
+  isPending,
+}: WorkspaceCodeStepProps) => {
   const { control, setValue } = useFormContext<OnboardingFormDraft>();
   const workspaceCode = useWatch({ control, name: 'workspaceCode' }) ?? '';
 
@@ -33,7 +38,7 @@ const WorkspaceCodeStep = ({ onNext, onPrev }: WorkspaceCodeStepProps) => {
       title={'근무지 코드를 입력해주세요.'}
       ctaLabel="가입 완료"
       onCtaClick={onNext}
-      isCtaDisabled={!isValid}
+      isCtaDisabled={!isValid || isPending}
       secondaryCta={{ onClick: onPrev }}
     >
       <Input value={workspaceCode} onChange={handleChange} />

@@ -9,9 +9,10 @@ import { storeNameSchema } from '@/features/onboarding/schemas';
 interface StoreNameStepProps {
   onNext: () => void;
   onPrev: () => void;
+  isPending: boolean;
 }
 
-const StoreNameStep = ({ onNext, onPrev }: StoreNameStepProps) => {
+const StoreNameStep = ({ onNext, onPrev, isPending }: StoreNameStepProps) => {
   const { control, setValue } = useFormContext<OnboardingFormDraft>();
   const storeName = useWatch({ control, name: 'storeName' }) ?? '';
 
@@ -26,7 +27,7 @@ const StoreNameStep = ({ onNext, onPrev }: StoreNameStepProps) => {
       title={'매장 별명을 설정해주세요.'}
       ctaLabel="가입 완료"
       onCtaClick={onNext}
-      isCtaDisabled={!isValid}
+      isCtaDisabled={!isValid || isPending}
       secondaryCta={{ onClick: onPrev }}
     >
       <Input

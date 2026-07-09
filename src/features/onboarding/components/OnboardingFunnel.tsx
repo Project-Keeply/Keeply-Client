@@ -1,6 +1,7 @@
 import useFunnel from '@shared/hooks/use-funnel';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
+import { useOnboarding } from '../hooks/use-onboarding';
 import { BrandStep, RoleStep, StoreNameStep, WorkspaceCodeStep } from './steps';
 
 import {
@@ -33,16 +34,20 @@ const OnboardingFunnel = ({ onSuccess }: OnboardingFunnelProps) => {
       ? STORE_MANAGER_STEPS
       : PART_TIMER_STEPS;
 
+  const { mutate: submitOnboarding, isPending } = useOnboarding({ onSuccess });
+
   const { Funnel, Step, currentStep, goToNextStep, goToPrevStep } = useFunnel(
     steps,
     {
-      onComplete: async () => {
+      onComplete: () => {
+        if (isPending) {
+          return;
+        }
         const result = onboardingSchema.safeParse(methods.getValues());
         if (!result.success) {
           return;
         }
-        // TODO: await signupApi(result.data);
-        onSuccess();
+        submitOnboarding(result.data);
       },
     },
   );
@@ -54,13 +59,21 @@ const OnboardingFunnel = ({ onSuccess }: OnboardingFunnelProps) => {
           <RoleStep onNext={goToNextStep} />
         </Step>
         <Step name={ONBOARDING_STEP.WORKSPACE_CODE}>
-          <WorkspaceCodeStep onNext={goToNextStep} onPrev={goToPrevStep} />
+          <WorkspaceCodeStep
+            onNext={goToNextStep}
+            onPrev={goToPrevStep}
+            isPending={isPending}
+          />
         </Step>
         <Step name={ONBOARDING_STEP.BRAND}>
           <BrandStep onNext={goToNextStep} onPrev={goToPrevStep} />
         </Step>
         <Step name={ONBOARDING_STEP.STORE_NAME}>
-          <StoreNameStep onNext={goToNextStep} onPrev={goToPrevStep} />
+          <StoreNameStep
+            onNext={goToNextStep}
+            onPrev={goToPrevStep}
+            isPending={isPending}
+          />
         </Step>
       </Funnel>
     </FormProvider>
