@@ -1,5 +1,5 @@
 import { useUser } from '@/entities/user';
-import { useLogOut } from '@/features/auth/hooks/use-logout';
+import { useLogOut } from '@/features/auth';
 
 const ProfileInfoSection = () => {
   const { user } = useUser();

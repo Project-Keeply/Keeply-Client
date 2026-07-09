@@ -1,10 +1,9 @@
+import { removeAccessToken, removeRefreshToken } from '@shared/apis';
+import { ROUTE_PATH } from '@shared/router/path';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 
 import { logout } from '../apis/auth-api';
-
-import { removeAccessToken, removeRefreshToken } from '@/shared/apis';
-import { ROUTE_PATH } from '@/shared/router/path';
 
 export const useLogOut = () => {
   const navigate = useNavigate();
