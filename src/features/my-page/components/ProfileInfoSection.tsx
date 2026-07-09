@@ -35,9 +35,11 @@ const ProfileInfoSection = () => {
         <p className="truncate text-title1 font-bold text-black">
           {user.name}
         </p>
-        <p className="mt-2.5 truncate text-body2 text-gray-300">
+        
+        /// TODO: groupName 대기
+        {/* <p className="mt-2.5 truncate text-body2 text-gray-300">
           {user.storeName}
-        </p>
+        </p> */}
       </div>
 
       <button
