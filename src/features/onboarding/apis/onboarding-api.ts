@@ -1,12 +1,12 @@
+import type { ApiResponse } from '@shared/apis';
+import { apiInstance, unwrapDataResponse } from '@shared/apis';
+
 import type {
   OwnerOnboardingRequest,
   OwnerOnboardingResponse,
   StaffOnboardingRequest,
   StaffOnboardingResponse,
 } from '../types';
-
-import type { ApiResponse } from '@/shared/apis';
-import { apiInstance, unwrapDataResponse } from '@/shared/apis';
 
 export const postStaffOnboarding = async (
   body: StaffOnboardingRequest,
@@ -26,4 +26,4 @@ export const postOwnerOnboarding = async (
     body,
   );
   return unwrapDataResponse(res);
-}
+};

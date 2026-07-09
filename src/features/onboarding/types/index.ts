@@ -1,4 +1,4 @@
-import type { components } from '@/shared/types/schema';
+import type { components } from '@shared/types/schema';
 
 export type StaffOnboardingRequest =
   components['schemas']['StaffOnboardingRequest'];

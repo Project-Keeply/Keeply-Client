@@ -33,8 +33,8 @@ const OnboardingFunnel = ({ onSuccess }: OnboardingFunnelProps) => {
     role === ONBOARDING_ROLE.STORE_MANAGER
       ? STORE_MANAGER_STEPS
       : PART_TIMER_STEPS;
-    
-  const { mutate: submitOnboarding } = useOnboarding({onSuccess});
+
+  const { mutate: submitOnboarding } = useOnboarding({ onSuccess });
 
   const { Funnel, Step, currentStep, goToNextStep, goToPrevStep } = useFunnel(
     steps,

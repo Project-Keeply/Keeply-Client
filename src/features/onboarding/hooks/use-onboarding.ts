@@ -1,6 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { postOwnerOnboarding, postStaffOnboarding } from '../apis/onboarding-api';
+import {
+  postOwnerOnboarding,
+  postStaffOnboarding,
+} from '../apis/onboarding-api';
 import { ONBOARDING_ROLE } from '../constants';
 import type { OnboardingFormValues } from '../schemas';
 
@@ -15,7 +18,7 @@ export const useOnboarding = ({ onSuccess }: UseOnboardingOptions) => {
 
   return useMutation({
     mutationFn: (values: OnboardingFormValues) => {
-      if(values.role == ONBOARDING_ROLE.PART_TIMER){
+      if (values.role === ONBOARDING_ROLE.PART_TIMER) {
         return postStaffOnboarding({
           name: user.name,
           inviteCode: values.workspaceCode,
@@ -25,8 +28,8 @@ export const useOnboarding = ({ onSuccess }: UseOnboardingOptions) => {
         name: user.name,
         storeBrand: values.brand,
         storeName: values.storeName,
-      })
+      });
     },
-    onSuccess
-  })
+    onSuccess,
+  });
 };
