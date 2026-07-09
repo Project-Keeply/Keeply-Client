@@ -10,3 +10,7 @@ export const postKakaoLogin = async (code: string): Promise<LoginResponse> => {
   );
   return unwrapDataResponse(res);
 };
+
+export const logout = async(): Promise<void> => {
+  await apiInstance.post<ApiResponse<void>>('/auth/logout');
+}
