@@ -1,7 +1,7 @@
-import type { UserResponse } from '../types/user';
+import type { ApiResponse } from '@shared/apis';
+import { apiInstance, unwrapDataResponse } from '@shared/apis';
 
-import type { ApiResponse } from '@/shared/apis';
-import { apiInstance, unwrapDataResponse } from '@/shared/apis';
+import type { UserResponse } from '../types/user';
 
 export const getMe = async (): Promise<UserResponse> => {
   const res = await apiInstance.get<ApiResponse<UserResponse>>('/users/me');

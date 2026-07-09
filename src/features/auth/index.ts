@@ -1,4 +1,4 @@
-export { postKakaoLogin } from './apis/auth-api';
+export { logout, postKakaoLogin } from './apis/auth-api';
 export { useKakaoLogin } from './hooks/use-kakao-login';
 export type { KakaoLoginRequest, LoginResponse } from './types/auth';
 export { default as KakaoLoginButton } from './ui/kakao-login-button';

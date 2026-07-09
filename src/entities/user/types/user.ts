@@ -1,5 +1,4 @@
-
-import type { components } from '@/shared/types/schema';
+import type { components } from '@shared/types/schema';
 
 export type UserResponse = components['schemas']['UserResponse'];
 
