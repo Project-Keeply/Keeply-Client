@@ -6,7 +6,7 @@ export type StaffOnboardingRequest =
 export type StaffOnboardingResponse =
   components['schemas']['StaffOnboardingResponse'];
 
-export type OwnerOnbaordingRequest =
+export type OwnerOnboardingRequest =
   components['schemas']['OwnerOnboardingRequest'];
 
 export type OwnerOnboardingResponse =
