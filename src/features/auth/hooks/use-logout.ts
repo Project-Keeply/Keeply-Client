@@ -1,21 +1,13 @@
-import { removeAccessToken, removeRefreshToken } from '@shared/apis';
-import { ROUTE_PATH } from '@shared/router/path';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router';
+import { useMutation } from '@tanstack/react-query';
 
 import { logout } from '../apis/auth-api';
+import { useClearSession } from './use-clear-session';
 
 export const useLogOut = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const clearSession = useClearSession();
 
   return useMutation({
-    mutationFn: logout, 
-    onSettled: () => {
-      removeAccessToken();
-      removeRefreshToken();
-      queryClient.clear();
-      navigate(ROUTE_PATH.LOGIN, {replace: true})
-    }
-  })
-}
+    mutationFn: logout,
+    onSettled: clearSession,
+  });
+};
