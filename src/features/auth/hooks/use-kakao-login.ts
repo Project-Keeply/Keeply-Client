@@ -30,7 +30,7 @@ export const useKakaoLogin = () => {
           navigate(ROUTE_PATH.ONBOARDING, { replace: true });
           return;
         }
-        navigate(ROUTE_PATH.LOGIN, { replace: true });
+        navigate(ROUTE_PATH.HOME, { replace: true });
       }
     },
     onError: () => {
