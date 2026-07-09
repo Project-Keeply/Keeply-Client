@@ -1,9 +1,9 @@
 import { useUser } from '@/entities/user';
-import { useLogOut } from '@/features/auth';
+import { useLogout } from '@/features/auth';
 
 const ProfileInfoSection = () => {
   const { user } = useUser();
-  const { mutate: handleLogOut, isPending} = useLogOut()
+  const { mutate: handleLogout, isPending } = useLogout();
 
   return (
     <section className="flex items-center gap-6 px-5 py-7">
@@ -35,7 +35,7 @@ const ProfileInfoSection = () => {
         type="button"
         className="shrink-0 cursor-pointer text-label2 font-medium text-gray-300"
         disabled={isPending}
-        onClick={() => handleLogOut()}
+        onClick={() => handleLogout()}
       >
         로그아웃
       </button>

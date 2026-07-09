@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { logout } from '../apis/auth-api';
 import { useClearSession } from './use-clear-session';
 
-export const useLogOut = () => {
+export const useLogout = () => {
   const clearSession = useClearSession();
 
   return useMutation({
