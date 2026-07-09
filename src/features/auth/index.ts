@@ -1,4 +1,5 @@
 export { logout, postKakaoLogin } from './apis/auth-api';
+export { useClearSession } from './hooks/use-clear-session'
 export { useKakaoLogin } from './hooks/use-kakao-login';
 export { useLogOut } from './hooks/use-logout';
 export type { KakaoLoginRequest, LoginResponse } from './types/auth';
