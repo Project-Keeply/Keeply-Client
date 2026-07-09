@@ -26,10 +26,9 @@ const ProfileInfoSection = () => {
 
       <div className="min-w-0 flex-1">
         <p className="truncate text-title1 font-bold text-black">{user.name}</p>
-        {/* TODO: /users/me 에 groupName 추가 후 매장명 표시 복구
         <p className="mt-2.5 truncate text-body2 text-gray-300">
-          {user.storeName}
-        </p> */}
+          {user.groupName}
+        </p>
       </div>
 
       <button

@@ -13,6 +13,7 @@ const useUser = () => {
   const user: User = {
     name: data.name ?? '',
     profileImageUrl: data.profileImageUrl ?? '',
+    groupName: data.groupName ?? '',
   };
   return {user}
 };
