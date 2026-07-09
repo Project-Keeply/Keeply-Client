@@ -30,6 +30,9 @@ export const useKakaoLogin = () => {
           navigate(ROUTE_PATH.ONBOARDING, { replace: true });
           return;
         }
+        // TODO: 에러 추적 인프라(Sentry 등) 도입 후 대체
+        // eslint-disable-next-line no-console
+        console.error('그룹 조회 실패:', error);
         navigate(ROUTE_PATH.HOME, { replace: true });
       }
     },
