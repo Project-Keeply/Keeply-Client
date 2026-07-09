@@ -1,0 +1,1 @@
+export { getMyGroup } from './apis/group-api'
