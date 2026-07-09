@@ -34,12 +34,15 @@ const OnboardingFunnel = ({ onSuccess }: OnboardingFunnelProps) => {
       ? STORE_MANAGER_STEPS
       : PART_TIMER_STEPS;
 
-  const { mutate: submitOnboarding } = useOnboarding({ onSuccess });
+  const { mutate: submitOnboarding, isPending } = useOnboarding({ onSuccess });
 
   const { Funnel, Step, currentStep, goToNextStep, goToPrevStep } = useFunnel(
     steps,
     {
       onComplete: () => {
+        if (isPending) {
+          return;
+        }
         const result = onboardingSchema.safeParse(methods.getValues());
         if (!result.success) {
           return;
@@ -56,13 +59,21 @@ const OnboardingFunnel = ({ onSuccess }: OnboardingFunnelProps) => {
           <RoleStep onNext={goToNextStep} />
         </Step>
         <Step name={ONBOARDING_STEP.WORKSPACE_CODE}>
-          <WorkspaceCodeStep onNext={goToNextStep} onPrev={goToPrevStep} />
+          <WorkspaceCodeStep
+            onNext={goToNextStep}
+            onPrev={goToPrevStep}
+            isPending={isPending}
+          />
         </Step>
         <Step name={ONBOARDING_STEP.BRAND}>
           <BrandStep onNext={goToNextStep} onPrev={goToPrevStep} />
         </Step>
         <Step name={ONBOARDING_STEP.STORE_NAME}>
-          <StoreNameStep onNext={goToNextStep} onPrev={goToPrevStep} />
+          <StoreNameStep
+            onNext={goToNextStep}
+            onPrev={goToPrevStep}
+            isPending={isPending}
+          />
         </Step>
       </Funnel>
     </FormProvider>
