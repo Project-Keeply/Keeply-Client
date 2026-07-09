@@ -1,6 +1,7 @@
 import useFunnel from '@shared/hooks/use-funnel';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
+import { useOnboarding } from '../hooks/use-onboarding';
 import { BrandStep, RoleStep, StoreNameStep, WorkspaceCodeStep } from './steps';
 
 import {
@@ -32,17 +33,18 @@ const OnboardingFunnel = ({ onSuccess }: OnboardingFunnelProps) => {
     role === ONBOARDING_ROLE.STORE_MANAGER
       ? STORE_MANAGER_STEPS
       : PART_TIMER_STEPS;
+    
+  const { mutate: submitOnboarding } = useOnboarding({onSuccess});
 
   const { Funnel, Step, currentStep, goToNextStep, goToPrevStep } = useFunnel(
     steps,
     {
-      onComplete: async () => {
+      onComplete: () => {
         const result = onboardingSchema.safeParse(methods.getValues());
         if (!result.success) {
           return;
         }
-        // TODO: await signupApi(result.data);
-        onSuccess();
+        submitOnboarding(result.data);
       },
     },
   );
