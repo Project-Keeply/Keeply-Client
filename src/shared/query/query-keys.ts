@@ -6,6 +6,10 @@ export const queryKeys = {
     detail: (groupId: number, announcementId: number) =>
       [...queryKeys.announcement.all, 'detail', groupId, announcementId] as const,
   },
+  group: {
+    all: ['group'] as const,
+    me: () => [...queryKeys.group.all, 'me'] as const,
+  },
   user: {
     all: ['user'] as const,
     me: () => [...queryKeys.user.all, 'me'] as const,
