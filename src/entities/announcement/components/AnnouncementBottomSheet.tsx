@@ -19,11 +19,13 @@ const AnnouncementBottomSheet = ({
     <BaseBottomSheet open={open} onClose={onClose}>
       {announcement && (
         <div className="p-6.25">
-          <img
-            src={announcement.imgUrl}
-            alt={announcement.title}
-            className="w-full h-[200px] object-cover rounded-[10px] pb-5"
-          />
+          {announcement.imgUrl && (
+            <img
+              src={announcement.imgUrl}
+              alt={announcement.title}
+              className="w-full h-[200px] object-cover rounded-[10px] pb-5"
+            />
+          )}
           <div className="flex flex-col gap-2.5 pb-12.5">
             <div className="flex items-center gap-2.5">
               <Tag variant="primary" label={announcement.tag} />
