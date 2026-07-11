@@ -1,4 +1,5 @@
 export { ApiError } from './api-error';
+export { uploadImage } from './file-upload';
 export { default as apiInstance } from './instance';
 export {
   getAccessToken,
