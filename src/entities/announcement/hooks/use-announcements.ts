@@ -11,8 +11,8 @@ const useAnnouncements = (groupId: number) => {
     queryKey: queryKeys.announcement.list(groupId),
     queryFn: () => getNoticeList(groupId),
   })
-  const announcement: Announcement[] = data.content?.map(convertToAnnouncement) ?? [];
-  return { announcement };
+  const announcements: Announcement[] = data.content?.map(convertToAnnouncement) ?? [];
+  return { announcements };
 }
 
 export default useAnnouncements;
