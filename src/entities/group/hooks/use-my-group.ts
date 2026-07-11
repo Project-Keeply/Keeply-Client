@@ -9,6 +9,9 @@ const useMyGroup = () => {
     queryKey: queryKeys.group.me(),
     queryFn: getMyGroup
   });
-  return { group: data }
+  if(data.groupId === undefined){
+    throw new Error('groupID가 존재하지 않습니다.');
+  }
+  return { group: data, groupId: data.groupId }
 }
 export default useMyGroup;
