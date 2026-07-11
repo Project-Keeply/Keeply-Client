@@ -14,10 +14,10 @@ import useAnnouncementWriteForm from '../hooks/use-announcement-write-form';
 import { ANNOUNCEMENT_CATEGORIES } from '@/entities/announcement';
 
 const AnnouncementWriteForm = () => {
-  const { control, isValid, submit } = useAnnouncementWriteForm();
+  const { control, isValid, isPending, submit } = useAnnouncementWriteForm();
 
   return (
-    <WritePageLayout label="공지사항 업로드" disabled={!isValid} onSubmit={submit}>
+    <WritePageLayout label="공지사항 업로드" disabled={!isValid || isPending} onSubmit={submit}>
       <div className="flex flex-col gap-10">
         <section>
           <WritePageTitle title="제목" />
