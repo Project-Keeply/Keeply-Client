@@ -12,4 +12,5 @@ export const convertToAnnouncement = (notice: NoticeListResponse): Announcement 
   tag: notice.tag === 'WEEKLY' ? '주간' : '일일',
   imgUrl: notice.imageUrl ?? '',
   title: notice.title ?? '',
+  content: notice.content,
 })

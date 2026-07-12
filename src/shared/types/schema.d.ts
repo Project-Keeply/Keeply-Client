@@ -581,8 +581,8 @@ export interface components {
              * @example 냉장고 점검 완료, 현재 온도 정상입니다.
              */
             content?: string;
-            updateFieldPresent?: boolean;
             contentNotBlank?: boolean;
+            updateFieldPresent?: boolean;
         };
         UpdateNoticeRequest: {
             /**
@@ -611,9 +611,9 @@ export interface components {
              * @example false
              */
             removeImage?: boolean;
+            imageConflictFree?: boolean;
             updateFieldPresent?: boolean;
             fieldNotBlank?: boolean;
-            imageConflictFree?: boolean;
         };
         UpdateExpiryItemRequest: {
             /**
@@ -698,6 +698,11 @@ export interface components {
              * @example 신상품 입고 안내
              */
             title?: string;
+            /**
+             * @description 공지 내용
+             * @example 오늘 야간 근무자는 신상품 진열 상태를 확인해주세요.
+             */
+            content?: string;
             /**
              * @description 공지 태그
              * @example DAILY
