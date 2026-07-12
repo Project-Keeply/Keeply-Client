@@ -11,6 +11,7 @@ const useUser = () => {
   });
 
   const user: User = {
+    id: data.id ?? 0,
     name: data.name ?? '',
     profileImageUrl: data.profileImageUrl ?? '',
     groupName: data.groupName ?? '',
