@@ -6,6 +6,8 @@ interface AnnouncementBottomSheetProps {
   open: boolean;
   onClose: () => void;
   onDelete: () => void;
+  canDelete: boolean;
+  isDeleting?: boolean;
   announcement: Announcement | null;
 }
 
@@ -13,17 +15,21 @@ const AnnouncementBottomSheet = ({
   open,
   onClose,
   onDelete,
+  canDelete,
+  isDeleting = false,
   announcement,
 }: AnnouncementBottomSheetProps) => {
   return (
     <BaseBottomSheet open={open} onClose={onClose}>
       {announcement && (
         <div className="p-6.25">
-          <img
-            src={announcement.imgUrl}
-            alt={announcement.title}
-            className="w-full h-[200px] object-cover rounded-[10px] pb-5"
-          />
+          {announcement.imgUrl && (
+            <img
+              src={announcement.imgUrl}
+              alt={announcement.title}
+              className="w-full h-[200px] object-cover rounded-[10px] pb-5"
+            />
+          )}
           <div className="flex flex-col gap-2.5 pb-12.5">
             <div className="flex items-center gap-2.5">
               <Tag variant="primary" label={announcement.tag} />
@@ -38,9 +44,16 @@ const AnnouncementBottomSheet = ({
             )}
           </div>
           <div className="flex gap-2.5">
-            <Button onClick={onDelete} variant="red" className="flex-1">
-              삭제
-            </Button>
+            {canDelete && (
+              <Button
+                onClick={onDelete}
+                variant="secondary"
+                className="flex-1"
+                disabled={isDeleting}
+              >
+                삭제
+              </Button>
+            )}
             <Button onClick={onClose} variant="primary" className="flex-1">
               닫기
             </Button>
