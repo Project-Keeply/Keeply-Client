@@ -1,6 +1,6 @@
-import type { ApiResponse } from '@/shared/apis';
-import { apiInstance, unwrapDataResponse } from '@/shared/apis';
-import type { components } from '@/shared/types/schema';
+import type { ApiResponse } from '@shared/apis';
+import { apiInstance, unwrapDataResponse } from '@shared/apis';
+import type { components } from '@shared/types/schema';
 
 type PageResponseNoticeList =
   components['schemas']['PageResponseNoticeListResponse'];

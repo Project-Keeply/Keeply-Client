@@ -1,4 +1,9 @@
+import banner1 from '@shared/assets/images/banners/banner-1.svg';
+import banner2 from '@shared/assets/images/banners/banner-2.svg';
+import banner3 from '@shared/assets/images/banners/banner-3.svg';
 import { CommonHeader } from '@shared/components';
+import ManagementGuideButton from '@shared/components/ManagementGuideButton';
+import { IcLogo } from '@shared/icons';
 import { ROUTE_PATH } from '@shared/router/path';
 import { useNavigate } from 'react-router';
 
@@ -9,11 +14,6 @@ import {
   useAnnouncements,
 } from '@/entities/announcement';
 import { useMyGroup } from '@/entities/group';
-import banner1 from '@/shared/assets/images/banners/banner-1.svg';
-import banner2 from '@/shared/assets/images/banners/banner-2.svg';
-import banner3 from '@/shared/assets/images/banners/banner-3.svg';
-import ManagementGuideButton from '@/shared/components/ManagementGuideButton';
-import { IcLogo } from '@/shared/icons';
 
 const HomePage = () => {
   const navigate = useNavigate();

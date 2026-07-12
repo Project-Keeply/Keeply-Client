@@ -1,6 +1,6 @@
-import type { Announcement } from '../types/announcement';
+import type { components } from '@shared/types/schema';
 
-import type { components } from '@/shared/types/schema';
+import type { Announcement } from '../types/announcement';
 
 type NoticeListResponse = components['schemas']['NoticeListResponse'];
 type NoticeTag = components['schemas']['CreateNoticeRequest']['tag'];
