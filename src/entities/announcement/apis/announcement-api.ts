@@ -27,3 +27,12 @@ export const createNotice = async (
   );
   return unwrapDataResponse(res);
 }
+
+export const deleteNotice = async (
+  groupId: number,
+  noticeId: number,
+): Promise<void> => {
+  await apiInstance.delete<void>(
+    `/groups/${groupId}/notices/${noticeId}}`,
+  );
+};
