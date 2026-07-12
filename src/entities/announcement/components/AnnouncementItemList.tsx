@@ -1,6 +1,7 @@
 import useBottomSheet from '@shared/hooks/use-bottom-sheet';
 
 import useAnnouncementChecks from '../hooks/use-announcement-checks';
+import useDeleteAnnouncement from '../hooks/use-delete-announcement';
 import type { Announcement } from '../types/announcement';
 import AnnouncementBottomSheet from './AnnouncementBottomSheet';
 import AnnouncementItem from './AnnouncementItem';
@@ -21,13 +22,26 @@ interface AnnouncementItemListProps {
 const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
   const { checkedIds, toggleCheck } = useAnnouncementChecks();
   const { isOpen, selectedItem, open, close } = useBottomSheet<Announcement>();
+  const { mutate: deleteAnnouncement } = useDeleteAnnouncement();
+
+  const handleDelete = () => {
+    if(!selectedItem) {
+      return
+    }
+    deleteAnnouncement(selectedItem.id, {onSuccess: close});
+
+  }
 
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-end gap-2 pb-2.5">
         <h2 className="text-title1 font-bold text-black">오늘의 공지사항</h2>
-        <span className="text-title1 font-bold text-primary-500">{items.length}개</span>
-        <span className="text-body2 font-normal text-gray-300">{formatDate(date)}</span>
+        <span className="text-title1 font-bold text-primary-500">
+          {items.length}개
+        </span>
+        <span className="text-body2 font-normal text-gray-300">
+          {formatDate(date)}
+        </span>
       </div>
       <div className="flex flex-col gap-3">
         {items.map((item) => (
@@ -44,7 +58,7 @@ const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
       <AnnouncementBottomSheet
         open={isOpen}
         onClose={close}
-        onDelete={close}
+        onDelete={handleDelete}
         announcement={selectedItem}
       />
     </div>
