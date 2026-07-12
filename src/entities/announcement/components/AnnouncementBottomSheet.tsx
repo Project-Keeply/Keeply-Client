@@ -6,6 +6,7 @@ interface AnnouncementBottomSheetProps {
   open: boolean;
   onClose: () => void;
   onDelete: () => void;
+  canDelete: boolean;
   announcement: Announcement | null;
 }
 
@@ -13,6 +14,7 @@ const AnnouncementBottomSheet = ({
   open,
   onClose,
   onDelete,
+  canDelete,
   announcement,
 }: AnnouncementBottomSheetProps) => {
   return (
@@ -40,9 +42,11 @@ const AnnouncementBottomSheet = ({
             )}
           </div>
           <div className="flex gap-2.5">
-            <Button onClick={onDelete} variant="secondary" className="flex-1">
-              삭제
-            </Button>
+            {canDelete && (
+              <Button onClick={onDelete} variant="secondary" className="flex-1">
+                삭제
+              </Button>
+            )}
             <Button onClick={onClose} variant="primary" className="flex-1">
               닫기
             </Button>

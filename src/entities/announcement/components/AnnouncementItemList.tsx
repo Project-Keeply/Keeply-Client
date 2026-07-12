@@ -6,6 +6,9 @@ import type { Announcement } from '../types/announcement';
 import AnnouncementBottomSheet from './AnnouncementBottomSheet';
 import AnnouncementItem from './AnnouncementItem';
 
+import { useMyGroup } from '@/entities/group';
+import { useUser } from '@/entities/user'
+
 const DAYS = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
 
 const formatDate = (date: Date): string => {
@@ -23,14 +26,17 @@ const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
   const { checkedIds, toggleCheck } = useAnnouncementChecks();
   const { isOpen, selectedItem, open, close } = useBottomSheet<Announcement>();
   const { mutate: deleteAnnouncement } = useDeleteAnnouncement();
+  const { user } = useUser();
+  const { group } = useMyGroup();
 
   const handleDelete = () => {
     if(!selectedItem) {
       return
     }
     deleteAnnouncement(selectedItem.id, {onSuccess: close});
-
   }
+
+  const canDelete = selectedItem ? group.role === 'OWNER' || selectedItem.authorUserId === user.id : false;
 
   return (
     <div className="flex flex-col gap-3">
@@ -67,6 +73,7 @@ const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
         open={isOpen}
         onClose={close}
         onDelete={handleDelete}
+        canDelete={canDelete}
         announcement={selectedItem}
       />
     </div>
