@@ -10,6 +10,7 @@ export const convertToServerTag = (tag: Announcement['tag']): NoticeTag => tag =
 export const convertToAnnouncement = (notice: NoticeListResponse): Announcement => ({
   id: notice.noticeId ?? 0,
   tag: notice.tag === 'WEEKLY' ? '주간' : '일일',
+  authorUserId: notice.authorUserId ?? 0,
   imgUrl: notice.imageUrl ?? '',
   title: notice.title ?? '',
   content: notice.content,
