@@ -7,9 +7,17 @@ import AnnouncementBottomSheet from './AnnouncementBottomSheet';
 import AnnouncementItem from './AnnouncementItem';
 
 import { useMyGroup } from '@/entities/group';
-import { useUser } from '@/entities/user'
+import { useUser } from '@/entities/user';
 
-const DAYS = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+const DAYS = [
+  '일요일',
+  '월요일',
+  '화요일',
+  '수요일',
+  '목요일',
+  '금요일',
+  '토요일',
+];
 
 const formatDate = (date: Date): string => {
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -30,13 +38,16 @@ const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
   const { group } = useMyGroup();
 
   const handleDelete = () => {
-    if(!selectedItem) {
-      return
+    if (!selectedItem) {
+      return;
     }
-    deleteAnnouncement(selectedItem.id, {onSuccess: close});
-  }
+    deleteAnnouncement(selectedItem.id, { onSuccess: close });
+  };
 
-  const canDelete = selectedItem ? group.role === 'OWNER' || selectedItem.authorUserId === user.id : false;
+  const canDelete = selectedItem
+    ? group.role === 'OWNER' ||
+      (user.id !== 0 && selectedItem.authorUserId === user.id)
+    : false;
 
   return (
     <div className="flex flex-col gap-3">
