@@ -44,16 +44,24 @@ const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
         </span>
       </div>
       <div className="flex flex-col gap-3">
-        {items.map((item) => (
-          <AnnouncementItem
-            key={item.id}
-            tag={item.tag}
-            title={item.title}
-            isChecked={checkedIds.includes(item.id)}
-            onClick={() => open(item)}
-            onCheckClick={() => toggleCheck(item.id)}
-          />
-        ))}
+        {items.length === 0 ? (
+          <div className="flex items-center justify-center rounded-[10px] bg-white py-36">
+            <p className="text-body2 font-medium text-gray-300">
+              오늘 등록된 공지사항이 없어요
+            </p>
+          </div>
+        ) : (
+          items.map((item) => (
+            <AnnouncementItem
+              key={item.id}
+              tag={item.tag}
+              title={item.title}
+              isChecked={checkedIds.includes(item.id)}
+              onClick={() => open(item)}
+              onCheckClick={() => toggleCheck(item.id)}
+            />
+          ))
+        )}
       </div>
       <AnnouncementBottomSheet
         open={isOpen}
