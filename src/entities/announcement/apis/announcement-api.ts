@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@shared/apis';
-import { apiInstance, unwrapDataResponse } from '@shared/apis';
+import { ApiError, apiInstance, unwrapDataResponse } from '@shared/apis';
 import type { components } from '@shared/types/schema';
 
 type PageResponseNoticeList =
@@ -32,5 +32,13 @@ export const deleteNotice = async (
   groupId: number,
   noticeId: number,
 ): Promise<void> => {
-  await apiInstance.delete<void>(`/groups/${groupId}/notices/${noticeId}`);
+  const res = await apiInstance.delete<ApiResponse<void>>(
+    `/groups/${groupId}/notices/${noticeId}`,
+  );
+  if (!res.data.success) {
+    throw new ApiError(
+      res.data.message ?? '공지 삭제에 실패했어요',
+      res.status,
+    );
+  }
 };
