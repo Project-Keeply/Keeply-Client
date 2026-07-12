@@ -7,6 +7,7 @@ interface AnnouncementBottomSheetProps {
   onClose: () => void;
   onDelete: () => void;
   canDelete: boolean;
+  isDeleting?: boolean;
   announcement: Announcement | null;
 }
 
@@ -15,6 +16,7 @@ const AnnouncementBottomSheet = ({
   onClose,
   onDelete,
   canDelete,
+  isDeleting = false,
   announcement,
 }: AnnouncementBottomSheetProps) => {
   return (
@@ -43,7 +45,12 @@ const AnnouncementBottomSheet = ({
           </div>
           <div className="flex gap-2.5">
             {canDelete && (
-              <Button onClick={onDelete} variant="secondary" className="flex-1">
+              <Button
+                onClick={onDelete}
+                variant="secondary"
+                className="flex-1"
+                disabled={isDeleting}
+              >
                 삭제
               </Button>
             )}

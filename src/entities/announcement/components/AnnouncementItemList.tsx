@@ -33,7 +33,8 @@ interface AnnouncementItemListProps {
 const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
   const { checkedIds, toggleCheck } = useAnnouncementChecks();
   const { isOpen, selectedItem, open, close } = useBottomSheet<Announcement>();
-  const { mutate: deleteAnnouncement } = useDeleteAnnouncement();
+  const { mutate: deleteAnnouncement, isPending: isDeleting } =
+    useDeleteAnnouncement();
   const { user } = useUser();
   const { group } = useMyGroup();
 
@@ -85,6 +86,7 @@ const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
         onClose={close}
         onDelete={handleDelete}
         canDelete={canDelete}
+        isDeleting={isDeleting}
         announcement={selectedItem}
       />
     </div>
