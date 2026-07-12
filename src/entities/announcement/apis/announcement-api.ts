@@ -33,6 +33,6 @@ export const deleteNotice = async (
   noticeId: number,
 ): Promise<void> => {
   await apiInstance.delete<void>(
-    `/groups/${groupId}/notices/${noticeId}}`,
+    `/groups/${groupId}/notices/${noticeId}`,
   );
 };
