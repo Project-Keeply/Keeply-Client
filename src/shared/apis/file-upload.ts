@@ -11,6 +11,8 @@ type PresignedUploadUrlResponse =
   components['schemas']['PresignedUploadUrlResponse'];
 type UploadDomain = PresignedUploadUrlRequest['domain'];
 
+const S3_UPLOAD_TIMEOUT_MS = 30_000;
+
 // presigned URL 발급
 const createUploadUrl = async (
   body: PresignedUploadUrlRequest,
@@ -36,6 +38,7 @@ export const uploadImage = async (
   }
   await axios.put(presignedUrl, file, {
     headers: { 'Content-Type': file.type },
+    timeout: S3_UPLOAD_TIMEOUT_MS,
   });
   return accessUrl;
 };
