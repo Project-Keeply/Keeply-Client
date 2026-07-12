@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router';
 
 import BannerCarousel from './ui/banner-carousel';
 
-import { AnnouncementItemList, useAnnouncements } from '@/entities/announcement';
+import {
+  AnnouncementItemList,
+  useAnnouncements,
+} from '@/entities/announcement';
 import { useMyGroup } from '@/entities/group';
 import banner1 from '@/shared/assets/images/banners/banner-1.svg';
 import banner2 from '@/shared/assets/images/banners/banner-2.svg';
@@ -12,13 +15,12 @@ import banner3 from '@/shared/assets/images/banners/banner-3.svg';
 import ManagementGuideButton from '@/shared/components/ManagementGuideButton';
 import { IcLogo } from '@/shared/icons';
 
-
 const HomePage = () => {
   const navigate = useNavigate();
   const handleProfileClick = () => {
     navigate(ROUTE_PATH.MYPAGE);
   };
-  
+
   const { groupId } = useMyGroup();
   const { announcements } = useAnnouncements(groupId);
 

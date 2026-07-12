@@ -16,15 +16,16 @@ const useAnnouncementWriteForm = () => {
   const { groupId } = useMyGroup();
   const { mutate, isPending } = useCreateAnnouncement({ groupId });
 
-  const { control, handleSubmit, formState } = useForm<AnnouncementWriteFormValues>({
-    resolver: zodResolver(announcementWriteSchema),
-    mode: 'onChange',
-    defaultValues: {
-      title: '',
-      tag: undefined,
-      content: '',
-    },
-  });
+  const { control, handleSubmit, formState } =
+    useForm<AnnouncementWriteFormValues>({
+      resolver: zodResolver(announcementWriteSchema),
+      mode: 'onChange',
+      defaultValues: {
+        title: '',
+        tag: undefined,
+        content: '',
+      },
+    });
 
   const submit = handleSubmit((values) => {
     mutate(values, {

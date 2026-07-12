@@ -7,11 +7,11 @@ import { queryKeys } from '@/shared/query/query-keys';
 const useMyGroup = () => {
   const { data } = useSuspenseQuery({
     queryKey: queryKeys.group.me(),
-    queryFn: getMyGroup
+    queryFn: getMyGroup,
   });
-  if(data.groupId === undefined){
+  if (data.groupId === undefined) {
     throw new Error('groupID가 존재하지 않습니다.');
   }
-  return { group: data, groupId: data.groupId }
-}
+  return { group: data, groupId: data.groupId };
+};
 export default useMyGroup;

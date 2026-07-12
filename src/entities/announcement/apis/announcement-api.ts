@@ -12,10 +12,10 @@ export const getNoticeList = async (
 ): Promise<PageResponseNoticeList> => {
   const res = await apiInstance.get<ApiResponse<PageResponseNoticeList>>(
     `/groups/${groupId}/notices`,
-    {params: {active: true, page: 0, size: 100}}
+    { params: { active: true, page: 0, size: 100 } },
   );
   return unwrapDataResponse(res);
-}
+};
 
 export const createNotice = async (
   groupId: number,
@@ -26,13 +26,11 @@ export const createNotice = async (
     body,
   );
   return unwrapDataResponse(res);
-}
+};
 
 export const deleteNotice = async (
   groupId: number,
   noticeId: number,
 ): Promise<void> => {
-  await apiInstance.delete<void>(
-    `/groups/${groupId}/notices/${noticeId}`,
-  );
+  await apiInstance.delete<void>(`/groups/${groupId}/notices/${noticeId}`);
 };

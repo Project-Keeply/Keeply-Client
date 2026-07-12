@@ -10,9 +10,10 @@ const useAnnouncements = (groupId: number) => {
   const { data } = useSuspenseQuery({
     queryKey: queryKeys.announcement.list(groupId),
     queryFn: () => getNoticeList(groupId),
-  })
-  const announcements: Announcement[] = data.content?.map(convertToAnnouncement) ?? [];
+  });
+  const announcements: Announcement[] =
+    data.content?.map(convertToAnnouncement) ?? [];
   return { announcements };
-}
+};
 
 export default useAnnouncements;

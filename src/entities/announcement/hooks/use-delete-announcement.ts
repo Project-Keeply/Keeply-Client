@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import {deleteNotice} from '../apis/announcement-api'
+import { deleteNotice } from '../apis/announcement-api';
 
 import { useMyGroup } from '@/entities/group';
 import { queryKeys } from '@/shared/query/query-keys';
@@ -14,9 +14,9 @@ const useDeleteAnnouncement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.announcement.list(groupId),
-      })
-    }
-  })
-}
+      });
+    },
+  });
+};
 
 export default useDeleteAnnouncement;
