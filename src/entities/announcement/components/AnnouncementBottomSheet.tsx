@@ -40,7 +40,7 @@ const AnnouncementBottomSheet = ({
             )}
           </div>
           <div className="flex gap-2.5">
-            <Button onClick={onDelete} variant="red" className="flex-1">
+            <Button onClick={onDelete} variant="secondary" className="flex-1">
               삭제
             </Button>
             <Button onClick={onClose} variant="primary" className="flex-1">
