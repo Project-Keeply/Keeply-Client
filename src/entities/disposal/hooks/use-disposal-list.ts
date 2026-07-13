@@ -13,12 +13,21 @@ const useDisposalList = (groupId: number) => {
     queryFn: () => getExpiryItemList(groupId),
   });
 
-  // 유통기한 임박순 정렬
+  // 유통기한 임박순 정렬 (id 없는 항목 제외, 날짜 없는 항목은 맨 뒤로)
   const sortedItems = useMemo(
     () =>
       (data.content ?? [])
+        .filter((item) => item.expiryItemId !== undefined)
         .map(convertToDisposalItem)
-        .sort((a, b) => a.expirationDate.localeCompare(b.expirationDate)),
+        .sort((a, b) => {
+          if (!a.expirationDate) {
+            return 1;
+          }
+          if (!b.expirationDate) {
+            return -1;
+          }
+          return a.expirationDate.localeCompare(b.expirationDate);
+        }),
     [data.content],
   );
 
