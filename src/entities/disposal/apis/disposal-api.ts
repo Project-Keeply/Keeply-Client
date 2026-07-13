@@ -7,33 +7,33 @@ type PageResponseExpiryItem = components['schemas']['PageResponseExpiryItemRespo
 type CreateExpiryItemRequest = components['schemas']['CreateExpiryItemRequest'];
 type ExpiryItemResponse = components['schemas']['ExpiryItemResponse'];
 
-export const getExiryItemList = async (
+export const getExpiryItemList = async (
   groupId: number,
 ): Promise<PageResponseExpiryItem> => {
   const res = await apiInstance.get<ApiResponse<PageResponseExpiryItem>>(
-    `groups/${groupId}/expiry-items`,
+    `/groups/${groupId}/expiry-items`,
     { params: {page: 0, size: 100}}
   );
   return unwrapDataResponse(res);
 }
 
-export const createExiryItem = async (
+export const createExpiryItem = async (
   groupId: number,
   body: CreateExpiryItemRequest,
 ): Promise<ExpiryItemResponse> => {
   const res = await apiInstance.post<ApiResponse<ExpiryItemResponse>>(
-    `groups/${groupId}/expiry-items`,
+    `/groups/${groupId}/expiry-items`,
     body,
   );
   return unwrapDataResponse(res);
 }
 
 export const deleteExpiryItem = async (
-  groupId: number, 
-  itemId: number, 
+  groupId: number,
+  itemId: number,
 ): Promise<void> => {
   const res = await apiInstance.delete<ApiResponse<void>>(
-    `groups/${groupId}/expiry-items/${itemId}`
+    `/groups/${groupId}/expiry-items/${itemId}`
   )
   if(!res.data.success) {
     throw new ApiError(
