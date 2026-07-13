@@ -84,7 +84,7 @@ const DisposalWriteForm = () => {
         <section>
           <WritePageTitle
             title="이미지"
-            explanation="(이미지 첨부는 필수 사항이 아닙니다.)"
+            explanation="(상품 이미지를 등록해주세요.)"
           />
           <Controller
             name="image"
