@@ -5,6 +5,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { getExpiryItemList } from '../apis/disposal-api';
 import type { DisposalItem } from '../types/disposal';
 import { convertToDisposalItem } from '../utils/convert-disposal';
+import useDeleteDisposal from './use-delete-disposal';
 
 const useDisposalList = (groupId: number) => {
   const { data } = useSuspenseQuery({
@@ -24,6 +25,9 @@ const useDisposalList = (groupId: number) => {
   const [selectedItem, setSelectedItem] = useState<DisposalItem | null>(null);
   const isOpen = selectedItem !== null;
 
+  const { mutate: deleteDisposal, isPending: isCompleting } =
+    useDeleteDisposal();
+
   const handleCardClick = (item: DisposalItem) => {
     setSelectedItem(item);
   };
@@ -32,14 +36,19 @@ const useDisposalList = (groupId: number) => {
   };
 
   const handleComplete = () => {
-    // TODO(Phase 4): 폐기 처리 삭제 mutation 연결 (성공 시 목록 invalidate)
-    setSelectedItem(null);
+    if (selectedItem === null || isCompleting) {
+      return;
+    }
+    deleteDisposal(selectedItem.id, {
+      onSuccess: () => setSelectedItem(null),
+    });
   };
 
   return {
     sortedItems,
     selectedItem,
     isOpen,
+    isCompleting,
     handleCardClick,
     handleClose,
     handleComplete,
