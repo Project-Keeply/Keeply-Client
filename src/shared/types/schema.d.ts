@@ -471,6 +471,12 @@ export interface components {
              */
             expireDate: string;
             /**
+             * @description 상품 카테고리
+             * @example FF
+             * @enum {string}
+             */
+            category: "BEVERAGE" | "SNACK" | "NOODLE" | "FF" | "DAIRY" | "ETC";
+            /**
              * @description 상품 이미지 URL
              * @example https://example.com/expiry-items/image.png
              */
@@ -499,6 +505,12 @@ export interface components {
              * @example 2026-07-10
              */
             expireDate?: string;
+            /**
+             * @description 상품 카테고리
+             * @example FF
+             * @enum {string}
+             */
+            category?: "BEVERAGE" | "SNACK" | "NOODLE" | "FF" | "DAIRY" | "ETC";
             /**
              * @description 상품 이미지 URL
              * @example https://example.com/expiry-items/image.png
@@ -581,8 +593,8 @@ export interface components {
              * @example 냉장고 점검 완료, 현재 온도 정상입니다.
              */
             content?: string;
-            contentNotBlank?: boolean;
             updateFieldPresent?: boolean;
+            contentNotBlank?: boolean;
         };
         UpdateNoticeRequest: {
             /**
@@ -611,9 +623,9 @@ export interface components {
              * @example false
              */
             removeImage?: boolean;
-            imageConflictFree?: boolean;
             updateFieldPresent?: boolean;
             fieldNotBlank?: boolean;
+            imageConflictFree?: boolean;
         };
         UpdateExpiryItemRequest: {
             /**
@@ -627,6 +639,12 @@ export interface components {
              * @example 2026-07-11
              */
             expireDate?: string;
+            /**
+             * @description 상품 카테고리
+             * @example DAIRY
+             * @enum {string}
+             */
+            category?: "BEVERAGE" | "SNACK" | "NOODLE" | "FF" | "DAIRY" | "ETC";
             /**
              * @description 상품 이미지 URL
              * @example https://example.com/expiry-items/updated.png
