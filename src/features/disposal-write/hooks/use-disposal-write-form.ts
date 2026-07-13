@@ -5,28 +5,42 @@
  */
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ROUTE_PATH } from '@shared/router/path';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 import {
   type DisposalWriteFormValues,
   disposalWriteSchema,
 } from '../schemas/disposal-write-schema';
+import useCreateDisposal from './use-create-disposal';
+
+import { useMyGroup } from '@/entities/group';
 
 const useDisposalWriteForm = () => {
-  const { control, handleSubmit, formState } = useForm<DisposalWriteFormValues>({
-    resolver: zodResolver(disposalWriteSchema),
-    mode: 'onChange',
-    defaultValues: {
-      title: '',
-      category: undefined,
-      date: '',
+  const navigate = useNavigate();
+  const { groupId } = useMyGroup();
+  const { mutate, isPending } = useCreateDisposal({ groupId });
+
+  const { control, handleSubmit, formState } = useForm<DisposalWriteFormValues>(
+    {
+      resolver: zodResolver(disposalWriteSchema),
+      mode: 'onChange',
+      defaultValues: {
+        title: '',
+        category: undefined,
+        date: '',
+      },
     },
+  );
+
+  const submit = handleSubmit((values) => {
+    mutate(values, {
+      onSuccess: () => navigate(ROUTE_PATH.MANAGEMENT),
+    });
   });
 
-  const submit = handleSubmit(() => {
-    // TODO: API 연동 (values 로 payload 조립 후 전송)
-  });
-  return { control, isValid: formState.isValid, submit };
+  return { control, isValid: formState.isValid, isPending, submit };
 };
 
 export default useDisposalWriteForm;
