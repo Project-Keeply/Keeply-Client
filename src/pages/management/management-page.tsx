@@ -5,8 +5,10 @@ import {
   DisposalList,
   useDisposalList,
 } from '@/entities/disposal';
+import { useMyGroup } from '@/entities/group';
 
 const ManagementPage = () => {
+  const { groupId } = useMyGroup();
   const {
     sortedItems,
     selectedItem,
@@ -14,7 +16,7 @@ const ManagementPage = () => {
     handleCardClick,
     handleClose,
     handleComplete,
-  } = useDisposalList();
+  } = useDisposalList(groupId);
 
   return (
     <>
