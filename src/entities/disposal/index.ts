@@ -6,6 +6,7 @@ export {
 export { default as DisposalBottomSheet } from './components/DisposalBottomSheet';
 export { default as DisposalList } from './components/DisposalList';
 export * from './constants/disposal-categories';
+export { default as useDeleteDisposal } from './hooks/use-delete-disposal';
 export { default as useDisposalList } from './hooks/use-disposal-list';
 export type { DisposalItem } from './types/disposal';
 export {
