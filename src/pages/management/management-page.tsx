@@ -5,16 +5,19 @@ import {
   DisposalList,
   useDisposalList,
 } from '@/entities/disposal';
+import { useMyGroup } from '@/entities/group';
 
 const ManagementPage = () => {
+  const { groupId } = useMyGroup();
   const {
     sortedItems,
     selectedItem,
     isOpen,
+    isCompleting,
     handleCardClick,
     handleClose,
     handleComplete,
-  } = useDisposalList();
+  } = useDisposalList(groupId);
 
   return (
     <>
@@ -24,6 +27,7 @@ const ManagementPage = () => {
         open={isOpen}
         onClose={handleClose}
         onComplete={handleComplete}
+        isCompleting={isCompleting}
       >
         {selectedItem && (
           <ItemCard

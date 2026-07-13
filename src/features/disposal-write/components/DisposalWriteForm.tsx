@@ -5,7 +5,12 @@
  * - 폼 로직은 갖지 않는 순수 뷰. (상태/제출은 훅 담당)
  */
 
-import { ImgUploadButton, Input, TagButton, WritePageTitle } from '@shared/components';
+import {
+  ImgUploadButton,
+  Input,
+  TagButton,
+  WritePageTitle,
+} from '@shared/components';
 import WritePageLayout from '@shared/layouts/WritePageLayout';
 import { Controller } from 'react-hook-form';
 
@@ -14,10 +19,14 @@ import useDisposalWriteForm from '../hooks/use-disposal-write-form';
 import { DISPOSAL_CATEGORIES } from '@/entities/disposal';
 
 const DisposalWriteForm = () => {
-  const { control, isValid, submit } = useDisposalWriteForm();
+  const { control, isValid, isPending, submit } = useDisposalWriteForm();
 
   return (
-    <WritePageLayout label="폐기 업로드" disabled={!isValid} onSubmit={submit}>
+    <WritePageLayout
+      label="폐기 업로드"
+      disabled={!isValid || isPending}
+      onSubmit={submit}
+    >
       <div className="flex flex-col gap-10">
         <section>
           <WritePageTitle title="상품명" />
@@ -25,7 +34,12 @@ const DisposalWriteForm = () => {
             name="title"
             control={control}
             render={({ field }) => (
-              <Input size="md" placeholder="상품명을 입력해주세요" value={field.value} onChange={field.onChange} />
+              <Input
+                size="md"
+                placeholder="상품명을 입력해주세요"
+                value={field.value}
+                onChange={field.onChange}
+              />
             )}
           />
         </section>
@@ -68,11 +82,16 @@ const DisposalWriteForm = () => {
         </section>
 
         <section>
-          <WritePageTitle title="이미지" explanation="(이미지 첨부는 필수 사항이 아닙니다.)" />
+          <WritePageTitle
+            title="이미지"
+            explanation="(상품 이미지를 등록해주세요.)"
+          />
           <Controller
             name="image"
             control={control}
-            render={({ field }) => <ImgUploadButton onChange={(files) => field.onChange(files[0])} />}
+            render={({ field }) => (
+              <ImgUploadButton onChange={(files) => field.onChange(files[0])} />
+            )}
           />
         </section>
       </div>
