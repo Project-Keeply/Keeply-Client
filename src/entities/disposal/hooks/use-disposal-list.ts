@@ -35,7 +35,7 @@ const useDisposalList = (groupId: number) => {
   const isOpen = selectedItem !== null;
 
   const { mutate: deleteDisposal, isPending: isCompleting } =
-    useDeleteDisposal();
+    useDeleteDisposal(groupId);
 
   const handleCardClick = (item: DisposalItem) => {
     setSelectedItem(item);
