@@ -12,6 +12,12 @@ export const queryKeys = {
         announcementId,
       ] as const,
   },
+  disposal: {
+    all: ['disposal'] as const,
+    lists: () => [...queryKeys.disposal.all, 'list'] as const,
+    list: (groupId: number) =>
+      [...queryKeys.disposal.lists(), groupId] as const,
+  },
   group: {
     all: ['group'] as const,
     me: () => [...queryKeys.group.all, 'me'] as const,
