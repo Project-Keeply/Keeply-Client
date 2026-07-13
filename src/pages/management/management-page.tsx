@@ -13,6 +13,7 @@ const ManagementPage = () => {
     sortedItems,
     selectedItem,
     isOpen,
+    isCompleting,
     handleCardClick,
     handleClose,
     handleComplete,
@@ -26,6 +27,7 @@ const ManagementPage = () => {
         open={isOpen}
         onClose={handleClose}
         onComplete={handleComplete}
+        isCompleting={isCompleting}
       >
         {selectedItem && (
           <ItemCard
