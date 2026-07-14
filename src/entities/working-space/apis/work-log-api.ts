@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@/shared/apis';
-import { apiInstance, unwrapDataResponse } from '@/shared/apis';
+import { ApiError, apiInstance, unwrapDataResponse } from '@/shared/apis';
 import type { components } from '@/shared/types/schema';
 
 type PageResponseWorkLog = components['schemas']['PageResponseWorkLogResponse'];
@@ -27,4 +27,19 @@ export const createWorkLog = async (
     body,
   );
   return unwrapDataResponse(res);
-}
+};
+
+export const deleteWorkLog = async (
+  groupId: number,
+  workLogId: number,
+): Promise<void> => {
+  const res = await apiInstance.delete<ApiResponse<void>>(
+    `/groups/${groupId}/work-logs/${workLogId}`,
+  );
+  if (!res.data.success) {
+    throw new ApiError(
+      res.data.message ?? '근무일지 삭제에 실패했어요',
+      res.status,
+    );
+  }
+};
