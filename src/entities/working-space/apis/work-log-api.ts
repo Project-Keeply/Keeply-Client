@@ -1,11 +1,14 @@
-import type { ApiResponse } from '@/shared/apis';
-import { ApiError, apiInstance, unwrapDataResponse } from '@/shared/apis';
-import type { components } from '@/shared/types/schema';
+import type { ApiResponse } from '@shared/apis';
+import { ApiError, apiInstance, unwrapDataResponse } from '@shared/apis';
+import type { components } from '@shared/types/schema';
 
 type PageResponseWorkLog = components['schemas']['PageResponseWorkLogResponse'];
 type CreateWorkLogRequest = components['schemas']['CreateWorkLogRequest'];
 type UpdateWorkLogRequest = components['schemas']['UpdateWorkLogRequest'];
 type WorkLogResponse = components['schemas']['WorkLogResponse'];
+
+// 근무일지는 최근 7일 범위만 조회하므로 단일 페이지로 충분 (초과 시 초과분 누락 주의)
+const WORK_LOG_PAGE_SIZE = 100;
 
 export const getWorkLogList = async (
   groupId: number,
@@ -14,10 +17,10 @@ export const getWorkLogList = async (
 ): Promise<PageResponseWorkLog> => {
   const res = await apiInstance.get<ApiResponse<PageResponseWorkLog>>(
     `/groups/${groupId}/work-logs`,
-    { params: {from, to, page: 0, size: 100}},
+    { params: { from, to, page: 0, size: WORK_LOG_PAGE_SIZE } },
   );
   return unwrapDataResponse(res);
-}
+};
 
 export const createWorkLog = async (
   groupId: number,
