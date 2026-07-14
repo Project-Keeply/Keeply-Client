@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import { queryKeys } from '@shared/query/query-keys';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getWorkLogList } from '../apis/work-log-api';
 import { convertToWorkingLog } from '../utils/convert-work-log';
 
 import { useUser } from '@/entities/user';
-import { queryKeys } from '@/shared/query/query-keys';
 
 const DAYS = [
   '일요일',
@@ -39,7 +39,7 @@ const useWorkingLogDate = (groupId: number) => {
   today.setHours(0, 0, 0, 0);
   const minDate = new Date(today);
   minDate.setDate(minDate.getDate() - 6);
-  
+
   const from = formatKeyDate(minDate);
   const to = formatKeyDate(today);
 
