@@ -2,6 +2,7 @@ import AuthGuards from '@shared/router/guards/auth-guards';
 import {
   AnnouncementWritePage,
   HomePage,
+  InvitePage,
   LoginCallbackPage,
   LoginPage,
   ManagementPage,
@@ -10,12 +11,12 @@ import {
   OnboardingPage,
   TermsPage,
   WithdrawPage,
-  WorkingSpacePage,
-} from '@shared/router/lazy';
+  WorkingSpacePage} from '@shared/router/lazy';
 import { ROUTE_PATH } from '@shared/router/path';
 import type { RouteObject } from 'react-router';
 
 import AppShell from '@/app/layouts/AppShell';
+// import { Component } from 'react';
 
 export const globalRoutes = [
   {
@@ -48,6 +49,10 @@ export const globalRoutes = [
       {
         path: ROUTE_PATH.MYPAGE_TERMS,
         Component: TermsPage,
+      },
+      {
+        path: ROUTE_PATH.MYPAGE_INVITE,
+        Component: InvitePage,
       },
       {
         Component: AppShell,
