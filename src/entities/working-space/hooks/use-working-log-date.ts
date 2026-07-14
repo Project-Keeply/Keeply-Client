@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getWorkLogList } from '../apis/work-log-api';
-import type { WorkingLog } from '../types/working-log';
 import { convertToWorkingLog } from '../utils/convert-work-log';
 
 import { useUser } from '@/entities/user';
