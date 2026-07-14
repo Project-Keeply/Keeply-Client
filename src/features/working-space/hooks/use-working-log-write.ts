@@ -1,22 +1,40 @@
 import { useState } from 'react';
 
 import useCreateWorkLog from './use-create-work-log';
+import useUpdateWorkLog from './use-update-work-log';
+
+import type { WorkingLog } from '@/entities/working-space/types/working-log';
 
 const useWorkingLogWrite = (groupId: number) => {
   const [isWriting, setIsWriting] = useState(false);
   const [content, setContent] = useState('');
+  const [editingId, setEditingId] = useState<number | null>(null);
 
-  const { mutate, isPending } = useCreateWorkLog(groupId);
+  const { mutate: createWorkLog, isPending: isCreating } =
+    useCreateWorkLog(groupId);
+  const { mutate: updateWorkLog, isPending: isUpdating } =
+    useUpdateWorkLog(groupId);
 
+  const isEditing = editingId !== null;
+  const isPending = isCreating || isUpdating;
   const isValid = content.trim().length > 0;
 
-  const openWrite = () => {
+  const openCreate = () => {
+    setEditingId(null);
+    setContent('');
+    setIsWriting(true);
+  };
+
+  const openEdit = (log: WorkingLog) => {
+    setEditingId(Number(log.id));
+    setContent(log.content);
     setIsWriting(true);
   };
 
   const closeWrite = () => {
     setIsWriting(false);
     setContent('');
+    setEditingId(null);
   };
 
   const handleContentChange = (value: string) => {
@@ -27,16 +45,24 @@ const useWorkingLogWrite = (groupId: number) => {
     if (!isValid || isPending) {
       return;
     }
-    mutate(content, {
-      onSuccess: closeWrite,
-    });
+    if (editingId !== null) {
+      updateWorkLog(
+        { workLogId: editingId, content },
+        { onSuccess: closeWrite },
+      );
+      return;
+    }
+    createWorkLog(content, { onSuccess: closeWrite });
   };
+
   return {
     isWriting,
+    isEditing,
     content,
     isValid,
     isPending,
-    openWrite,
+    openCreate,
+    openEdit,
     closeWrite,
     handleContentChange,
     submit,

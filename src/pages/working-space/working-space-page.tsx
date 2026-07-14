@@ -25,10 +25,12 @@ const WorkingSpacePage = () => {
   } = useWorkingLogDate(groupId);
   const {
     isWriting,
+    isEditing,
     content,
     isValid,
-    isPending: isCreating,
-    openWrite,
+    isPending: isComposing,
+    openCreate,
+    openEdit,
     closeWrite,
     handleContentChange,
     submit,
@@ -36,18 +38,10 @@ const WorkingSpacePage = () => {
   const {
     selectedLog,
     isOpen,
-    mode,
-    editContent,
-    isEditValid,
     isDeleting,
-    isUpdating,
     handleLogClick,
     handleClose,
     handleDelete,
-    handleEditClick,
-    handleEditChange,
-    handleEditCancel,
-    handleSave,
   } = useWorkingLogItem(groupId);
 
   const handleWriteOpen = () => {
@@ -56,7 +50,16 @@ const WorkingSpacePage = () => {
     }
     handleClose();
     goToToday();
-    openWrite();
+    openCreate();
+  };
+
+  const handleEditOpen = () => {
+    if (selectedLog === null) {
+      return;
+    }
+    const targetLog = selectedLog;
+    handleClose();
+    openEdit(targetLog);
   };
 
   const handleLogSelect = (log: (typeof filteredLogs)[number]) => {
@@ -92,7 +95,8 @@ const WorkingSpacePage = () => {
             <WorkingLogWriteForm
               content={content}
               isValid={isValid}
-              isPending={isCreating}
+              isPending={isComposing}
+              submitLabel={isEditing ? '저장' : '등록'}
               onChange={handleContentChange}
               onSubmit={submit}
               onCancel={closeWrite}
@@ -103,16 +107,9 @@ const WorkingSpacePage = () => {
       <WorkingLogBottomSheet
         open={isOpen}
         onClose={handleClose}
-        mode={mode}
-        onEdit={handleEditClick}
+        onEdit={handleEditOpen}
         onDelete={handleDelete}
         isDeleting={isDeleting}
-        editContent={editContent}
-        isEditValid={isEditValid}
-        onEditChange={handleEditChange}
-        onSave={handleSave}
-        onEditCancel={handleEditCancel}
-        isUpdating={isUpdating}
       >
         {selectedLog && (
           <WorkingLog

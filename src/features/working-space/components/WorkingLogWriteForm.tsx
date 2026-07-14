@@ -8,6 +8,7 @@ interface WorkingLogWriteFormProps {
   onSubmit: () => void;
   onCancel: () => void;
   isPending?: boolean;
+  submitLabel?: string;
 }
 
 const WorkingLogWriteForm = ({
@@ -17,6 +18,7 @@ const WorkingLogWriteForm = ({
   onSubmit,
   onCancel,
   isPending = false,
+  submitLabel = '등록',
 }: WorkingLogWriteFormProps) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -46,7 +48,7 @@ const WorkingLogWriteForm = ({
         disabled={!isValid || isPending}
         className="shrink-0 text-body2 text-primary-500 disabled:opacity-50"
       >
-        등록
+        {submitLabel}
       </button>
     </form>
   );
