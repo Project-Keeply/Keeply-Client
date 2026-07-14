@@ -4,7 +4,8 @@ import type { components } from '@/shared/types/schema';
 
 type PageResponseWorkLog = components['schemas']['PageResponseWorkLogResponse'];
 type CreateWorkLogRequest = components['schemas']['CreateWorkLogRequest'];
-type WorkLogResponse = components['schemas']['WorkLogResponse']
+type UpdateWorkLogRequest = components['schemas']['UpdateWorkLogRequest'];
+type WorkLogResponse = components['schemas']['WorkLogResponse'];
 
 export const getWorkLogList = async (
   groupId: number,
@@ -24,6 +25,18 @@ export const createWorkLog = async (
 ): Promise<WorkLogResponse> => {
   const res = await apiInstance.post<ApiResponse<WorkLogResponse>>(
     `/groups/${groupId}/work-logs`,
+    body,
+  );
+  return unwrapDataResponse(res);
+};
+
+export const updateWorkLog = async (
+  groupId: number,
+  workLogId: number,
+  body: UpdateWorkLogRequest,
+): Promise<WorkLogResponse> => {
+  const res = await apiInstance.patch<ApiResponse<WorkLogResponse>>(
+    `/groups/${groupId}/work-logs/${workLogId}`,
     body,
   );
   return unwrapDataResponse(res);
