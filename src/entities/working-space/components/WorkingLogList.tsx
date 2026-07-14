@@ -11,6 +11,7 @@ interface WorkingLogListProps {
   filteredLogs: WorkingLogType[];
   onPrevClick: () => void;
   onNextClick: () => void;
+  onLogClick: (log: WorkingLogType) => void;
   writeSlot?: ReactNode;
 }
 
@@ -21,6 +22,7 @@ const WorkingLogList = ({
   filteredLogs,
   onPrevClick,
   onNextClick,
+  onLogClick,
   writeSlot,
 }: WorkingLogListProps) => {
   return (
@@ -52,6 +54,9 @@ const WorkingLogList = ({
             tag={log.tag}
             content={log.content}
             variant={log.variant}
+            onClick={
+              log.variant === 'primary' ? () => onLogClick(log) : undefined
+            }
           />
         ))}
       </div>
