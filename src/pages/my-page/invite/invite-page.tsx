@@ -1,9 +1,5 @@
-const invitePage = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const InvitePage = () => {
+  return <></>;
+};
 
-export default invitePage
+export default InvitePage;

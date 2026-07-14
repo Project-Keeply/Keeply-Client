@@ -11,12 +11,12 @@ import {
   OnboardingPage,
   TermsPage,
   WithdrawPage,
-  WorkingSpacePage} from '@shared/router/lazy';
+  WorkingSpacePage,
+} from '@shared/router/lazy';
 import { ROUTE_PATH } from '@shared/router/path';
 import type { RouteObject } from 'react-router';
 
 import AppShell from '@/app/layouts/AppShell';
-// import { Component } from 'react';
 
 export const globalRoutes = [
   {

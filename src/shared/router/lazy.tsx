@@ -19,8 +19,8 @@ export const WithdrawPage = lazy(
   () => import('@/pages/my-page/withdraw/withdraw-page'),
 );
 export const InvitePage = lazy(
-  () => import ('@/pages/my-page/invite/invite-page')
-)
+  () => import('@/pages/my-page/invite/invite-page'),
+);
 export const TermsPage = lazy(() => import('@/pages/my-page/terms/terms-page'));
 export const AnnouncementWritePage = lazy(
   () => import('@/pages/home/write/announcement-write-page'),
