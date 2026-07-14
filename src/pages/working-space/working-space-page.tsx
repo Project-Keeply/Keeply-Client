@@ -1,14 +1,19 @@
 import { CommonHeader } from '@shared/components';
 import FloatingButton from '@shared/components/FloatingButton';
 
+import { useMyGroup } from '@/entities/group';
+import WorkingLog from '@/entities/working-space/components/WorkingLog';
 import WorkingLogList from '@/entities/working-space/components/WorkingLogList';
 import useWorkingLogDate from '@/entities/working-space/hooks/use-working-log-date';
 import {
+  useWorkingLogItem,
   useWorkingLogWrite,
+  WorkingLogBottomSheet,
   WorkingLogWriteForm,
 } from '@/features/working-space';
 
 const WorkingSpacePage = () => {
+  const { groupId } = useMyGroup();
   const {
     displayDate,
     isAtMin,
@@ -17,32 +22,60 @@ const WorkingSpacePage = () => {
     handleNextClick: goNextDate,
     filteredLogs,
     goToToday,
-  } = useWorkingLogDate([]);
+  } = useWorkingLogDate(groupId);
   const {
     isWriting,
+    isEditing,
     content,
     isValid,
-    openWrite,
+    isPending: isComposing,
+    openCreate,
+    openEdit,
     closeWrite,
     handleContentChange,
     submit,
-  } = useWorkingLogWrite();
+  } = useWorkingLogWrite(groupId);
+  const {
+    selectedLog,
+    isOpen,
+    isDeleting,
+    handleLogClick,
+    handleClose,
+    handleDelete,
+  } = useWorkingLogItem(groupId);
 
   const handleWriteOpen = () => {
     if (isWriting) {
       return;
     }
+    handleClose();
     goToToday();
-    openWrite();
+    openCreate();
+  };
+
+  const handleEditOpen = () => {
+    if (selectedLog === null) {
+      return;
+    }
+    const targetLog = selectedLog;
+    handleClose();
+    openEdit(targetLog);
+  };
+
+  const handleLogSelect = (log: (typeof filteredLogs)[number]) => {
+    closeWrite();
+    handleLogClick(log);
   };
 
   const handlePrevClick = () => {
     closeWrite();
+    handleClose();
     goPrevDate();
   };
 
   const handleNextClick = () => {
     closeWrite();
+    handleClose();
     goNextDate();
   };
 
@@ -56,11 +89,14 @@ const WorkingSpacePage = () => {
         filteredLogs={filteredLogs}
         onPrevClick={handlePrevClick}
         onNextClick={handleNextClick}
+        onLogClick={handleLogSelect}
         writeSlot={
           isWriting && (
             <WorkingLogWriteForm
               content={content}
               isValid={isValid}
+              isPending={isComposing}
+              submitLabel={isEditing ? '저장' : '등록'}
               onChange={handleContentChange}
               onSubmit={submit}
               onCancel={closeWrite}
@@ -68,6 +104,21 @@ const WorkingSpacePage = () => {
           )
         }
       />
+      <WorkingLogBottomSheet
+        open={isOpen}
+        onClose={handleClose}
+        onEdit={handleEditOpen}
+        onDelete={handleDelete}
+        isDeleting={isDeleting}
+      >
+        {selectedLog && (
+          <WorkingLog
+            tag={selectedLog.tag}
+            content={selectedLog.content}
+            variant={selectedLog.variant}
+          />
+        )}
+      </WorkingLogBottomSheet>
       <FloatingButton onClick={handleWriteOpen} />
     </>
   );

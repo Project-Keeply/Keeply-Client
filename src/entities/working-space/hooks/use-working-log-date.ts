@@ -1,6 +1,11 @@
 import { useState } from 'react';
+import { queryKeys } from '@shared/query/query-keys';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import type { WorkingLog } from '../types/working-log';
+import { getWorkLogList } from '../apis/work-log-api';
+import { convertToWorkingLog } from '../utils/convert-work-log';
+
+import { useUser } from '@/entities/user';
 
 const DAYS = [
   '일요일',
@@ -26,22 +31,35 @@ const formatKeyDate = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
-const useWorkingLogDate = (logs: WorkingLog[]) => {
+const useWorkingLogDate = (groupId: number) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const { user } = useUser();
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const minDate = new Date(today);
   minDate.setDate(minDate.getDate() - 6);
 
-  const isAtMin = formatKeyDate(selectedDate) === formatKeyDate(minDate);
-  const isAtMax = formatKeyDate(selectedDate) === formatKeyDate(today);
+  const from = formatKeyDate(minDate);
+  const to = formatKeyDate(today);
+
+  const { data } = useSuspenseQuery({
+    queryKey: [...queryKeys.worklog.list(groupId), from, to],
+    queryFn: () => getWorkLogList(groupId, from, to),
+  });
+
+  const logs = (data.content ?? [])
+    .filter((item) => item.workLogId !== undefined)
+    .map((item) => convertToWorkingLog(item, user.id));
+
+  const isAtMin = formatKeyDate(selectedDate) <= formatKeyDate(minDate);
+  const isAtMax = formatKeyDate(selectedDate) >= formatKeyDate(today);
 
   const handlePrevClick = () => {
-    if (isAtMin) {
-      return;
-    }
     setSelectedDate((prev) => {
+      if (formatKeyDate(prev) <= formatKeyDate(minDate)) {
+        return prev;
+      }
       const next = new Date(prev);
       next.setDate(next.getDate() - 1);
       return next;
@@ -49,10 +67,10 @@ const useWorkingLogDate = (logs: WorkingLog[]) => {
   };
 
   const handleNextClick = () => {
-    if (isAtMax) {
-      return;
-    }
     setSelectedDate((prev) => {
+      if (formatKeyDate(prev) >= formatKeyDate(today)) {
+        return prev;
+      }
       const next = new Date(prev);
       next.setDate(next.getDate() + 1);
       return next;
