@@ -10,6 +10,7 @@ export const ROUTE_PATH = {
   MANAGEMENT_WRITE: '/management/write',
   MYPAGE_WITHDRAW: '/my-page/withdraw',
   MYPAGE_TERMS: '/my-page/terms',
+  MYPAGE_INVITE: '/my-pahe/invite',
 } as const;
 
 export type Routes = (typeof ROUTE_PATH)[keyof typeof ROUTE_PATH];
