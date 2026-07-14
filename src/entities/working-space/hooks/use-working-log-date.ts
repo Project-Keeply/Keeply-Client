@@ -1,6 +1,12 @@
 import { useState } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { getWorkLogList } from '../apis/work-log-api';
 import type { WorkingLog } from '../types/working-log';
+import { convertToWorkingLog } from '../utils/convert-work-log';
+
+import { useUser } from '@/entities/user';
+import { queryKeys } from '@/shared/query/query-keys';
 
 const DAYS = [
   '일요일',
@@ -26,13 +32,26 @@ const formatKeyDate = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
-const useWorkingLogDate = (logs: WorkingLog[]) => {
+const useWorkingLogDate = (groupId: number) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const { user } = useUser();
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const minDate = new Date(today);
   minDate.setDate(minDate.getDate() - 6);
+  
+  const from = formatKeyDate(minDate);
+  const to = formatKeyDate(today);
+
+  const { data } = useSuspenseQuery({
+    queryKey: [...queryKeys.worklog.list(groupId), from, to],
+    queryFn: () => getWorkLogList(groupId, from, to),
+  });
+
+  const logs = (data.content ?? [])
+    .filter((item) => item.workLogId !== undefined)
+    .map((item) => convertToWorkingLog(item, user.id));
 
   const isAtMin = formatKeyDate(selectedDate) === formatKeyDate(minDate);
   const isAtMax = formatKeyDate(selectedDate) === formatKeyDate(today);
