@@ -9,12 +9,12 @@ interface WorkingLogProps {
 
 const WorkingLog = ({ tag, content, variant }: WorkingLogProps) => {
   return (
-    <div className='flex items-start gap-5 px-5 pb-5 bg-white'>
+    <div className="flex items-start gap-5 px-5 pb-5 bg-white">
       <span className="shrink-0">
         <Tag variant={variant} label={tag} />
       </span>
-      <p className="text-body2 text-gray-800">{content}</p>
+      <p className="text-body2 text-gray-800 leading-8">{content}</p>
     </div>
-  )
+  );
 }
 export default WorkingLog;
