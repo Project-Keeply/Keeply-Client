@@ -2,10 +2,13 @@ import { CommonHeader } from '@shared/components';
 import FloatingButton from '@shared/components/FloatingButton';
 
 import { useMyGroup } from '@/entities/group';
+import WorkingLog from '@/entities/working-space/components/WorkingLog';
 import WorkingLogList from '@/entities/working-space/components/WorkingLogList';
 import useWorkingLogDate from '@/entities/working-space/hooks/use-working-log-date';
 import {
+  useWorkingLogItem,
   useWorkingLogWrite,
+  WorkingLogBottomSheet,
   WorkingLogWriteForm,
 } from '@/features/working-space';
 
@@ -29,22 +32,38 @@ const WorkingSpacePage = () => {
     handleContentChange,
     submit,
   } = useWorkingLogWrite(groupId);
+  const {
+    selectedLog,
+    isOpen,
+    isDeleting,
+    handleLogClick,
+    handleClose,
+    handleDelete,
+  } = useWorkingLogItem(groupId);
 
   const handleWriteOpen = () => {
     if (isWriting) {
       return;
     }
+    handleClose();
     goToToday();
     openWrite();
   };
 
+  const handleLogSelect = (log: (typeof filteredLogs)[number]) => {
+    closeWrite();
+    handleLogClick(log);
+  };
+
   const handlePrevClick = () => {
     closeWrite();
+    handleClose();
     goPrevDate();
   };
 
   const handleNextClick = () => {
     closeWrite();
+    handleClose();
     goNextDate();
   };
 
@@ -58,6 +77,7 @@ const WorkingSpacePage = () => {
         filteredLogs={filteredLogs}
         onPrevClick={handlePrevClick}
         onNextClick={handleNextClick}
+        onLogClick={handleLogSelect}
         writeSlot={
           isWriting && (
             <WorkingLogWriteForm
@@ -70,6 +90,21 @@ const WorkingSpacePage = () => {
           )
         }
       />
+      <WorkingLogBottomSheet
+        open={isOpen}
+        onClose={handleClose}
+        onEdit={() => {}}
+        onDelete={handleDelete}
+        isDeleting={isDeleting}
+      >
+        {selectedLog && (
+          <WorkingLog
+            tag={selectedLog.tag}
+            content={selectedLog.content}
+            variant={selectedLog.variant}
+          />
+        )}
+      </WorkingLogBottomSheet>
       <FloatingButton onClick={handleWriteOpen} />
     </>
   );
