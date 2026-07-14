@@ -1,6 +1,7 @@
 import { CommonHeader } from '@shared/components';
 import FloatingButton from '@shared/components/FloatingButton';
 
+import { useMyGroup } from '@/entities/group';
 import WorkingLogList from '@/entities/working-space/components/WorkingLogList';
 import useWorkingLogDate from '@/entities/working-space/hooks/use-working-log-date';
 import {
@@ -9,6 +10,7 @@ import {
 } from '@/features/working-space';
 
 const WorkingSpacePage = () => {
+  const { groupId } = useMyGroup();
   const {
     displayDate,
     isAtMin,
@@ -17,7 +19,7 @@ const WorkingSpacePage = () => {
     handleNextClick: goNextDate,
     filteredLogs,
     goToToday,
-  } = useWorkingLogDate([]);
+  } = useWorkingLogDate(groupId);
   const {
     isWriting,
     content,
