@@ -35,10 +35,17 @@ const WorkingSpacePage = () => {
   const {
     selectedLog,
     isOpen,
+    mode,
+    editContent,
+    isEditValid,
     isDeleting,
     handleLogClick,
     handleClose,
     handleDelete,
+    handleEditClick,
+    handleEditChange,
+    handleEditCancel,
+    handleSave,
   } = useWorkingLogItem(groupId);
 
   const handleWriteOpen = () => {
@@ -93,9 +100,15 @@ const WorkingSpacePage = () => {
       <WorkingLogBottomSheet
         open={isOpen}
         onClose={handleClose}
-        onEdit={() => {}}
+        mode={mode}
+        onEdit={handleEditClick}
         onDelete={handleDelete}
         isDeleting={isDeleting}
+        editContent={editContent}
+        isEditValid={isEditValid}
+        onEditChange={handleEditChange}
+        onSave={handleSave}
+        onEditCancel={handleEditCancel}
       >
         {selectedLog && (
           <WorkingLog
