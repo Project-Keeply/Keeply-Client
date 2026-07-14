@@ -26,4 +26,9 @@ export const queryKeys = {
     all: ['user'] as const,
     me: () => [...queryKeys.user.all, 'me'] as const,
   },
+  worklog: {
+    all: ['worklog'] as const,
+    lists: () => [...queryKeys.worklog.all, 'list'] as const,
+    list: (groupId: number) => [...queryKeys.worklog.lists(), groupId] as const,
+  },
 } as const;
