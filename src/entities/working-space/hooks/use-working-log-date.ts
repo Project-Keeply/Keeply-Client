@@ -52,14 +52,14 @@ const useWorkingLogDate = (groupId: number) => {
     .filter((item) => item.workLogId !== undefined)
     .map((item) => convertToWorkingLog(item, user.id));
 
-  const isAtMin = formatKeyDate(selectedDate) === formatKeyDate(minDate);
-  const isAtMax = formatKeyDate(selectedDate) === formatKeyDate(today);
+  const isAtMin = formatKeyDate(selectedDate) <= formatKeyDate(minDate);
+  const isAtMax = formatKeyDate(selectedDate) >= formatKeyDate(today);
 
   const handlePrevClick = () => {
-    if (isAtMin) {
-      return;
-    }
     setSelectedDate((prev) => {
+      if (formatKeyDate(prev) <= formatKeyDate(minDate)) {
+        return prev;
+      }
       const next = new Date(prev);
       next.setDate(next.getDate() - 1);
       return next;
@@ -67,10 +67,10 @@ const useWorkingLogDate = (groupId: number) => {
   };
 
   const handleNextClick = () => {
-    if (isAtMax) {
-      return;
-    }
     setSelectedDate((prev) => {
+      if (formatKeyDate(prev) >= formatKeyDate(today)) {
+        return prev;
+      }
       const next = new Date(prev);
       next.setDate(next.getDate() + 1);
       return next;
