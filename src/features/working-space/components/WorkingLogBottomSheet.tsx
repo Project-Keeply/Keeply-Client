@@ -13,6 +13,7 @@ interface WorkingLogBottomSheetProps {
   onEditChange: (value: string) => void;
   onSave: () => void;
   onEditCancel: () => void;
+  isUpdating?: boolean;
   children: ReactNode;
 }
 
@@ -28,6 +29,7 @@ const WorkingLogBottomSheet = ({
   onEditChange,
   onSave,
   onEditCancel,
+  isUpdating = false,
   children,
 }: WorkingLogBottomSheetProps) => {
   return (
@@ -50,7 +52,7 @@ const WorkingLogBottomSheet = ({
             <Button
               variant="primary"
               onClick={onSave}
-              disabled={!isEditValid}
+              disabled={!isEditValid || isUpdating}
               className="flex-1"
             >
               저장

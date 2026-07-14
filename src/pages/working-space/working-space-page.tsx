@@ -27,6 +27,7 @@ const WorkingSpacePage = () => {
     isWriting,
     content,
     isValid,
+    isPending: isCreating,
     openWrite,
     closeWrite,
     handleContentChange,
@@ -39,6 +40,7 @@ const WorkingSpacePage = () => {
     editContent,
     isEditValid,
     isDeleting,
+    isUpdating,
     handleLogClick,
     handleClose,
     handleDelete,
@@ -90,6 +92,7 @@ const WorkingSpacePage = () => {
             <WorkingLogWriteForm
               content={content}
               isValid={isValid}
+              isPending={isCreating}
               onChange={handleContentChange}
               onSubmit={submit}
               onCancel={closeWrite}
@@ -109,6 +112,7 @@ const WorkingSpacePage = () => {
         onEditChange={handleEditChange}
         onSave={handleSave}
         onEditCancel={handleEditCancel}
+        isUpdating={isUpdating}
       >
         {selectedLog && (
           <WorkingLog
