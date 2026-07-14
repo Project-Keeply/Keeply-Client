@@ -5,7 +5,7 @@ const InvitePage = () => {
   const { group } = useMyGroup();
   return (
     <DetailPageLayout title="가입코드">
-      <InviteCodeCard inviteCode={group.inviteCode ?? ''}/>
+      <InviteCodeCard inviteCode={group.inviteCode ?? ''} />
     </DetailPageLayout>
   );
 };

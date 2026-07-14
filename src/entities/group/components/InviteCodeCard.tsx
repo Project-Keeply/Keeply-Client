@@ -1,8 +1,8 @@
 interface InviteCodeCardProps {
-  inviteCode : string;
+  inviteCode: string;
 }
 
-const InviteCodeCard = ({inviteCode}: InviteCodeCardProps) => {
+const InviteCodeCard = ({ inviteCode }: InviteCodeCardProps) => {
   return (
     <section className="pt-6">
       <h2 className="text-title2 font-bold text-black">그룹 가입 코드</h2>
@@ -16,6 +16,6 @@ const InviteCodeCard = ({inviteCode}: InviteCodeCardProps) => {
       </div>
     </section>
   );
-}
+};
 
-export default InviteCodeCard
+export default InviteCodeCard;
