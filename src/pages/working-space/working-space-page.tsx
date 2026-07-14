@@ -28,7 +28,7 @@ const WorkingSpacePage = () => {
     closeWrite,
     handleContentChange,
     submit,
-  } = useWorkingLogWrite();
+  } = useWorkingLogWrite(groupId);
 
   const handleWriteOpen = () => {
     if (isWriting) {

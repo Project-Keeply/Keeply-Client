@@ -1,8 +1,12 @@
 import { useState } from 'react';
 
-const useWorkingLogWrite = () => {
+import useCreateWorkLog from './use-create-work-log';
+
+const useWorkingLogWrite = (groupId: number) => {
   const [isWriting, setIsWriting] = useState(false);
   const [content, setContent] = useState('');
+
+  const { mutate, isPending } = useCreateWorkLog(groupId);
 
   const isValid = content.trim().length > 0;
 
@@ -20,15 +24,18 @@ const useWorkingLogWrite = () => {
   };
 
   const submit = () => {
-    if (!isValid) {
+    if (!isValid || isPending) {
       return;
     }
-    closeWrite();
+    mutate(content, {
+      onSuccess: closeWrite,
+    });
   };
   return {
     isWriting,
     content,
     isValid,
+    isPending,
     openWrite,
     closeWrite,
     handleContentChange,
