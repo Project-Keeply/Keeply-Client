@@ -11,7 +11,7 @@ const InviteCodeCard = ({ inviteCode }: InviteCodeCardProps) => {
       </p>
       <div className="mt-8 flex items-center justify-center rounded-xl bg-lightgray py-8">
         <span className="text-title1 font-bold tracking-[0.1em] text-black">
-          {inviteCode}
+          {inviteCode || '--'}
         </span>
       </div>
     </section>
