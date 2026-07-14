@@ -4,7 +4,7 @@ import { ROUTE_PATH } from '../path';
 
 import { useMyGroup } from '@/entities/group';
 
-const OwnerGuard = () => {
+const OwnerGuards = () => {
   const { group } = useMyGroup();
 
   if (group.role !== 'OWNER') {
@@ -13,4 +13,4 @@ const OwnerGuard = () => {
   return <Outlet />;
 };
 
-export default OwnerGuard;
+export default OwnerGuards;
