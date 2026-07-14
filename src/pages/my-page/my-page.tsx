@@ -11,7 +11,9 @@ const MyPage = () => {
   const { group } = useMyGroup();
 
   const isOwner = group.role === 'OWNER';
-  const visibleMenus = MYPAGE_MENUS.filter(({ ownerOnly }) => !ownerOnly || isOwner,)
+  const visibleMenus = MYPAGE_MENUS.filter(
+    ({ ownerOnly }) => !ownerOnly || isOwner,
+  );
 
   return (
     <>

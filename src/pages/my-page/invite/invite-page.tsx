@@ -4,7 +4,7 @@ import DetailPageLayout from '@/shared/layouts/DetailPageLayout';
 const InvitePage = () => {
   const { group } = useMyGroup();
   return (
-    <DetailPageLayout title="가입코드">
+    <DetailPageLayout title="초대코드">
       <InviteCodeCard inviteCode={group.inviteCode ?? ''} />
     </DetailPageLayout>
   );

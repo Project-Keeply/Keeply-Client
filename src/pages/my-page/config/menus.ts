@@ -7,7 +7,7 @@ interface MyPageMenu {
 }
 
 export const MYPAGE_MENUS: MyPageMenu[] = [
-  { label: '초대코드', path: ROUTE_PATH.MYPAGE_INVITE, ownerOnly: true},
+  { label: '초대코드', path: ROUTE_PATH.MYPAGE_INVITE, ownerOnly: true },
   { label: '탈퇴하기', path: ROUTE_PATH.MYPAGE_WITHDRAW },
   { label: '약관 및 정책', path: ROUTE_PATH.MYPAGE_TERMS },
 ];
