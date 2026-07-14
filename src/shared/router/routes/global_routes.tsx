@@ -1,7 +1,9 @@
 import AuthGuards from '@shared/router/guards/auth-guards';
+import OwnerGuards from '@shared/router/guards/owner-guards';
 import {
   AnnouncementWritePage,
   HomePage,
+  InvitePage,
   LoginCallbackPage,
   LoginPage,
   ManagementPage,
@@ -57,6 +59,15 @@ export const globalRoutes = [
           { path: ROUTE_PATH.MANAGEMENT, Component: ManagementPage },
           { path: ROUTE_PATH.MYPAGE, Component: MyPage },
         ] satisfies RouteObject[],
+      },
+      {
+        Component: OwnerGuards,
+        children: [
+          {
+            path: ROUTE_PATH.MYPAGE_INVITE,
+            Component: InvitePage,
+          },
+        ],
       },
     ],
   },
