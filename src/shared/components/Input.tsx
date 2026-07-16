@@ -3,11 +3,21 @@ interface InputProps {
   placeholder?: string;
   type?: 'text' | 'date';
   size?: 'lg' | 'md';
+  maxLength?: number;
   onChange: (value: string) => void;
 }
 
-const Input = ({ value, placeholder, type = 'text', size = 'lg', onChange }: InputProps) => {
+const Input = ({
+  value,
+  placeholder,
+  type = 'text',
+  size = 'lg',
+  maxLength,
+  onChange,
+}: InputProps) => {
   const isFilled = value.length > 0;
+  const isMaxLengthReached =
+    maxLength !== undefined && value.length >= maxLength;
 
   // lg: 온보딩(포커스/입력색 토글) / md: 글쓰기(정적 밑줄, TextArea 와 통일)
   const wrapperStyle = {
@@ -21,16 +31,32 @@ const Input = ({ value, placeholder, type = 'text', size = 'lg', onChange }: Inp
   } as const;
 
   return (
-    <div className={`w-full border-0 ${wrapperStyle[size]}`}>
-      <input
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
-        className={`w-full bg-transparent outline-none placeholder:text-gray-200 ${textStyle[size]} font-normal pb-2`}
-      />
+    <div className="w-full">
+      <div className={`w-full border-0 ${wrapperStyle[size]}`}>
+        <input
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          maxLength={maxLength}
+          onChange={(e) =>
+            onChange(
+              maxLength !== undefined
+                ? e.target.value.slice(0, maxLength)
+                : e.target.value,
+            )
+          }
+          className={`w-full bg-transparent outline-none placeholder:text-gray-200 ${textStyle[size]} font-normal pb-2`}
+        />
+      </div>
+      {maxLength !== undefined && (
+        <p
+          className={`mt-1 text-right text-caption1 ${isMaxLengthReached ? 'text-red-500' : 'text-gray-300'}`}
+        >
+          {value.length} / {maxLength}
+        </p>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

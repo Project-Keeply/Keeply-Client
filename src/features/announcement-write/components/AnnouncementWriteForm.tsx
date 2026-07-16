@@ -8,6 +8,7 @@ import {
 import WritePageLayout from '@shared/layouts/WritePageLayout';
 import { Controller } from 'react-hook-form';
 
+import { ANNOUNCEMENT_MAX_LENGTH } from '../constants';
 import useAnnouncementWriteForm from '../hooks/use-announcement-write-form';
 
 import { ANNOUNCEMENT_CATEGORIES } from '@/entities/announcement';
@@ -31,6 +32,7 @@ const AnnouncementWriteForm = () => {
               <Input
                 size="md"
                 placeholder="제목을 입력해주세요"
+                maxLength={ANNOUNCEMENT_MAX_LENGTH.TITLE}
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -69,6 +71,7 @@ const AnnouncementWriteForm = () => {
             render={({ field }) => (
               <TextArea
                 placeholder="공지사항 내용을 남겨주세요"
+                maxLength={ANNOUNCEMENT_MAX_LENGTH.CONTENT}
                 value={field.value ?? ''}
                 onChange={field.onChange}
               />
