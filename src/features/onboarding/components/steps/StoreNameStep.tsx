@@ -12,12 +12,15 @@ interface StoreNameStepProps {
   isPending: boolean;
 }
 
+const sanitizeStoreName = (value: string) =>
+  value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9() ]/g, '');
+
 const StoreNameStep = ({ onNext, onPrev, isPending }: StoreNameStepProps) => {
   const { control, setValue } = useFormContext<OnboardingFormDraft>();
   const storeName = useWatch({ control, name: 'storeName' }) ?? '';
 
   const handleChange = (value: string) => {
-    setValue('storeName', value);
+    setValue('storeName', sanitizeStoreName(value));
   };
 
   const isValid = storeNameSchema.safeParse(storeName).success;
