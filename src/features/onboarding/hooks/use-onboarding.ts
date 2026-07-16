@@ -1,3 +1,4 @@
+import { TOAST_MESSAGE } from '@shared/constants/toast-message';
 import { showErrorToast } from '@shared/utils/toast';
 import { useMutation } from '@tanstack/react-query';
 
@@ -33,7 +34,7 @@ export const useOnboarding = ({ onSuccess }: UseOnboardingOptions) => {
     },
     onSuccess,
     onError: () => {
-      showErrorToast('온보딩에 실패했어요. 잠시 후 다시 시도해주세요.');
+      showErrorToast(TOAST_MESSAGE.ONBOARDING_SUBMIT_FAIL);
     },
   });
 };

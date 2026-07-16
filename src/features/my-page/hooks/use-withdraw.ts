@@ -1,3 +1,5 @@
+import { TOAST_MESSAGE } from '@shared/constants/toast-message';
+import { showErrorToast } from '@shared/utils/toast';
 import { useMutation } from '@tanstack/react-query';
 
 import { deleteUser } from '@/entities/user';
@@ -8,5 +10,8 @@ export const useWithdraw = () => {
   return useMutation({
     mutationFn: deleteUser,
     onSuccess: clearSession,
+    onError: () => {
+      showErrorToast(TOAST_MESSAGE.WITHDRAW_FAIL);
+    },
   });
 };
