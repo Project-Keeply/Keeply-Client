@@ -7,7 +7,7 @@ interface EmptyStateProps {
 const EmptyState = ({ message }: EmptyStateProps) => {
   return (
     <div className="flex flex-col items-center justify-center gap-1">
-      <img src={emptyCharacter} alt="" className="w-100" />
+      <img src={emptyCharacter} alt="" className="w-[400px]" />
       <p className="text-body2 font-medium text-gray-300">{message}</p>
     </div>
   );
