@@ -1,4 +1,6 @@
+import { TOAST_MESSAGE } from '@shared/constants/toast-message';
 import { queryKeys } from '@shared/query/query-keys';
+import { showErrorToast } from '@shared/utils/toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteNotice } from '../apis/announcement-api';
@@ -15,6 +17,9 @@ const useDeleteAnnouncement = () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.announcement.list(groupId),
       });
+    },
+    onError: () => {
+      showErrorToast(TOAST_MESSAGE.ANNOUNCEMENT_DELETE_FAIL);
     },
   });
 };

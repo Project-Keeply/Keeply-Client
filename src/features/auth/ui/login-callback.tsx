@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { LoadingScreen } from '@shared/components';
 import { ROUTE_PATH } from '@shared/router/path';
 import { useNavigate, useSearchParams } from 'react-router';
 
@@ -23,11 +24,7 @@ const LoginCallback = () => {
     hasRequestedRef.current = true;
     mutate(code);
   }, [searchParams, mutate, navigate]);
-  return (
-    <div>
-      <p>로딩중...</p>
-    </div>
-  );
+  return <LoadingScreen />;
 };
 
 export default LoginCallback;

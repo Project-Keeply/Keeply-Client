@@ -14,6 +14,7 @@ import {
 import WritePageLayout from '@shared/layouts/WritePageLayout';
 import { Controller } from 'react-hook-form';
 
+import { DISPOSAL_MAX_LENGTH } from '../constants';
 import useDisposalWriteForm from '../hooks/use-disposal-write-form';
 
 import { DISPOSAL_CATEGORIES } from '@/entities/disposal';
@@ -37,6 +38,7 @@ const DisposalWriteForm = () => {
               <Input
                 size="md"
                 placeholder="상품명을 입력해주세요"
+                maxLength={DISPOSAL_MAX_LENGTH.TITLE}
                 value={field.value}
                 onChange={field.onChange}
               />

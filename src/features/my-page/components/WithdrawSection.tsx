@@ -3,6 +3,8 @@ import { BaseBottomSheet, Button, CheckButton } from '@shared/components';
 
 import { useWithdraw } from '../hooks/use-withdraw';
 
+import { useMyGroup } from '@/entities/group';
+
 const WITHDRAW_NOTICES = [
   '탈퇴 시 카카오 계정 연결이 해제되고, 개인정보는 지체 없이 파기됩니다.',
   '작성하신 공지사항과 운영 기록은 매장 운영을 위해 유지되며, 작성자는 ‘탈퇴한 사용자’로 표시됩니다.',
@@ -13,6 +15,8 @@ const WithdrawSection = () => {
   const [isAgreed, setIsAgreed] = useState(false);
   const [isConfirmSheetOpen, setIsConfirmSheetOpen] = useState(false);
   const { mutate: handleWithdraw, isPending } = useWithdraw();
+  const { group } = useMyGroup();
+  const isOwner = group.role === 'OWNER';
 
   const handleAgreeClick = () => {
     setIsAgreed((prev) => !prev);
@@ -28,8 +32,7 @@ const WithdrawSection = () => {
 
   const handleWithdrawConfirmClick = () => {
     handleWithdraw();
-  }
-
+  };
 
   return (
     <>
@@ -63,10 +66,15 @@ const WithdrawSection = () => {
           </div>
         </div>
         <div className="flex shrink-0 flex-col gap-4">
+          {isOwner && (
+            <p className="text-center text-body2 font-medium text-gray-300">
+              점장은 탈퇴할 수 없어요
+            </p>
+          )}
           <Button
             variant="red"
             size="large"
-            disabled={!isAgreed}
+            disabled={isOwner || !isAgreed}
             onClick={handleWithdrawClick}
           >
             탈퇴하기

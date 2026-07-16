@@ -9,6 +9,7 @@ export const workspaceCodeSchema = z
 
 export const storeNameSchema = z
   .string()
+  .trim()
   .min(1, '매장 별명을 입력해주세요.')
   .max(20, '매장 별명은 20자 이내로 입력해주세요.');
 
