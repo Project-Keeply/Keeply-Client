@@ -16,3 +16,17 @@
 [data-sonner-toast] {
   transition-duration: 100ms !important;
 }
+
+@keyframes loading-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-loading-bounce {
+  animation: loading-bounce 1.5s ease-in-out infinite;
+}

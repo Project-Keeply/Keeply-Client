@@ -6,6 +6,7 @@ export { default as EmptyState } from './EmptyState';
 export { default as ImgUploadButton } from './ImgUploadButton';
 export { default as Input } from './Input';
 export { default as ItemCard } from './ItemCard';
+export { default as LoadingScreen } from './LoadingScreen';
 export { default as MenuRow } from './MenuRow';
 export { default as Tag } from './Tag';
 export { default as TagButton } from './TagButton';
