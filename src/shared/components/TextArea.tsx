@@ -14,8 +14,6 @@ const TextArea = ({
   onChange,
 }: TextAreaProps) => {
   const id = useId();
-  const isMaxLengthReached =
-    maxLength !== undefined && value.length >= maxLength;
   return (
     <div>
       <textarea
@@ -33,9 +31,7 @@ const TextArea = ({
         className="w-full h-40 bg-transparent outline-none placeholder:text-gray-200 text-title3 font-normal pb-2 border-b border-gray-100"
       />
       {maxLength !== undefined && (
-        <p
-          className={`mt-1 text-right text-caption1 ${isMaxLengthReached ? 'text-red-500' : 'text-gray-300'}`}
-        >
+        <p className="mt-1 text-right text-caption1 text-gray-300">
           {value.length} / {maxLength}
         </p>
       )}

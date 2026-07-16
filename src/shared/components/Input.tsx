@@ -16,8 +16,6 @@ const Input = ({
   onChange,
 }: InputProps) => {
   const isFilled = value.length > 0;
-  const isMaxLengthReached =
-    maxLength !== undefined && value.length >= maxLength;
 
   // lg: 온보딩(포커스/입력색 토글) / md: 글쓰기(정적 밑줄, TextArea 와 통일)
   const wrapperStyle = {
@@ -49,9 +47,7 @@ const Input = ({
         />
       </div>
       {maxLength !== undefined && (
-        <p
-          className={`mt-1 text-right text-caption1 ${isMaxLengthReached ? 'text-red-500' : 'text-gray-300'}`}
-        >
+        <p className="mt-1 text-right text-caption1 text-gray-300">
           {value.length} / {maxLength}
         </p>
       )}
