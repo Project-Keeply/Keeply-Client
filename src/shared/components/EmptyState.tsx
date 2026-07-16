@@ -1,4 +1,4 @@
-import emptyCharacter from '@shared/assets/images/empty-state/character.png';
+import emptyCharacter from '@shared/assets/images/empty-state/character.jpg';
 
 interface EmptyStateProps {
   message: string;
