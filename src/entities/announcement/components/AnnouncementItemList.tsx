@@ -1,3 +1,4 @@
+import { EmptyState } from '@shared/components';
 import useBottomSheet from '@shared/hooks/use-bottom-sheet';
 
 import useAnnouncementChecks from '../hooks/use-announcement-checks';
@@ -63,10 +64,8 @@ const AnnouncementItemList = ({ date, items }: AnnouncementItemListProps) => {
       </div>
       <div className="flex flex-col gap-3">
         {items.length === 0 ? (
-          <div className="flex items-center justify-center rounded-[10px] bg-white py-36">
-            <p className="text-body2 font-medium text-gray-300">
-              오늘 등록된 공지사항이 없어요
-            </p>
+          <div className="flex items-center justify-center rounded-[10px] bg-white py-16">
+            <EmptyState message="등록된 공지사항이 없어요" />
           </div>
         ) : (
           items.map((item) => (

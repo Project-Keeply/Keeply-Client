@@ -1,3 +1,4 @@
+import { EmptyState } from '@shared/components';
 import { IcLeftArrow, IcRightArrow } from '@shared/icons/svgs';
 import type { ReactNode } from 'react';
 
@@ -48,17 +49,23 @@ const WorkingLogList = ({
       </div>
       <div className="flex flex-col flex-1 min-h-0 overflow-y-auto">
         {writeSlot}
-        {filteredLogs.map((log) => (
-          <WorkingLog
-            key={log.id}
-            tag={log.tag}
-            content={log.content}
-            variant={log.variant}
-            onClick={
-              log.variant === 'primary' ? () => onLogClick(log) : undefined
-            }
-          />
-        ))}
+        {filteredLogs.length === 0 && !writeSlot ? (
+          <div className="flex flex-1 items-center justify-center py-36">
+            <EmptyState message="등록된 근무일지가 없어요" />
+          </div>
+        ) : (
+          filteredLogs.map((log) => (
+            <WorkingLog
+              key={log.id}
+              tag={log.tag}
+              content={log.content}
+              variant={log.variant}
+              onClick={
+                log.variant === 'primary' ? () => onLogClick(log) : undefined
+              }
+            />
+          ))
+        )}
       </div>
     </div>
   );
