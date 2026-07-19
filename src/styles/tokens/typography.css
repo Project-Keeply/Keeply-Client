@@ -1,0 +1,27 @@
+@theme {
+  /* Headline */
+  --text-headline1: 1.8rem;
+  --text-headline2: 2.2rem;
+
+  /* Title */
+  --text-title1: 1.8rem;
+  --text-title2: 1.6rem;
+  --text-title3: 1.4rem;
+
+  /* Subtitle */
+  --text-subtitle1: 1.2rem;
+
+  /* Body */
+  --text-body1: 1.2rem;
+  --text-body2: 1.4rem;
+  --text-body4: 1.5rem;
+
+  /* Button */
+  --text-button1: 1.3rem;
+
+  /* Caption / Label */
+  --text-caption1: 1.2rem;
+  --text-caption2: 1.4rem;
+  --text-label1: 1.1rem;
+  --text-label2: 1.2rem;
+}

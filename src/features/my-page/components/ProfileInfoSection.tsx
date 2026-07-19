@@ -1,0 +1,46 @@
+import { useUser } from '@/entities/user';
+import { useLogout } from '@/features/auth';
+
+const ProfileInfoSection = () => {
+  const { user } = useUser();
+  const { mutate: handleLogout, isPending } = useLogout();
+
+  return (
+    <section className="flex items-center gap-6 px-5 py-7">
+      {user.profileImageUrl ? (
+        <img
+          src={user.profileImageUrl}
+          alt={`${user.name} 프로필 이미지`}
+          className="size-[52px] shrink-0 rounded-full object-cover"
+        />
+      ) : (
+        <div
+          aria-hidden
+          className="flex size-[52px] shrink-0 items-center justify-center rounded-full bg-primary-100"
+        >
+          <span className="text-title2 font-bold text-primary-500">
+            {user.name.charAt(0)}
+          </span>
+        </div>
+      )}
+
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-title1 font-bold text-black">{user.name}</p>
+        <p className="mt-2.5 truncate text-body2 text-gray-300">
+          {user.groupName}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        className="shrink-0 cursor-pointer text-label2 font-medium text-gray-300"
+        disabled={isPending}
+        onClick={() => handleLogout()}
+      >
+        로그아웃
+      </button>
+    </section>
+  );
+};
+
+export default ProfileInfoSection;

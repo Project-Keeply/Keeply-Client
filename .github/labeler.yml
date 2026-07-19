@@ -1,0 +1,73 @@
+enable:
+  issues: true
+  prs: true
+
+comments:
+  issues: |
+    자동 라벨러가 제목/본문 패턴을 기반으로 라벨을 적용했어요.
+    필요하면 라벨을 수정해 주세요.
+  prs: |
+    자동 라벨러가 제목/본문 패턴을 기반으로 라벨을 적용했어요.
+    필요하면 라벨을 수정해 주세요.
+
+labels:
+  '📝 DOCS':
+    include:
+      - '(?i)\bdocs?\b'
+      - '(?i)\bdocument(ation)?\b'
+      - '(?i)\breadme\b'
+      - '(?i)\bmd\b'
+    exclude: []
+
+  '⭐ INIT':
+    include:
+      - '(?i)\binit(ial)?\b'
+      - '(?i)\bbootstrap\b'
+      - '(?i)\bsetup\b'
+      - '(?i)\bscaffold(ing)?\b'
+    exclude: []
+
+  '🍀 CHORE':
+    include:
+      - '(?i)\bchore\b'
+      - '(?i)\bmaint(enance)?\b'
+      - '(?i)\bdeps?\b'
+      - '(?i)\bci\b'
+      - '(?i)\bworkflow\b'
+    exclude: []
+
+  '🎨 STYLE':
+    include:
+      - '(?i)\bstyle\b'
+      - '(?i)\bui\b'
+      - '(?i)\bux\b'
+      - '(?i)\bdesign\b'
+      - '(?i)\bcss\b'
+      - '(?i)\btailwind\b'
+    exclude: []
+
+  '👽 FEAT':
+    include:
+      - '(?i)\bfeat\b'
+      - '(?i)\bfeature\b'
+      - '(?i)\bimplement\b'
+      - '(?i)\badd(ed|ing)?\b'
+    exclude:
+      - '(?i)\brefactor\b'
+      - '(?i)\bfix\b'
+
+  '🔨 REFACTOR':
+    include:
+      - '(?i)\brefactor(ing)?\b'
+      - '(?i)\brestructure\b'
+      - '(?i)\bcleanup\b'
+      - '(?i)\breorganize\b'
+    exclude: []
+
+  '🚨 FIX':
+    include:
+      - '(?i)\bfix(ed|es|ing)?\b'
+      - '(?i)\bbug\b'
+      - '(?i)\bhotfix\b'
+      - '(?i)\berror\b'
+    exclude: []

@@ -1,0 +1,46 @@
+/* 컬러 팔레트 */
+@theme {
+  --color-*: initial;
+
+  /* white ,black*/
+  --color-white: #ffffff;
+  --color-lightgray: #F5F6F8;
+  --color-black: #37364E;
+  --color-black50: rgba(0, 0, 0, 0.5);
+  --color-black70: rgba(0, 0, 0, 0.7);
+
+  /* grayscale */
+  --color-gray-800: #5F5F5F;
+  --color-gray-300: #A6ACB5;
+  --color-gray-200: #D0D4DB;
+  --color-gray-100: #EEEEEE;
+
+  /* red */
+  --color-red-500: #FF5331;
+  --color-red-600: #E32600;
+
+  /* orange */
+  --color-orange-100: #FFF2E9;
+  --color-orange-500: #FF8031;
+
+
+  /* blue */
+  --color-primary-800: #0F2876;
+  --color-primary-700: #0D36AF;
+  --color-primary-600: #0D42EB;
+  --color-primary-500: #3164FF;
+  --color-primary-400: #688DFD;
+  --color-primary-300: #96B0FD;
+  --color-primary-200: #C9D6FD;
+  --color-primary-100: #ECF0FE;
+
+  /* Shadow */
+  --shadow-modal: 0 -8px 20px 0 rgba(245, 245, 245, 0.1);
+}
+
+@layer utilities {
+  /* Shadow */
+  .shadow-modal {
+    box-shadow: var(--shadow-modal);
+  }
+}

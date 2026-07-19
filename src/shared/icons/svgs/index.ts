@@ -1,0 +1,15 @@
+export { default as IcCart } from './ic_cart.svg?react';
+export { default as IcCheck } from './ic_check.svg?react';
+export { default as IcFillCart } from './ic_fill_cart.svg?react';
+export { default as IcFillCheck } from './ic_fill_check.svg?react';
+export { default as IcFillHome } from './ic_fill_home.svg?react';
+export { default as IcFillMyPage } from './ic_fill_my_page.svg?react';
+export { default as IcFillNote } from './ic_fill_note.svg?react';
+export { default as IcHome } from './ic_home.svg?react';
+export { default as IcLeftArrow } from './ic_left_arrow.svg?react';
+export { default as IcLogo } from './ic_logo.svg?react'
+export { default as IcMyPage } from './ic_my_page.svg?react';
+export { default as IcNote } from './ic_note.svg?react';
+export { default as IcPlus } from './ic_plus.svg?react';
+export { default as IcRightArrow } from './ic_right_arrow.svg?react';
+export { default as IcUploadArrow } from './ic_upload_arrow.svg?react';

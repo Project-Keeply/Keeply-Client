@@ -1,0 +1,11 @@
+<svg width="390" height="90" viewBox="0 0 390 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="390" height="90" fill="#AEC6E4"/>
+  <text x="24" y="40" fill="#2E4763" font-family="'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700">유통기한 관리 시작하기</text>
+  <text x="24" y="64" fill="#5A7189" font-family="'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="400">폐기 손실을 미리 줄여보세요</text>
+  <g transform="translate(300 20)">
+    <rect x="12" y="14" width="46" height="40" rx="6" fill="#5A94F5"/>
+    <rect x="12" y="14" width="46" height="12" rx="6" fill="#3F79DB"/>
+    <circle cx="35" cy="16" r="16" fill="#FF7A59"/>
+    <path d="M35 8v8l5 3" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

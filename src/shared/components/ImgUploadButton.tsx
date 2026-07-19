@@ -1,0 +1,68 @@
+import { useEffect,useRef, useState } from 'react';
+import type { ChangeEvent } from 'react';
+
+import { IcUploadArrow } from '@/shared/icons';
+
+interface ImgUploadButtonProps {
+  onChange: (files: FileList) => void;
+}
+
+const ImgUploadButton = ({ onChange }: ImgUploadButtonProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
+  const handleButtonClick = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+    inputRef.current?.click();
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if(!file) {
+      return;
+    }
+    onChange(e.target.files!);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={handleButtonClick}
+        className="h-[150px] w-[150px] cursor-pointer overflow-hidden rounded-2xl bg-primary-100"
+      >
+        {previewUrl ? (
+          <img
+            src={previewUrl}
+            alt="업로드 이미지 미리보기"
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <IcUploadArrow />
+          </div>
+        )}
+      </button>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+    </>
+  );
+};
+
+export default ImgUploadButton;

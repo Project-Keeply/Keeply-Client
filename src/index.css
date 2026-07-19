@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+@import './styles/reset.css';
+@import './styles/tokens/color.css';
+@import './styles/tokens/typography.css';
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+[data-sonner-toast] {
+  transition-duration: 100ms !important;
+}
+
+@keyframes loading-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-loading-bounce {
+  animation: loading-bounce 1.5s ease-in-out infinite;
+}
