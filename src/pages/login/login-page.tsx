@@ -1,8 +1,10 @@
+import { ErrorScreen } from '@shared/components'; // TEMP: preview
 import { IcLogo } from '@shared/icons';
 
 import { KakaoLoginButton, LoginIntro } from '@/features/auth';
 
 const LoginPage = () => {
+  return <ErrorScreen />; // TEMP: ErrorScreen UI 확인용, 되돌릴 것
   return (
     <div className="mx-auto flex h-[100dvh] max-w-[430px] flex-col bg-white pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]">
       <header className="flex items-center px-5 py-[40px]">
