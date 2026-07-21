@@ -1,3 +1,4 @@
+import { ErrorScreen } from '@shared/components';
 import AuthGuards from '@shared/router/guards/auth-guards';
 import OwnerGuards from '@shared/router/guards/owner-guards';
 import {
@@ -21,51 +22,56 @@ import AppShell from '@/app/layouts/AppShell';
 
 export const globalRoutes = [
   {
-    path: ROUTE_PATH.LOGIN,
-    Component: LoginPage,
-  },
-  {
-    path: ROUTE_PATH.LOGIN_CALLBACK,
-    Component: LoginCallbackPage,
-  },
-  {
-    path: ROUTE_PATH.ONBOARDING,
-    Component: OnboardingPage,
-  },
-  {
-    Component: AuthGuards,
+    errorElement: <ErrorScreen />,
     children: [
       {
-        path: ROUTE_PATH.ANNOUNCEMENT_WRITE,
-        Component: AnnouncementWritePage,
+        path: ROUTE_PATH.LOGIN,
+        Component: LoginPage,
       },
       {
-        path: ROUTE_PATH.MANAGEMENT_WRITE,
-        Component: ManagementWritePage,
+        path: ROUTE_PATH.LOGIN_CALLBACK,
+        Component: LoginCallbackPage,
       },
       {
-        path: ROUTE_PATH.MYPAGE_WITHDRAW,
-        Component: WithdrawPage,
+        path: ROUTE_PATH.ONBOARDING,
+        Component: OnboardingPage,
       },
       {
-        path: ROUTE_PATH.MYPAGE_TERMS,
-        Component: TermsPage,
-      },
-      {
-        Component: AppShell,
-        children: [
-          { path: ROUTE_PATH.HOME, Component: HomePage },
-          { path: ROUTE_PATH.WORKING_SPACE, Component: WorkingSpacePage },
-          { path: ROUTE_PATH.MANAGEMENT, Component: ManagementPage },
-          { path: ROUTE_PATH.MYPAGE, Component: MyPage },
-        ] satisfies RouteObject[],
-      },
-      {
-        Component: OwnerGuards,
+        Component: AuthGuards,
         children: [
           {
-            path: ROUTE_PATH.MYPAGE_INVITE,
-            Component: InvitePage,
+            path: ROUTE_PATH.ANNOUNCEMENT_WRITE,
+            Component: AnnouncementWritePage,
+          },
+          {
+            path: ROUTE_PATH.MANAGEMENT_WRITE,
+            Component: ManagementWritePage,
+          },
+          {
+            path: ROUTE_PATH.MYPAGE_WITHDRAW,
+            Component: WithdrawPage,
+          },
+          {
+            path: ROUTE_PATH.MYPAGE_TERMS,
+            Component: TermsPage,
+          },
+          {
+            Component: AppShell,
+            children: [
+              { path: ROUTE_PATH.HOME, Component: HomePage },
+              { path: ROUTE_PATH.WORKING_SPACE, Component: WorkingSpacePage },
+              { path: ROUTE_PATH.MANAGEMENT, Component: ManagementPage },
+              { path: ROUTE_PATH.MYPAGE, Component: MyPage },
+            ] satisfies RouteObject[],
+          },
+          {
+            Component: OwnerGuards,
+            children: [
+              {
+                path: ROUTE_PATH.MYPAGE_INVITE,
+                Component: InvitePage,
+              },
+            ],
           },
         ],
       },
