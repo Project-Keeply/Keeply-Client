@@ -34,6 +34,7 @@ const WorkingLogWriteForm = ({
         size="md"
         placeholder="근무일지를 입력해주세요"
         value={content}
+        autoFocus
         onChange={onChange}
       />
       <button

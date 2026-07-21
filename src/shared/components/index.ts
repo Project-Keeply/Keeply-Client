@@ -3,6 +3,7 @@ export { default as Button } from './Button';
 export { default as CheckButton } from './CheckButton';
 export { default as CommonHeader } from './CommonHeader';
 export { default as EmptyState } from './EmptyState';
+export { default as ErrorScreen } from './ErrorScreen';
 export { default as ImgUploadButton } from './ImgUploadButton';
 export { default as Input } from './Input';
 export { default as ItemCard } from './ItemCard';

@@ -28,7 +28,7 @@ const TextArea = ({
               : e.target.value,
           )
         }
-        className="w-full h-40 bg-transparent outline-none placeholder:text-gray-200 text-title3 font-normal pb-2 border-b border-gray-100"
+        className="w-full h-40 bg-transparent outline-none placeholder:text-gray-200 text-title2 font-normal pb-2 border-b border-gray-100"
       />
       {maxLength !== undefined && (
         <p className="mt-1 text-right text-caption1 text-gray-300">
