@@ -25,7 +25,7 @@ const Input = ({
 
   const textStyle = {
     lg: 'text-title1',
-    md: 'text-title3',
+    md: 'text-title2',
   } as const;
 
   return (
