@@ -4,6 +4,7 @@ interface InputProps {
   type?: 'text' | 'date';
   size?: 'lg' | 'md';
   maxLength?: number;
+  autoFocus?: boolean;
   onChange: (value: string) => void;
 }
 
@@ -13,6 +14,7 @@ const Input = ({
   type = 'text',
   size = 'lg',
   maxLength,
+  autoFocus = false,
   onChange,
 }: InputProps) => {
   const isFilled = value.length > 0;
@@ -36,6 +38,7 @@ const Input = ({
           value={value}
           placeholder={placeholder}
           maxLength={maxLength}
+          autoFocus={autoFocus}
           onChange={(e) =>
             onChange(
               maxLength !== undefined
