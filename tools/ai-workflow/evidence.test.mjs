@@ -43,6 +43,8 @@ const fixture = (t) => {
     'package.json',
     JSON.stringify({
       scripts: {
+        'workflow:harness-check':
+          'node -e "console.log(\'actual harness pass\')"',
         lint: 'node -e "console.log(\'actual pass\')"',
         'check-types':
           'node -e "console.error(\'actual failure\'); process.exit(2)"',
@@ -318,4 +320,24 @@ test('missing base, conflicting issue and nonignored local directory block recor
   f.write('.gitignore', 'node_modules\n');
   assert.equal(f.run('check', '--script', 'lint').status, 1);
   assert.equal(existsSync(path.join(f.root, f.statePath)), false);
+});
+
+test('harness check is allowed, actually executes and accumulates log/subject records', (t) => {
+  const f = fixture(t);
+  assert.equal(f.run('check', '--script', 'workflow:harness-check').status, 0);
+  assert.equal(f.run('check', '--script', 'workflow:harness-check').status, 0);
+  const records = f.state().checks;
+  assert.equal(records.length, 2);
+  records.forEach((record) => {
+    assert.equal(record.id, 'workflow:harness-check');
+    assert.equal(record.command, 'pnpm workflow:harness-check');
+    assert.equal(record.result, 'passed');
+    assert.equal(record.freshness, 'current');
+    assert.deepEqual(record.subject, f.report().subject);
+    assert.match(
+      readFileSync(path.join(f.root, record.evidence[0]), 'utf8'),
+      /actual harness pass/,
+    );
+  });
+  assert.notEqual(records[0].evidence[0], records[1].evidence[0]);
 });

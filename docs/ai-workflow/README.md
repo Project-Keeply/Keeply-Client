@@ -161,6 +161,7 @@ pnpm workflow:check --script lint
 pnpm workflow:check --script check-types
 pnpm workflow:check --script build
 pnpm workflow:check --script workflow:test
+pnpm workflow:check --script workflow:harness-check
 pnpm workflow:review --start
 pnpm workflow:review --input .tmp/ai-workflow/tasks/114/reviews/{세션}/input.json
 ```
@@ -171,7 +172,7 @@ pnpm workflow:review --input .tmp/ai-workflow/tasks/114/reviews/{세션}/input.j
 기록으로 만들며 기존 완료 조건을 통과로 추정하지 않는다. 리뷰 시작만으로는
 상태 파일을 저장하지 않으며 실제 결과 저장 시 생성한다. `.tmp`는 Git ignore되어야 한다.
 
-검사 명령은 `lint`, `check-types`, `build`, `workflow:test`만 실행한다.
+검사 명령은 `lint`, `check-types`, `build`, `workflow:test`, `workflow:harness-check`만 실행한다.
 실제 종료 코드·출력 로그·검사 전후 코드 상태를 저장한다. 실행 실패도 기록하고
 실패 종료 코드를 반환한다. 실행 중 코드가 바뀌면 성공해도 재확인 대상으로 남긴다.
 새 검사 실행은 이전 기록에 추가하며 실패 로그는 지우지 않는다.
@@ -244,6 +245,7 @@ push는 하지 않는다. 기본 기준은 `origin/develop`이며 없으면 차�
   중복·빈값·다른 이슈/브랜치·추가 설명이 섞인 연결 값은 차단한다.
 - 모든 AC는 `met`, 현재 subject, 실제 근거 파일을 가져야 한다.
   AI가 기능을 검토한 기록의 누락 검사이며 기능 자체를 자동 판정하지 않는다.
+- 모든 PR은 현재 대상의 `workflow:harness-check` 성공과 실제 로그가 필요하다. 문서 전용도 예외가 아니다.
 - 앱·의존성·빌드 설정 및 모호한 파일은 lint/check-types/build와 동작 근거를 요구한다.
   하네스/관련 CI 변경은 workflow:test와 관련 검증 근거를 요구한다.
   문서가 포함되면 docs-review가 필요하다. 문서 전용은 앱 검사 3개 각각 N/A 이유가 필요하다.
@@ -314,3 +316,48 @@ push는 하지 않는다. 기본 기준은 `origin/develop`이며 없으면 차�
 준비가 blocked면 승인된 범위의 보완을 먼저 수행한다. 해결할 수 없는 게시 예외는
 차단 이유·미확인 항목·권한을 별도로 기록하고 PR 본문에 공개한다.
 예외 승인을 ready 결과로 바꾸거나 검증 완료로 표시하지 않는다.
+
+
+## 공유 하네스 구조 검사
+
+```bash
+pnpm workflow:harness-check
+pnpm workflow:harness-check --json
+pnpm workflow:harness-check --help
+```
+
+`tools/ai-workflow/harness-check.mjs`는 공유 파일만 읽으며 자동 수정이나 상태 기록을
+하지 않는다. 통과=0, 구조/연결 진단=1, 인자/실행 오류=2다. JSON 진단은
+`file`, `code`, `reason`, `action`으로 위치·원인·조치를 제공한다.
+브랜치/기준 ref나 `.tmp`의 실제 상태가 없는 새 clone·detached CI에서도 실행한다.
+`.tmp` 내용은 읽지 않고 Git 추적/ignore 규칙만 확인한다. Git optional locks는 0이다.
+
+검사 계약은 다음과 같다.
+
+- AGENTS 필수 문서/체크리스트 링크와 Skill Routing H2 표 안의 각 실제 스킬 등록, CLAUDE의 선택적 H1과
+  `@AGENTS.md` 하나로 구성된 얇은 진입점.
+- 스킬 폴더와 같은 lowercase kebab-case `name`, 비어 있지 않은 `description`만
+  가진 YAML frontmatter. 추가/중복 필드는 오류다. 각 Claude command는 해당 원본의
+  정확한 심볼릭 링크여야 하고 대응 스킬 없는 command도 오류다.
+- 진입점에서 연결되는 Markdown의 실제 local 파일 링크 대상. Markdown AST를
+  사용해 코드 블록/인라인 코드/placeholder와 외부 URL을 구분한다. 외부 조회와
+  fragment anchor 검증은 하지 않는다.
+- 공통 package scripts와 도구 entry 명령의 정확한 연결, 테스트 실행 대상.
+  앱 공통 명령은 `eslint . --max-warnings 0`, `tsc -b --noEmit`,
+  `tsc -b && vite build`의 현재 실행 계약과 정확히 일치해야 한다.
+- 명세 템플릿의 필수 H2/H3와 초기 연결/AC placeholder, 상태 템플릿의 schemaVersion 1,
+  design/not-run/unknown 및 null/빈 배열 구조. 실제 작업 정보·증적을 템플릿에 넣지 않는다.
+- CI YAML의 develop pull_request, `ubuntu-latest`에서 실행하는 단일 정적 `ci` job과 install → harness-check →
+  workflow:test → lint → check-types → build의 unconditional 직접 명령. checkout,
+  pnpm 10, Node 22 setup이 install 전에 있어야 한다. 실행은 `pnpm run {script}` 형식이다.
+  각 단계는 `uses` 또는 `run` 하나만 가지며 setup의 입력도 현재 설정과 일치해야 한다.
+
+CI의 조건/continue-on-error/전략/defaults/needs/container/env/shell/작업경로 변경,
+trigger 추가 필터 및 동적/미지원 run은 성공으로 추정하지 않고 진단한다.
+이 유한 계약을 바꿀 때는 검사 코드와 문서 정책·관련 테스트를 함께 수정한다.
+자연어 정책 의미, 실제 기능·완료 조건 충족, 원격 CI 실행 성공은 자동 보증하지 않는다.
+
+GitHub CI는 의존성 설치 후 공유 검사와 workflow 테스트를 실행한다. 로컬 `.tmp`
+증적이 필요한 `workflow:pr-check`나 기록용 `workflow:check`는 CI에서 실행하지 않는다.
+로컬 PR 준비에서는 공유 검사도 `workflow:check --script workflow:harness-check`로
+실제 실행·로그를 누적하며 최신/current 규칙은 다른 실행 검사와 동일하다.

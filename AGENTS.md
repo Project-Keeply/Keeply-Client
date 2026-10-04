@@ -95,6 +95,8 @@ separate from `create-issue`. See [AI Development Workflow](docs/rules/ai-workfl
 
 ## Record Verification and Review
 
+- Run read-only `pnpm workflow:harness-check` for shared structure/link checks; see [Task Records](docs/ai-workflow/README.md) for its finite contract and limits.
+- For linked tasks, record the common check via `pnpm workflow:check --script workflow:harness-check`; every PR requires current success/log evidence, including docs-only changes.
 - For linked tasks, run applicable checks via `pnpm workflow:check --script {script}`.
 - Start reviews with `pnpm workflow:review --start`, inspect the generated scope,
   then save actual findings via `--input {path}`.

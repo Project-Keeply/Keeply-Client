@@ -190,6 +190,7 @@ export const assessReadiness = (report) => {
   }
   const kinds = classifyChanges(report.committedFiles);
   const required = [
+    'workflow:harness-check',
     ...(kinds.includes('app') ? ['lint', 'check-types', 'build'] : []),
     ...(kinds.includes('harness') ? ['workflow:test'] : []),
     ...(kinds.includes('docs') ? ['docs-review'] : []),

@@ -6,7 +6,7 @@ on:
 
 jobs:
   ci:
-    name: Lint, Type Check & Build
+    name: Harness, Workflow Tests, Lint, Type Check & Build
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +26,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Check AI harness
+        run: pnpm run workflow:harness-check
+
+      - name: Test AI workflow
+        run: pnpm run workflow:test
 
       - name: Lint
         run: pnpm run lint

@@ -84,6 +84,7 @@ const fixture = (t, files = ['src/app.ts']) => {
       'build',
       'docs-review',
       'workflow:test',
+      'workflow:harness-check',
     ].map((id) => check(id)),
     readinessEvidence: ['behavior', 'harness-validation'].map((kind) => ({
       ...common,
@@ -346,4 +347,35 @@ test('spec identity accepts exact plain/link values and blocks duplicate, empty 
   });
   f.write(f.specPath, f.content);
   assert.equal(f.run().code, 0);
+});
+
+test('every PR including docs-only requires current latest harness success and actual log', (t) => {
+  const f = fixture(t, ['docs/guide.md']);
+  assert.ok(f.run().report.requiredChecks.includes('workflow:harness-check'));
+  f.state.checks = f.state.checks.filter(
+    (item) => item.id !== 'workflow:harness-check',
+  );
+  assert.ok(f.codes().includes('check:workflow:harness-check'));
+  f.state.checks.push(f.check('workflow:harness-check'));
+  assert.equal(f.run().code, 0);
+  f.state.checks.push(
+    f.check('workflow:harness-check', '2026-10-05T01:00:00.000Z', 'failed'),
+  );
+  assert.ok(f.codes().includes('check:workflow:harness-check'));
+  Object.assign(f.state.checks.at(-1), {
+    result: 'not-applicable',
+    reason: 'docs only',
+  });
+  assert.ok(f.codes().includes('check:workflow:harness-check'));
+  Object.assign(f.state.checks.at(-1), {
+    result: 'passed',
+    exitCode: 0,
+    evidence: ['.tmp/missing.log'],
+  });
+  assert.ok(f.codes().includes('check:workflow:harness-check'));
+  Object.assign(f.state.checks.at(-1), {
+    evidence: ['.tmp/evidence.log'],
+    subject: { ...f.subject, headSha: 'old' },
+  });
+  assert.ok(f.codes().includes('check:workflow:harness-check'));
 });

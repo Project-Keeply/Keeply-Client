@@ -86,8 +86,8 @@ Low는 처리 여부와 이유를 남긴다. 문제를 찾지 못한 경우에�
 |---|---|
 | 애플리케이션 코드·의존성·빌드 설정 | lint, 타입 검사, build 및 변경 기능에 필요한 기존 테스트·실행 확인 |
 | UI 동작 | 위 코드 검증과 브라우저의 주요 흐름·관련 예외 확인 |
-| 문서·스킬만 변경 | 링크·지침 일관성·diff 확인. 앱 lint/타입 검사/build는 N/A로 이유 표시 |
-| 하네스 스크립트·검사 설정 | 변경 도구의 정상/실패 동작과 관련 CI 설정 확인 |
+| 문서·스킬만 변경 | workflow:harness-check, 링크·지침 일관성·diff 확인. 앱 lint/타입 검사/build는 N/A로 이유 표시 |
+| 하네스 스크립트·검사 설정 | workflow:harness-check와 workflow:test, 변경 도구의 정상/실패 동작과 관련 CI 설정 확인 |
 
 클라이언트 코드 검증 명령은 `pnpm lint`, `pnpm check-types`, `pnpm build`다.
 PR 제목은 [Git Convention](git-convention.md)의 `[Type] description` 또는
@@ -109,7 +109,7 @@ PR 제목은 [Git Convention](git-convention.md)의 `[Type] description` 또는
 
 현재 실행 도구는 전체 변경 수집기, 읽기 전용 `pnpm workflow:resume`,
 검사 기록용 `pnpm workflow:check`, 리뷰 기록용 `pnpm workflow:review`,
-읽기 전용 `pnpm workflow:pr-check`, GitHub CI다.
+읽기 전용 `pnpm workflow:pr-check`, 공유 구조 검사 `pnpm workflow:harness-check`, GitHub CI다.
 PR 준비 검사는 기록·실제 Git 상태를 함께 확인한다. 게시 권한은 별도로 확인하며
 Git push hook으로 강제하는 자동 게이트는 아니다.
 리뷰 수집기는 커밋·staged·unstaged·새 파일을 각각 수집한다.
@@ -125,5 +125,7 @@ Git push hook으로 강제하는 자동 게이트는 아니다.
 명령 실행 시 상태·검증·리뷰 증적을 로컬에 저장한다. 지속적인 파일 감시는 없다.
 PR 단계는 push 전에 `pnpm workflow:pr-check --base {명시한 ref}`를 실행한다.
 누락·실패·오래된 증적은 보완하거나 구체적 게시 예외와 사용자 권한을 기록한다.
-하네스 지침·설정 검사 및 CI 연결은 이슈 #114의 후속 구현 단계다.
+공유 하네스 구조는 `pnpm workflow:harness-check`로 검사한다. 모든 PR에서 현재 성공 기록이
+필요하며 문서 전용 앱 검사 N/A와 별개다. CI는 install 후 공유 검사·workflow:test·
+lint·check-types·build를 순서대로 실행한다. 구조 검사 범위와 한계는 작업 기록 문서를 따른다.
 기록이 아직 없을 때는 현재 대화와 실제 Git 상태·검사 결과를 기준으로 보고한다.

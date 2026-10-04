@@ -4,6 +4,7 @@
 
 변경 유형별 검증과 재검증 조건은
 [AI Development Workflow](../../docs/rules/ai-workflow.md)를 따른다.
+모든 변경은 `pnpm workflow:harness-check`로 공유 하네스 구조·연결을 확인한다.
 문서·스킬만 변경하면 링크·지침 일관성·diff를 확인하고 앱 검증은 N/A로 표시한다.
 하네스 도구 변경은 해당 도구의 정상/실패 동작을 확인한다.
 
@@ -11,6 +12,7 @@
 
 - 명세가 연결된 작업은 `pnpm workflow:check --script lint`,
   `pnpm workflow:check --script check-types`, `pnpm workflow:check --script build`로 실행·기록
+- 명세 연결 작업은 `pnpm workflow:check --script workflow:harness-check`로 공통 검사를 실제 실행·기록
 - 하네스 스크립트 변경은 `pnpm workflow:check --script workflow:test`로 정상/실패 시나리오 확인
 - 미연결 작업이나 명시적 읽기 전용 요청은 일반 `pnpm lint`, `pnpm check-types`,
   `pnpm build` 등을 실행하고 결과를 대화로 보고 (상태 파일 기록 금지)

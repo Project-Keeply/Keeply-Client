@@ -50,11 +50,17 @@ const parse = (args) => {
     operation === 'check' &&
     (options.start ||
       options.input ||
-      !['lint', 'check-types', 'build', 'workflow:test'].includes(
-        options.script,
-      ))
+      ![
+        'lint',
+        'check-types',
+        'build',
+        'workflow:test',
+        'workflow:harness-check',
+      ].includes(options.script))
   )
-    throw new Error('지원하는 검사: lint, check-types, build, workflow:test');
+    throw new Error(
+      '지원하는 검사: lint, check-types, build, workflow:test, workflow:harness-check',
+    );
   if (
     operation === 'review' &&
     (options.script ||

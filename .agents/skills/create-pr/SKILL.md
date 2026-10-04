@@ -39,6 +39,10 @@ GitHub 대상 브랜치다. 대응 관계를 추측하지 않는다.
 pnpm workflow:pr-check --issue {ISSUE_NUMBER} --base {BASE_REF} --json
 ```
 
+모든 PR은 `workflow:harness-check`의 현재 성공/실제 로그를 요구한다.
+누락 시 `pnpm workflow:check --script workflow:harness-check`로 실행·기록한다.
+문서 전용 앱 검사 N/A도 이 공통 검사를 대체하지 않는다.
+
 [Task Records](../../../docs/ai-workflow/README.md)의 규칙과 출력된 이유/다음
 조치를 확인한다. ready는 기술 준비이며 게시 권한을 뜻하지 않는다.
 blocked면 이미 승인된 범위의 보완·검증·리뷰를 수행한다. 미커밋 변경은
