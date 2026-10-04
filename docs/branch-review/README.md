@@ -13,6 +13,8 @@ This setup gives both agents the same local, diff-based pre-push review workflow
 
 ## Run manually
 
+The default base ref is `origin/develop` for feature work.
+
 ```bash
 pnpm review:scope
 ```
@@ -20,12 +22,12 @@ pnpm review:scope
 Or with a custom base ref:
 
 ```bash
-bash ./tools/branch-review/collect_scope.sh origin/develop
+bash ./tools/branch-review/collect_scope.sh origin/main
 ```
 
 ## Skill-specific wrappers
 
-- Codex skill: `skills/branch-review/SKILL.md`
+- Codex skill: `.agents/skills/branch-review/SKILL.md`
 - Claude command: `.claude/commands/branch-review.md`
 
 ## How to show "skill is active"

@@ -75,11 +75,13 @@ git branch -r | grep -E "origin/(develop|main|master)"
 ### 3.1 PR 제목 입력
 사용자에게 PR 제목을 요청한다.
 
-"PR 제목을 입력해주세요. (예: `Feat: 로그인 페이지 리디자인`)"
+"PR 제목을 입력해주세요. (예: `[Feat] 로그인 페이지 리디자인`)"
 
 - 입력받은 값을 `PR_TITLE`로 저장
-- 형식이 `Type: 설명` 패턴이 아니면 한 번 확인:
-  "`Feat: ...` 형식으로 작성하시겠어요, 아니면 그대로 사용할까요?"
+- [Git Convention](../../../docs/rules/git-convention.md)의 `[Type] description`
+  또는 `Type(scope): description` 형식을 따른다.
+- 사용자 지정 제목이 해당 형식과 다르면 맞춘 제목을 제안한다.
+  기존에 제목이나 예외가 승인됐다면 반복 확인하지 않는다.
 
 ### 3.2 중점 컨텐츠 입력
 사용자에게 PR에서 중점적으로 설명할 내용을 요청한다.

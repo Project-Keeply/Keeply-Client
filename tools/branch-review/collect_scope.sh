@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BASE_REF="${1:-origin/main}"
+BASE_REF="${1:-origin/develop}"
 OUT_DIR="${2:-.tmp/branch-review}"
 
 if ! git rev-parse --git-dir >/dev/null 2>&1; then

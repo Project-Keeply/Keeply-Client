@@ -10,7 +10,7 @@
 ## 1. 코드 품질 검증 (코드 변경 시)
 
 - `pnpm lint` 통과
-- `pnpm typecheck` 통과
+- `pnpm check-types` 통과
 - `pnpm build` 성공
 - 실패 시 원인 파악 후 재시도 (에러 무시 금지)
 

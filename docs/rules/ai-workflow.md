@@ -79,6 +79,10 @@ Low는 처리 여부와 이유를 남긴다. 문제를 찾지 못한 경우에�
 | 문서·스킬만 변경 | 링크·지침 일관성·diff 확인. 앱 lint/타입 검사/build는 N/A로 이유 표시 |
 | 하네스 스크립트·검사 설정 | 변경 도구의 정상/실패 동작과 관련 CI 설정 확인 |
 
+클라이언트 코드 검증 명령은 `pnpm lint`, `pnpm check-types`, `pnpm build`다.
+PR 제목은 [Git Convention](git-convention.md)의 `[Type] description` 또는
+`Type(scope): description` 형식을 따른다.
+
 - 검사 결과에 실제 명령, 성공/실패/미실행/N/A, 대상 코드 상태와 범위를 남긴다.
 - 실패·미실행은 통과로 인정하지 않는다. 환경상 확인할 수 없으면 한계와
   필요한 다음 확인을 명시한다. 예외로 PR을 게시한다면 사용자 승인과

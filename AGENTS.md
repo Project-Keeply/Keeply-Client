@@ -38,7 +38,7 @@ Every skill invocation follows this flight protocol:
 
 1. **Preflight** — [`.agents/checklists/preflight.md`](.agents/checklists/preflight.md) — verify task-specific context and existing authorization
 2. **Flight** — Execute skill-specific steps (from the skill's SKILL.md)
-3. **Postflight** — [`.agents/checklists/postflight.md`](.agents/checklists/postflight.md) — lint / typecheck / build / convention checks
+3. **Postflight** — [`.agents/checklists/postflight.md`](.agents/checklists/postflight.md) — `pnpm lint` / `pnpm check-types` / `pnpm build` / convention checks
 4. **Debrief** — Report using [`.agents/checklists/debrief.md`](.agents/checklists/debrief.md) format
 
 Apply the task-specific entry conditions and approval rules in
