@@ -75,6 +75,9 @@ proceed with the default criteria and report "기본 리뷰 기준 적용".
 The collector includes committed, staged, unstaged, and untracked changes in
 separate patches. Inspect actual files and binary contents as needed.
 Output must be inside the repository `.tmp` directory.
+The collector rejects symlinks in the output directory path and existing artifact
+files before writing. It resolves the repository path and verifies the final
+directory remains inside its real `.tmp` directory.
 Report the base ref, reviewed scope, findings, and unverified items.
 Recheck affected findings and validations after code changes.
 Unresolved High/Medium defects prevent a PR-ready assessment.

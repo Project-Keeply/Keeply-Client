@@ -19,6 +19,7 @@ import { assessFreshness, collectScope } from './evidence-core.mjs';
 
 const recordScript = fileURLToPath(new URL('./record.mjs', import.meta.url));
 const resumeScript = fileURLToPath(new URL('./resume.mjs', import.meta.url));
+const collectScript = fileURLToPath(new URL('./collect.mjs', import.meta.url));
 const fixture = (t) => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'keeply-evidence-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
@@ -340,4 +341,47 @@ test('harness check is allowed, actually executes and accumulates log/subject re
     );
   });
   assert.notEqual(records[0].evidence[0], records[1].evidence[0]);
+});
+
+test('scope collection rejects symlink directories before creating any external output, including CLI', (t) => {
+  for (const link of ['.tmp', '.tmp/review', '.tmp/review/nested']) {
+    const f = fixture(t);
+    const outside = mkdtempSync(
+      path.join(os.tmpdir(), 'keeply-scope-outside-'),
+    );
+    t.after(() => rmSync(outside, { recursive: true, force: true }));
+    mkdirSync(path.dirname(path.join(f.root, link)), { recursive: true });
+    symlinkSync(outside, path.join(f.root, link));
+    assert.throws(
+      () => collectScope(f.root, 'origin/develop', `${link}/output`),
+      /리뷰 출력 경로가 일반 폴더가 아닙니다/,
+    );
+    const cli = spawnSync(
+      process.execPath,
+      [collectScript, 'origin/develop', `${link}/output`],
+      {
+        cwd: f.root,
+        encoding: 'utf8',
+      },
+    );
+    assert.equal(cli.status, 1);
+    assert.match(cli.stderr, /리뷰 출력 경로가 일반 폴더가 아닙니다/);
+    assert.deepEqual(readdirSync(outside), []);
+  }
+});
+
+test('scope collection rejects existing artifact symlinks before any write and preserves external content', (t) => {
+  const f = fixture(t);
+  const outside = mkdtempSync(path.join(os.tmpdir(), 'keeply-scope-artifact-'));
+  t.after(() => rmSync(outside, { recursive: true, force: true }));
+  const sentinel = path.join(outside, 'sentinel.txt');
+  writeFileSync(sentinel, 'preserve external content');
+  mkdirSync(path.join(f.root, '.tmp/review'), { recursive: true });
+  symlinkSync(sentinel, path.join(f.root, '.tmp/review/summary.md'));
+  assert.throws(
+    () => collectScope(f.root, 'origin/develop', '.tmp/review'),
+    /리뷰 산출물이 일반 파일이 아닙니다/,
+  );
+  assert.equal(readFileSync(sentinel, 'utf8'), 'preserve external content');
+  assert.equal(existsSync(path.join(f.root, '.tmp/review/diff.patch')), false);
 });

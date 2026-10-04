@@ -5,6 +5,7 @@ import {
   mkdirSync,
   readFileSync,
   readlinkSync,
+  realpathSync,
   writeFileSync,
 } from 'node:fs';
 import path from 'node:path';
@@ -121,12 +122,48 @@ export const assessFreshness = (record, current, mismatches = []) => {
 };
 
 export const collectScope = (root, baseRef, out) => {
+  root = realpathSync(root);
   git(['rev-parse', '--verify', `${baseRef}^{commit}`], root);
   const destination = path.resolve(root, out);
   const tmpRoot = path.join(root, '.tmp');
   if (!destination.startsWith(`${tmpRoot}${path.sep}`))
     throw new Error('리뷰 산출물은 저장소 .tmp 내부에 저장해야 합니다.');
-  mkdirSync(destination, { recursive: true });
+  // Check each component before creating directories; recursive mkdir follows links.
+  let current = root;
+  path
+    .relative(root, destination)
+    .split(path.sep)
+    .forEach((segment) => {
+      current = path.join(current, segment);
+      try {
+        if (!lstatSync(current).isDirectory())
+          throw new Error(`리뷰 출력 경로가 일반 폴더가 아닙니다: ${current}`);
+      } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+        mkdirSync(current);
+      }
+    });
+  if (!realpathSync(destination).startsWith(`${tmpRoot}${path.sep}`))
+    throw new Error('리뷰 산출물은 저장소 .tmp 내부에 저장해야 합니다.');
+  // Existing output symlinks must not redirect writes outside the checked folder.
+  [
+    'diff.patch',
+    'staged.patch',
+    'unstaged.patch',
+    'untracked.patch',
+    'files.json',
+    'files.txt',
+    'commits.txt',
+    'summary.md',
+  ].forEach((file) => {
+    const target = path.join(destination, file);
+    try {
+      if (!lstatSync(target).isFile())
+        throw new Error(`리뷰 산출물이 일반 파일이 아닙니다: ${target}`);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  });
   const branch = git(['rev-parse', '--abbrev-ref', 'HEAD'], root).trim();
   const mergeBase = git(['merge-base', baseRef, 'HEAD'], root).trim();
   const range = `${mergeBase}..HEAD`;
