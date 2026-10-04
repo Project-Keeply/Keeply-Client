@@ -19,6 +19,7 @@ Read these before starting any work.
 - **[Coding Convention](docs/rules/coding-convention.md)** — component / type / function / variable / folder naming rules
 - **[Git Convention](docs/rules/git-convention.md)** — branch / commit / PR rules
 - **[AI Development Workflow](docs/rules/ai-workflow.md)** — GitHub issue-based task lifecycle
+- **[Task Records](docs/ai-workflow/README.md)** — specification templates and local status format (read when designing or resuming a task)
 - **[Local Branch Review](docs/branch-review/README.md)** — pre-push review tooling
 
 ## Skill Routing
