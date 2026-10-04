@@ -107,7 +107,7 @@ PR 제목은 [Git Convention](git-convention.md)의 `[Type] description` 또는
 
 ## 현재 구현과 예정 기능
 
-현재 자동 실행 도구는 브랜치 diff 수집 스크립트와 GitHub CI다.
+현재 실행 도구는 브랜치 diff 수집 스크립트, 읽기 전용 `pnpm workflow:resume`, GitHub CI다.
 위 규칙은 AI가 문서를 읽고 수행하는 절차이며 자동 게이트가 아니다.
 리뷰 수집기는 현재 커밋된 변경만 수집하므로 미커밋·새 파일은 별도 확인한다.
 
@@ -115,6 +115,6 @@ PR 제목은 [Git Convention](git-convention.md)의 `[Type] description` 또는
 [작업 기록 문서](../ai-workflow/README.md)에 정의되어 있다.
 명세는 Git으로 공유하고 실제 상태는 `.tmp`에 로컬로 저장한다.
 명세 저장·갱신은 현재 에이전트 지침으로 연결되어 있다. 별도 감시 프로그램은 없다.
-상태 자동 갱신, 복원 스크립트, 검증·리뷰 증적 연결,
+상태 자동 갱신, 검증·리뷰 증적 연결,
 PR 준비 검사, 하네스 자체 검사는 이슈 #114의 후속 구현 단계다.
 기록이 아직 없을 때는 현재 대화와 실제 Git 상태·검사 결과를 기준으로 보고한다.

@@ -82,6 +82,8 @@ separate from `create-issue`. See [AI Development Workflow](docs/rules/ai-workfl
 ## Keep Task Specifications Current
 
 - The main agent reads the linked task spec when starting or resuming work.
+- When resuming, run `pnpm workflow:resume` (or `--issue {number}`) and read the
+  linked spec. This is read-only; warnings and saved results do not establish current validation.
 - When agreed scope, requirements, design, acceptance criteria, or validation changes,
   update that task's `spec.md` using [Task Records](docs/ai-workflow/README.md).
   This applies during implementation, verification, and review without rerunning `logic-design`.
