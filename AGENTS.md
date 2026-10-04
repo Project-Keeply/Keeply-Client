@@ -83,7 +83,7 @@ separate from `create-issue`. See [AI Development Workflow](docs/rules/ai-workfl
 
 - The main agent reads the linked task spec when starting or resuming work.
 - When resuming, run `pnpm workflow:resume` (or `--issue {number}`) and read the
-  linked spec. This is read-only; warnings and saved results do not establish current validation.
+  linked spec. This is read-only; compare recorded freshness and disclose unverified environments.
 - When agreed scope, requirements, design, acceptance criteria, or validation changes,
   update that task's `spec.md` using [Task Records](docs/ai-workflow/README.md).
   This applies during implementation, verification, and review without rerunning `logic-design`.
@@ -92,6 +92,15 @@ separate from `create-issue`. See [AI Development Workflow](docs/rules/ai-workfl
   applies; new scope still follows the shared approval rules.
 - Subagents return proposals and evidence to the main agent; they do not concurrently
   modify shared specs/status. Skill selection alone does not authorize delegation.
+
+## Record Verification and Review
+
+- For linked tasks, run applicable checks via `pnpm workflow:check --script {script}`.
+- Start reviews with `pnpm workflow:review --start`, inspect the generated scope,
+  then save actual findings via `--input {path}`.
+- Follow [Task Records](docs/ai-workflow/README.md) for snapshot comparison,
+  unresolved findings, local history, and environment limits.
+- Respect explicit read-only requests; report results without writing task state.
 
 ## Folder Structure (Summary)
 

@@ -18,22 +18,23 @@ its default review criteria, approval rules, and revalidation conditions.
 
 ## 2) Build review scope
 
-Run:
+For a linked task with a spec, start a review session before inspecting changes:
 
 ```bash
-bash ./tools/branch-review/collect_scope.sh origin/develop
+pnpm workflow:review --start
 ```
 
-For a different PR target, pass its base ref explicitly (example):
-
-```bash
-bash ./tools/branch-review/collect_scope.sh origin/main
-```
+Use `--base {ref}` for a different PR target and `--issue {number}` for an
+explicit task. Read the generated session patches and actual relevant files.
+Follow [Local Branch Review](../../../docs/branch-review/README.md).
+For unlinked or explicitly read-only tasks, collect with
+`bash ./tools/branch-review/collect_scope.sh origin/develop` or read Git directly;
+report the lack of a task record without blocking review.
 
 ## 3) Review policy
 
-- Primary scope: changed lines in `.tmp/branch-review/diff.patch`
-- The current collector covers committed changes only. Check staged, unstaged, and untracked changes separately; include requested changes in the review or explicitly report exclusions.
+- Primary scope: changed lines across `diff.patch`, `staged.patch`, `unstaged.patch`, and `untracked.patch` in the generated directory
+- Inspect binary contents and relevant actual files separately; disclose any exclusions.
 - Secondary scope: local context in changed files only when needed
 - Avoid style-only comments unless they affect maintainability or defects
 
@@ -58,3 +59,14 @@ If nothing is found, output:
 ## 5) Rules
 
 - Do not review unrelated untouched areas unless required for impact analysis.
+
+## 6) Save actual findings
+
+For a task session, fill its `input.json` after reviewing. Preserve `subject` and
+`scope`; record result, focus points, findings (ID, severity, file, line,
+description, status, resolution), unverified items, and next actions.
+Save with `pnpm workflow:review --input {session-input-path}`.
+Keep prior unresolved findings; resolve them only with verified evidence.
+Changes since review start require rechecking the affected scope; a stale saved
+review is not a current pass. Report storage failures without claiming evidence
+was saved. Read-only requests must not write status.

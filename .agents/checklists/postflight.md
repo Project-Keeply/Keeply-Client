@@ -9,9 +9,11 @@
 
 ## 1. 코드 품질 검증 (코드 변경 시)
 
-- `pnpm lint` 통과
-- `pnpm check-types` 통과
-- `pnpm build` 성공
+- 명세가 연결된 작업은 `pnpm workflow:check --script lint`,
+  `pnpm workflow:check --script check-types`, `pnpm workflow:check --script build`로 실행·기록
+- 하네스 스크립트 변경은 `pnpm workflow:check --script workflow:test`로 정상/실패 시나리오 확인
+- 미연결 작업이나 명시적 읽기 전용 요청은 일반 `pnpm lint`, `pnpm check-types`,
+  `pnpm build` 등을 실행하고 결과를 대화로 보고 (상태 파일 기록 금지)
 - 실패 시 원인 파악 후 재시도 (에러 무시 금지)
 
 ## 2. 변경 범위 검증

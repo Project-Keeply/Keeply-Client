@@ -10,11 +10,13 @@
     "lint": "eslint . --max-warnings 0",
     "review:scope": "bash ./tools/branch-review/collect_scope.sh",
     "workflow:resume": "node tools/ai-workflow/resume.mjs",
-    "workflow:test": "node --test tools/ai-workflow/resume.test.mjs",
+    "workflow:test": "node --test tools/ai-workflow/*.test.mjs",
     "generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/shared/types/schema.d.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "workflow:check": "node tools/ai-workflow/record.mjs check",
+    "workflow:review": "node tools/ai-workflow/record.mjs review"
   },
   "prettier": "./packages/configs/prettier/index.json",
   "dependencies": {

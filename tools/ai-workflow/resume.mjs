@@ -2,6 +2,8 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
+import { captureSubject, assessFreshness } from './evidence-core.mjs';
 
 const git = (args, cwd) =>
   execFileSync('git', args, {
@@ -12,9 +14,16 @@ const git = (args, cwd) =>
   });
 
 const parseArgs = (args) => {
-  const options = { issue: null, json: false, help: false };
+  const options = {
+    issue: null,
+    json: false,
+    help: false,
+    base: 'origin/develop',
+  };
   for (let i = 0; i < args.length; i += 1) {
-    if (args[i] === '--json') options.json = true;
+    if (args[i] === '--base' && args[i + 1] && !args[i + 1].startsWith('-'))
+      options.base = args[++i];
+    else if (args[i] === '--json') options.json = true;
     else if (args[i] === '--help') options.help = true;
     else if (
       args[i] === '--issue' &&
@@ -26,7 +35,7 @@ const parseArgs = (args) => {
         throw new Error('이슈 번호가 너무 큽니다.');
     } else
       throw new Error(
-        '사용법: workflow:resume [--issue 양의정수] [--json] [--help]',
+        '사용법: workflow:resume [--issue 양의정수] [--base ref] [--json] [--help]',
       );
   }
   return options;
@@ -63,7 +72,7 @@ const isStrings = (value) =>
   Array.isArray(value) && value.every((item) => typeof item === 'string');
 const isRevision = (value) =>
   value === null || (Number.isSafeInteger(value) && value > 0);
-const validState = (value) =>
+export const validState = (value) =>
   isObject(value) &&
   value.schemaVersion === 1 &&
   isRevision(value.issue) &&
@@ -116,37 +125,10 @@ const validState = (value) =>
       ['open', 'resolved', 'accepted'].includes(item.status),
   );
 
-const assessRecord = (record, report) => {
-  const subject = record.subject;
-  const reasons = [];
-  if (record.freshness === 'needs-recheck')
-    reasons.push('기록이 재확인 대상으로 표시됨');
-  if (subject) {
-    if (subject.headSha && subject.headSha !== report.headSha)
-      reasons.push('HEAD 변경');
-    if (subject.baseRef && subject.baseRef !== report.baseRef)
-      reasons.push('기준 ref 변경');
-    if (subject.baseSha && report.baseSha && subject.baseSha !== report.baseSha)
-      reasons.push('기준 SHA 변경');
-    if (
-      subject.specRevision &&
-      report.spec?.revision &&
-      subject.specRevision !== report.spec.revision
-    )
-      reasons.push('명세 버전 변경');
-  }
-  if (report.stateMismatches.length) reasons.push('작업 상태 연결 불일치');
-  return {
-    recordedResult: record.result,
-    recordedFreshness: record.freshness,
-    effectiveFreshness: reasons.length ? 'needs-recheck' : 'unknown',
-    reasons: reasons.length
-      ? reasons
-      : ['작업 트리 지문·환경 비교 미구현: 현재 유효성 확인 필요'],
-  };
-};
+const assessRecord = (record, report) =>
+  assessFreshness(record, report.subject, report.stateMismatches);
 
-const buildReport = (options) => {
+export const buildReport = (options) => {
   let root;
   try {
     root = git(['rev-parse', '--show-toplevel'], process.cwd()).trim();
@@ -170,7 +152,8 @@ const buildReport = (options) => {
     branch,
     headSha,
     issue,
-    baseRef: 'origin/develop',
+    baseRef: options.base ?? 'origin/develop',
+    subject: null,
     baseSha: null,
     changes: parseChanges(
       git(['status', '--porcelain=v1', '-z', '--untracked-files=all'], root),
@@ -197,7 +180,7 @@ const buildReport = (options) => {
       .filter(Boolean);
   } catch {
     report.warnings.push(
-      'origin/develop 조회/비교 불가. fetch 또는 기준 브랜치를 별도로 확인하세요.',
+      `${report.baseRef} 조회/비교 불가. fetch 또는 기준 브랜치를 별도로 확인하세요.`,
     );
   }
   if (!issue) {
@@ -238,6 +221,11 @@ const buildReport = (options) => {
       report.stateMismatches.push('specRevision');
     }
   } else report.warnings.push(`명세 없음: ${specPath}`);
+  try {
+    report.subject = captureSubject(report);
+  } catch (error) {
+    report.warnings.push(`코드 상태 수집 실패: ${error.message}`);
+  }
   const statePath = `.tmp/ai-workflow/tasks/${issue}/status.json`;
   const rawState = readOptional(root, statePath, report.warnings);
   if (rawState === null)
@@ -283,7 +271,7 @@ const buildReport = (options) => {
       '명세의 완료 조건과 실제 변경을 확인하고 남은 작업을 기록하세요.',
     );
   report.warnings.push(
-    '복원은 기록 열람입니다. 검증 실행·작업 트리 지문/환경 비교·PR 준비 판정은 수행하지 않습니다.',
+    '복원은 기록과 현재 코드·기록된 환경을 비교합니다. 검증 재실행·외부 환경 확인·PR 준비 판정은 수행하지 않습니다.',
   );
   return report;
 };
@@ -347,21 +335,26 @@ const formatReport = (report) => {
   return `${lines.join('\n')}\n`;
 };
 
-try {
-  const options = parseArgs(process.argv.slice(2));
-  if (options.help)
-    process.stdout.write(
-      'workflow:resume [--issue 양의정수] [--json] [--help]\n현재 저장소의 명세·상태·Git 변경을 읽습니다. 파일 변경이나 원격 조회는 하지 않습니다.\n',
-    );
-  else {
-    const report = buildReport(options);
-    process.stdout.write(
-      options.json
-        ? `${JSON.stringify(report, null, 2)}\n`
-        : formatReport(report),
-    );
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
+  try {
+    const options = parseArgs(process.argv.slice(2));
+    if (options.help)
+      process.stdout.write(
+        'workflow:resume [--issue 양의정수] [--base ref] [--json] [--help]\n현재 저장소의 명세·상태·Git 변경을 읽습니다. 파일 변경이나 원격 조회는 하지 않습니다.\n',
+      );
+    else {
+      const report = buildReport(options);
+      process.stdout.write(
+        options.json
+          ? `${JSON.stringify(report, null, 2)}\n`
+          : formatReport(report),
+      );
+    }
+  } catch (error) {
+    process.stderr.write(`작업 복원 실패: ${error.message}\n`);
+    process.exitCode = 1;
   }
-} catch (error) {
-  process.stderr.write(`작업 복원 실패: ${error.message}\n`);
-  process.exitCode = 1;
 }

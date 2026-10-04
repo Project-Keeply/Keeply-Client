@@ -26,9 +26,10 @@ JSON 출력에는 명세 본문도 담는다. GitHub API는 조회하지 않으�
 검증을 실행하지 않는다. 다음 작업이 없으면 명세와 실제 변경을 확인하라고 안내하며
 단계나 완료 상태를 추정하지 않는다.
 
-검증·리뷰의 기록상 유효성과 복원 시 판단을 분리한다. 알려진 HEAD/기준 SHA/
-명세 버전이 다르면 `needs-recheck`로 표시한다. 아직 작업 트리 지문·환경 비교가
-구현되지 않아 나머지 결과도 `unknown`이며 현재 통과나 PR 준비 완료로 인정하지 않는다.
+검증·리뷰의 기록상 유효성과 복원 시 판단을 분리한다. HEAD/기준 SHA/명세 버전/
+작업 트리 지문/기록된 환경이 모두 같으면 `current`, 다르면 `needs-recheck`,
+필수 대상 정보가 없으면 `unknown`으로 표시한다. 유효성은 검사 성공과 별개다.
+`current`인 실패도 실패이며, 복원 명령 자체는 PR 준비 완료를 판정하지 않는다.
 누락된 기준 ref는 경고하며 fetch나 다른 ref로의 자동 대체는 수행하지 않는다.
 정상 복원(경고 포함)은 종료 코드 0, 잘못된 인자·저장소 접근 실패는 1이다.
 
@@ -88,7 +89,7 @@ JSON 출력에는 명세 본문도 담는다. GitHub API는 조회하지 않으�
 ## 상태 형식
 
 `schemaVersion: 1`은 이 문서에서 정한 기록 형식의 버전이다. 현재 JSON 스키마
-검증기는 없으므로 형식을 바꾸면 문서와 템플릿도 함께 갱신한다.
+파일은 없으며 명령에서 기본 구조를 검사한다. 형식을 바꾸면 코드·문서·템플릿도 함께 갱신한다.
 모든 경로는 저장소 기준 상대 경로, 시간은 시간대가 포함된 ISO 8601 문자열이다.
 `null`은 미확인/미설정 값이며 성공이나 일치로 인정하지 않는다.
 
@@ -101,6 +102,7 @@ JSON 출력에는 명세 본문도 담는다. GitHub API는 조회하지 않으�
 | `acceptance` | 완료 조건별 상태와 실제 근거 |
 | `checks` | 개별 검사 명령·결과·범위·시각·대상 코드 |
 | `review` | 리뷰 결과·범위·지적사항·미확인 항목·대상 코드 |
+| `reviewHistory` | 이전 리뷰 기록 배열 (기존 상태에서는 생략 가능) |
 
 `acceptance` 항목은 `id`, `status`, `evidence`를 갖는다.
 상태는 `pending`, `met`, `not-met`, `needs-recheck`다. 완료 조건을 수정하거나
@@ -141,14 +143,60 @@ HEAD, 추적/비추적 파일 내용의 상태를 구분해야 한다.
 }
 ```
 
-`worktreeFingerprint`의 계산은 후속 증적 연결 단계에서 구현한다.
-현재는 대상 파일·내용을 직접 확인하며 지문을 지어내지 않는다.
-지문이 없거나 대상 일치를 확인할 수 없으면 자동 PR 준비 판정에 사용할 수 없다.
-환경 변경도 관련 검증의 유효성에 영향을 준다. `environment`는 사용한 런타임·
-환경의 비밀값 없는 요약이며 자동 수집 형식은 후속 단계에서 정한다.
+`worktreeFingerprint`는 Git 추적 파일과 ignore되지 않은 새 파일의 경로·내용·
+실행 권한·심볼릭 링크 대상, index의 staged 상태로 계산한 SHA-256 값이다.
+ignored 파일은 제외하며 외부 심볼릭 링크의 내용은 읽지 않는다.
+Git submodule은 이 구현에서 지원하지 않으며 증적 수집을 중단한다.
+파일 수와 이름만 같아도 내용이 바뀌면 지문이 달라진다. 삭제·stage·새 파일도 반영된다.
+`environment`는 Node 버전·OS/아키텍처·pnpm 버전·설치 상태 파일의 해시를 기록한다.
+환경변수·외부 API·DB 상태·ignored 파일 변화는 감지하지 않으므로 실행 환경에
+의존하는 검증은 별도 확인한다. 그 한계를 근거로 자동 실행 성공을 보장하지 않는다.
+
+## 검사와 리뷰 증적 기록
+
+```bash
+pnpm workflow:check --script lint
+pnpm workflow:check --script check-types
+pnpm workflow:check --script build
+pnpm workflow:check --script workflow:test
+pnpm workflow:review --start
+pnpm workflow:review --input .tmp/ai-workflow/tasks/114/reviews/{세션}/input.json
+```
+
+각 명령은 현재 브랜치 이슈를 사용한다. `--issue {번호}`, `--base {ref}`로 지정할 수
+있지만 브랜치 이슈와 충돌하면 기록을 중단한다. 명세·기준 ref가 없거나 상태가
+손상/다른 작업에 연결됐으면 덮어쓰지 않고 오류를 알린다. 상태가 없으면 빈 초기
+기록으로 만들며 기존 완료 조건을 통과로 추정하지 않는다. 리뷰 시작만으로는
+상태 파일을 저장하지 않으며 실제 결과 저장 시 생성한다. `.tmp`는 Git ignore되어야 한다.
+
+검사 명령은 `lint`, `check-types`, `build`, `workflow:test`만 실행한다.
+실제 종료 코드·출력 로그·검사 전후 코드 상태를 저장한다. 실행 실패도 기록하고
+실패 종료 코드를 반환한다. 실행 중 코드가 바뀌면 성공해도 재확인 대상으로 남긴다.
+새 검사 실행은 이전 기록에 추가하며 실패 로그는 지우지 않는다.
+검사 로그에는 프로그램 출력이 그대로 들어가므로 민감값 출력은 검사 코드에서 피한다.
+
+리뷰 시작은 diff·staged/unstaged·새 파일 목록 및 patch와 대상 스냅샷을 저장하고
+입력 파일 경로를 출력한다. AI가 실제 리뷰 후 입력 파일의 `result`, `focusPoints`,
+`findings`, `unverified`, `nextActions`를 작성하고 저장 명령을 실행한다.
+초기 result는 `not-run`이므로 그대로 저장하면 오류다. `subject`와 `scope`는 시작
+시점의 값으로 유지한다. 입력은 생성한 세션 경로에서만 받는다.
+
+리뷰 파일은 `no-blocking-findings` 또는 `changes-required`를 사용한다.
+High/Medium의 open/accepted 결함이 있으면 결과는 `changes-required`여야 한다.
+지적에는 고정 ID, 심각도, 파일·줄, 설명, 상태, 해결 근거를 포함한다.
+수정 후 새 세션에서 재리뷰하고 같은 ID의 해결 여부와 근거를 기록한다.
+미확인 범위는 숨기지 않는다. 명령은 AI 판단을 저장하며 자동으로 코드를 리뷰하지 않는다.
+
+리뷰 저장 시 코드가 바뀌었으면 당시 결과는 보존하되 현재 유효성은 재확인으로
+기록한다. 이전 리뷰는 `reviewHistory`에 보관하고 `review`는 최신 결과다.
+기록 명령은 state 파일 충돌을 막는 로컬 lock과 임시 파일 rename을 사용한다.
+중단으로 lock이 남으면 다른 기록 작업이 끝났는지 확인한 뒤 수동 정리한다.
+복원은 lock을 만들거나 유효성 필드를 파일에 덮어쓰지 않고 실제 상태와 비교한다.
+완료 조건 자동 판정과 PR 준비 검사기는 아직 없다.
 
 `review.result`는 `not-run`, `changes-required`, `no-blocking-findings` 중 하나다.
-`review.scope`는 포함한 경로와 제외 범위를 설명하고, `focusPoints`가 비어 있으면 기본 기준을 쓴다.
+`review.scope`는 수집한 대상 경로 목록이며 제외·미확인 범위는 `unverified`에 적는다.
+`focusPoints`가 비어 있으면 기본 기준을 쓴다.
 지적사항은 `id`, `severity`(High/Medium/Low), `file`, `line`, `description`,
 `status`(open/resolved/accepted), `resolution`을 기록한다.
 High/Medium이 남거나 미확인 범위가 필요한 완료 조건에 영향을 주면 준비 완료로 표시하지 않는다.
