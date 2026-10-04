@@ -2,7 +2,7 @@
 
 공통 작업 정책은 [AI Development Workflow](../rules/ai-workflow.md)를 따른다.
 아래 템플릿을 에이전트가 읽고 명세를 작성한다. 별도 대화 감시·자동 생성
-프로그램과 PR 검사기는 아직 없다. 작업 복원은 아래 읽기 전용 명령을 사용한다.
+프로그램은 없다. PR 준비는 아래 읽기 전용 검사로 확인한다. 작업 복원은 아래 읽기 전용 명령을 사용한다.
 
 ## 작업 복원
 
@@ -104,9 +104,11 @@ JSON 출력에는 명세 본문도 담는다. GitHub API는 조회하지 않으�
 | `review` | 리뷰 결과·범위·지적사항·미확인 항목·대상 코드 |
 | `reviewHistory` | 이전 리뷰 기록 배열 (기존 상태에서는 생략 가능) |
 
-`acceptance` 항목은 `id`, `status`, `evidence`를 갖는다.
+`acceptance` 항목은 `id`, `status`, `evidence`를 갖는다. PR 준비의 `met` 판단에는
+`subject`와 `freshness`도 필요하며 현재 코드·명세·환경과 비교한다.
 상태는 `pending`, `met`, `not-met`, `needs-recheck`다. 완료 조건을 수정하거나
 관련 구현이 바뀌면 `met`를 그대로 유지하지 말고 `needs-recheck`로 바꾼다.
+실제 재확인 후 현재 subject와 근거를 기록한다.
 
 `checks` 항목은 아래 구조를 사용한다. 실행하지 않은 검사에는 실행 결과나
 시각을 만들지 않는다. N/A에는 적용되지 않는 이유를 적는다.
@@ -192,7 +194,7 @@ High/Medium의 open/accepted 결함이 있으면 결과는 `changes-required`여
 기록 명령은 state 파일 충돌을 막는 로컬 lock과 임시 파일 rename을 사용한다.
 중단으로 lock이 남으면 다른 기록 작업이 끝났는지 확인한 뒤 수동 정리한다.
 복원은 lock을 만들거나 유효성 필드를 파일에 덮어쓰지 않고 실제 상태와 비교한다.
-완료 조건 자동 판정과 PR 준비 검사기는 아직 없다.
+완료 조건 기능 자체는 자동 판정하지 않는다. PR 준비 검사는 아래 기록·대상 검사를 사용한다.
 
 `review.result`는 `not-run`, `changes-required`, `no-blocking-findings` 중 하나다.
 `review.scope`는 수집한 대상 경로 목록이며 제외·미확인 범위는 `unverified`에 적는다.
@@ -211,8 +213,104 @@ High/Medium이 남거나 미확인 범위가 필요한 완료 조건에 영향�
 2. 구현 후 실제 검사 결과를 기록한다. 필요한 검사 실패·미실행은 남은 작업으로 둔다.
 3. 리뷰 결과와 수정 필요 사항을 기록하고 수정 시 관련 결과를 재확인한다.
 4. 필요한 검사·완료 조건·리뷰가 현재 변경에 유효할 때 `pr-ready`로 표시한다.
-5. `phase` 값만으로 PR 준비를 증명하지 않는다. 향후 검사기는 실제 Git 상태와 기록을 함께 확인해야 한다.
+5. `phase` 값만으로 PR 준비를 증명하지 않는다. `workflow:pr-check`가 실제 Git 상태와 기록을 함께 확인한다.
 6. `done`은 PR 생성 시점이 아니라 이슈 완료 조건과 팀의 완료 처리를 확인한 뒤 사용한다.
 
 로컬 파일은 작업이 끝나도 자동 삭제하지 않는다. 필요할 때 직접 정리할 수 있으며,
 삭제하면 로컬 증적은 사라진다. 미구현 기능을 수행한 것으로 기록하지 않는다.
+
+
+## PR 준비 검사
+
+```bash
+pnpm workflow:pr-check
+pnpm workflow:pr-check --issue 114 --base origin/develop --json
+```
+
+읽기 전용이며 fetch, GitHub 인증/조회, 검사 실행, 상태 쓰기, stage, commit,
+push는 하지 않는다. 기본 기준은 `origin/develop`이며 없으면 차단한다.
+`main`으로 자동 대체하지 않는다. 종료 코드는 ready=0, blocked=1,
+잘못된 인자/실행 오류=2다. JSON에는 차단 이유와 다음 조치가 포함된다.
+`phase: pr-ready`만으로 통과하지 않는다. 기술 준비와 게시 권한은 별개다.
+이 명령은 Git push hook이 아니며 스킬 절차에서 실행한다.
+
+검사 규칙:
+
+- 이슈 연결 작업 브랜치, 명세의 이슈/브랜치/고유 AC, 상태 연결·버전,
+  확인 가능한 기준 ref, 기준 대비 커밋된 변경과 clean 작업 트리가 필요하다.
+  명세의 `- 이슈:`와 `- 브랜치:`는 각각 정확히 하나여야 한다. 이슈 값은
+  `#114`, `#114 / https://...`, `[#114](https://...)` 형식을 지원한다.
+  브랜치 값은 실제 이름 그대로 또는 백틱으로 감싼 이름이어야 한다.
+  중복·빈값·다른 이슈/브랜치·추가 설명이 섞인 연결 값은 차단한다.
+- 모든 AC는 `met`, 현재 subject, 실제 근거 파일을 가져야 한다.
+  AI가 기능을 검토한 기록의 누락 검사이며 기능 자체를 자동 판정하지 않는다.
+- 앱·의존성·빌드 설정 및 모호한 파일은 lint/check-types/build와 동작 근거를 요구한다.
+  하네스/관련 CI 변경은 workflow:test와 관련 검증 근거를 요구한다.
+  문서가 포함되면 docs-review가 필요하다. 문서 전용은 앱 검사 3개 각각 N/A 이유가 필요하다.
+- `checkedAt`/`reviewedAt`은 `new Date().toISOString()`의 정규 UTC 형식
+  `YYYY-MM-DDTHH:mm:ss.sssZ`여야 한다. 오프셋 표현이나 밀리초가 없는
+  일반 ISO 시각은 PR 준비 기록으로 인정하지 않는다.
+- 동일 검사 ID의 최신 checkedAt을 선택한다. 형식 오류/동일 시각은 차단한다.
+  최신 성공은 오래된 실패를 대체하지만 최신 실패를 옛 성공으로 숨길 수 없다.
+  N/A는 동일 대상에서 실패한 검사를 숨기지 못한다.
+  실행 검사는 passed, exitCode 0, current, 실제 `.log` 파일이 필요하다.
+- 최신 리뷰는 current/no-blocking-findings, 근거 파일과 모든 변경 파일의 scope가 필요하다.
+  history의 미해결 ID를 누락할 수 없다. 미해결 High/Medium은 차단하고
+  Low도 처리 상태와 구체적 resolution을 요구한다.
+- 미확인 항목은 AC 영향이 없다는 AI 판단과 파일 근거가 없으면 차단한다.
+  외부 API/DB/환경변수와 로컬 ref의 원격 최신 여부는 자동 보증하지 않는다.
+- 근거 경로는 저장소 내부 실제 일반 파일이어야 한다. 절대/탈출 경로와 외부를
+  가리키는 심볼릭 링크는 거부한다. 근거 내용의 진실성은 AI 리뷰 책임이다.
+
+### 수동 판단 기록
+
+메인 에이전트가 실제 수행한 판단만 로컬 status.json에 기록한다.
+`workflow:resume --json`의 **현재 subject 객체 전체**를 아래 `subject`에 복사한다.
+`freshness`만 current로 바꾸어 오래된 대상을 통과시키면 안 된다.
+근거 파일에는 관측한 결과·범위·명령·한계·AC별 판단 이유를 작성한다.
+이 수동 형식은 명령 실행 기록을 대체하지 않는다. 기존 state 필드를 유지한다.
+
+```json
+{
+  "acceptance": [
+    { "id": "AC-1", "status": "met", "freshness": "current", "subject": {},
+      "evidence": [".tmp/ai-workflow/tasks/114/ac-review.md"] }
+  ],
+  "readinessEvidence": [
+    { "kind": "harness-validation", "result": "passed", "freshness": "current",
+      "checkedAt": "2026-10-04T12:00:00.000Z", "subject": {},
+      "reason": "정상/실패 시나리오와 관련 CI 설정을 실제 검토함",
+      "evidence": [".tmp/ai-workflow/tasks/114/harness-review.md"] }
+  ]
+}
+```
+
+앱 변경은 같은 형식의 `kind: "behavior"`로 필요한 기능 동작 확인을 기록한다.
+앱과 하네스가 모두 포함되면 두 종류가 필요하다. 불필요한 추가 실행은 강제하지
+않지만 해당 변경에 대한 실제 확인 범위와 이유를 파일에 명시한다.
+코드/명세/환경이 바뀌면 AC 판단과 관련 수동 근거를 다시 확인한다.
+
+문서 검토는 `checks`에 id `docs-review`, command `manual docs review`, result
+`passed`, exitCode 0, checkedAt, subject, freshness `current`, `.log` evidence를
+기록한다. 실제 링크·지침·diff 검토 결과를 로그 파일에 쓴다.
+문서 전용 앱 N/A는 기존 checks에 다음 형식을 각각 lint/check-types/build ID로 추가한다.
+
+```json
+{ "id": "lint", "command": "pnpm lint", "result": "not-applicable",
+  "freshness": "current", "checkedAt": "2026-10-04T12:01:00.000Z", "subject": {},
+  "reason": "변경이 문서/스킬뿐이며 앱·의존성·설정에 영향 없음", "evidence": [] }
+```
+
+`workflow:check`는 실제 명령 실행용이며 N/A/docs-review는 자동 기록하지 않는다.
+리뷰의 unverified가 있으면 실제 판단 후 input.json에 다음 필드를 추가해 저장한다.
+영향이 있거나 불명확하면 `none`으로 조작하지 말고 추가 검증 또는 게시 예외 절차를 따른다.
+
+```json
+{ "unverifiedAssessment": { "acceptanceImpact": "none",
+  "reason": "미확인 외부 환경과 이번 AC의 관계를 검토한 구체적 이유",
+  "evidence": [".tmp/ai-workflow/tasks/114/environment-limits.md"] } }
+```
+
+준비가 blocked면 승인된 범위의 보완을 먼저 수행한다. 해결할 수 없는 게시 예외는
+차단 이유·미확인 항목·권한을 별도로 기록하고 PR 본문에 공개한다.
+예외 승인을 ready 결과로 바꾸거나 검증 완료로 표시하지 않는다.

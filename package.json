@@ -9,6 +9,7 @@
     "check-types": "tsc -b --noEmit",
     "lint": "eslint . --max-warnings 0",
     "review:scope": "bash ./tools/branch-review/collect_scope.sh",
+    "workflow:pr-check": "node tools/ai-workflow/pr-check.mjs",
     "workflow:resume": "node tools/ai-workflow/resume.mjs",
     "workflow:test": "node --test tools/ai-workflow/*.test.mjs",
     "generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/shared/types/schema.d.ts",

@@ -108,8 +108,10 @@ PR 제목은 [Git Convention](git-convention.md)의 `[Type] description` 또는
 ## 현재 구현과 예정 기능
 
 현재 실행 도구는 전체 변경 수집기, 읽기 전용 `pnpm workflow:resume`,
-검사 기록용 `pnpm workflow:check`, 리뷰 기록용 `pnpm workflow:review`, GitHub CI다.
-위 규칙은 AI가 문서를 읽고 수행하는 절차이며 자동 게이트가 아니다.
+검사 기록용 `pnpm workflow:check`, 리뷰 기록용 `pnpm workflow:review`,
+읽기 전용 `pnpm workflow:pr-check`, GitHub CI다.
+PR 준비 검사는 기록·실제 Git 상태를 함께 확인한다. 게시 권한은 별도로 확인하며
+Git push hook으로 강제하는 자동 게이트는 아니다.
 리뷰 수집기는 커밋·staged·unstaged·새 파일을 각각 수집한다.
 연결된 작업의 검사는 `pnpm workflow:check --script {명령}`으로 실제 결과·로그를 남긴다.
 리뷰는 `pnpm workflow:review --start`로 대상 상태를 저장한 뒤 결과를 기록한다.
@@ -121,5 +123,7 @@ PR 제목은 [Git Convention](git-convention.md)의 `[Type] description` 또는
 명세는 Git으로 공유하고 실제 상태는 `.tmp`에 로컬로 저장한다.
 명세 저장·갱신은 현재 에이전트 지침으로 연결되어 있다. 별도 감시 프로그램은 없다.
 명령 실행 시 상태·검증·리뷰 증적을 로컬에 저장한다. 지속적인 파일 감시는 없다.
-PR 준비 검사와 하네스 지침·설정 검사 및 CI 연결은 이슈 #114의 후속 구현 단계다.
+PR 단계는 push 전에 `pnpm workflow:pr-check --base {명시한 ref}`를 실행한다.
+누락·실패·오래된 증적은 보완하거나 구체적 게시 예외와 사용자 권한을 기록한다.
+하네스 지침·설정 검사 및 CI 연결은 이슈 #114의 후속 구현 단계다.
 기록이 아직 없을 때는 현재 대화와 실제 Git 상태·검사 결과를 기준으로 보고한다.

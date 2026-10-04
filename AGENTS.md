@@ -102,6 +102,14 @@ separate from `create-issue`. See [AI Development Workflow](docs/rules/ai-workfl
   unresolved findings, local history, and environment limits.
 - Respect explicit read-only requests; report results without writing task state.
 
+## Check PR Readiness Before Publication
+
+- Before push/PR, run read-only `pnpm workflow:pr-check --base {explicit ref}`.
+- Follow [Task Records](docs/ai-workflow/README.md) for current AC/check/review evidence,
+  blockers, manual judgments, and limitations. A phase value alone is insufficient.
+- Follow `create-pr` to prepare the concrete title/body/preview before push and reuse
+  existing publication authorization. Exceptions remain blocked technical results.
+
 ## Folder Structure (Summary)
 
 ```
