@@ -1,0 +1,1 @@
+../../.agents/skills/logic-architecture/SKILL.md

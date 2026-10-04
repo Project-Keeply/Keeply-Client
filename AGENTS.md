@@ -18,6 +18,8 @@ Read these before starting any work.
 
 - **[Coding Convention](docs/rules/coding-convention.md)** — component / type / function / variable / folder naming rules
 - **[Git Convention](docs/rules/git-convention.md)** — branch / commit / PR rules
+- **[AI Development Workflow](docs/rules/ai-workflow.md)** — GitHub issue-based task lifecycle
+- **[Task Records](docs/ai-workflow/README.md)** — specification templates, ongoing updates, and local status format
 - **[Local Branch Review](docs/branch-review/README.md)** — pre-push review tooling
 
 ## Skill Routing
@@ -26,9 +28,9 @@ Use the following skills based on task type. Natural language triggers auto-matc
 
 | Task Type | Skill | Trigger Examples |
 |---|---|---|
-| Start Notion task (Notion → GitHub) | [`start-notion-task`](.agents/skills/start-notion-task/SKILL.md) | "Notion 태스크 시작해줘", "이 태스크 시작하자" |
 | Create GitHub issue | [`create-issue`](.agents/skills/create-issue/SKILL.md) | "이슈 만들어줘", "이슈 올려야 해" |
 | Design implementation | [`logic-design`](.agents/skills/logic-design/SKILL.md) | "설계 좀 해줘", "구현 계획 세워줘" |
+| Review complex logic architecture | [`logic-architecture`](.agents/skills/logic-architecture/SKILL.md) | "로직 구조 검토해줘", "어떤 패턴이 적절해?" (in a concrete implementation task) |
 | Review branch (pre-push) | [`branch-review`](.agents/skills/branch-review/SKILL.md) | "리뷰해줘", "push 전 확인해줘" |
 | Create / update PR | [`create-pr`](.agents/skills/create-pr/SKILL.md) | "PR 올려줘", "PR 설명 써줘" |
 
@@ -36,30 +38,32 @@ Use the following skills based on task type. Natural language triggers auto-matc
 
 Every skill invocation follows this flight protocol:
 
-1. **Preflight** — [`.agents/checklists/preflight.md`](.agents/checklists/preflight.md) — verify context, branch, issue, and get user approval
+1. **Preflight** — [`.agents/checklists/preflight.md`](.agents/checklists/preflight.md) — verify task-specific context and existing authorization
 2. **Flight** — Execute skill-specific steps (from the skill's SKILL.md)
-3. **Postflight** — [`.agents/checklists/postflight.md`](.agents/checklists/postflight.md) — lint / typecheck / build / convention checks
+3. **Postflight** — [`.agents/checklists/postflight.md`](.agents/checklists/postflight.md) — `pnpm lint` / `pnpm check-types` / `pnpm build` / convention checks
 4. **Debrief** — Report using [`.agents/checklists/debrief.md`](.agents/checklists/debrief.md) format
 
-**Exception**: Trivial fixes (typo, missing semicolon, 1 file & ≤5 lines) may skip preflight steps 3-5, but must be explicitly declared upfront.
+Apply the task-specific entry conditions and approval rules in
+[AI Development Workflow](docs/rules/ai-workflow.md). Already-authorized work
+does not require repeated approval. Read-only tasks do not require a feature branch.
 
 ## Standard Workflow
 
-Typical feature development order (Notion-first hybrid):
+Typical feature development order (GitHub issue-first):
 
 ```
-1. Create Notion task    → (create manually in Notion "Task 관리" DB)
-2. Start Notion task     → start-notion-task
-                           (auto: GitHub Issue + branch + Notion → "진행 중")
-3. Design implementation → logic-design
+1. Create / select issue → create-issue (new issue only)
+2. Create task branch   → from develop, linked by issue number
+3. Design implementation → logic-design → task spec
+                           (complex logic: consult logic-architecture)
 4. Implement
 5. Review branch         → branch-review
 6. Create PR             → create-pr
-                           (manually update Notion "리뷰 중" / PR URL; auto sync TBD)
+7. CI / team review     → GitHub
 ```
 
-**Note**: Notion is the source of truth for tasks. GitHub Issues are auto-mirrored
-for PR linking. Steps 6+ Notion sync automation is planned but not yet implemented.
+**Note**: GitHub Issues are the source of truth for tasks. Branch creation is
+separate from `create-issue`. See [AI Development Workflow](docs/rules/ai-workflow.md).
 
 ## Skill Specification
 
@@ -70,10 +74,43 @@ for PR linking. Steps 6+ Notion sync automation is planned but not yet implement
 
 ## Work Policy (Mandatory)
 
-1. **Always preview → get approval → execute** before creating or modifying code
+1. **Explain scope before implementation; reuse existing authorization** — follow [AI Development Workflow](docs/rules/ai-workflow.md) for new scope and external actions
 2. **Respond in Korean** by default (exception only when requested)
 3. **Always include file paths** (e.g., `apps/web/src/...`)
 4. **Stay within scope** — do only what was requested
+
+## Keep Task Specifications Current
+
+- The main agent reads the linked task spec when starting or resuming work.
+- When resuming, run `pnpm workflow:resume` (or `--issue {number}`) and read the
+  linked spec. This is read-only; compare recorded freshness and disclose unverified environments.
+- When agreed scope, requirements, design, acceptance criteria, or validation changes,
+  update that task's `spec.md` using [Task Records](docs/ai-workflow/README.md).
+  This applies during implementation, verification, and review without rerunning `logic-design`.
+- Preserve read-only requests. Do not turn speculative ideas or conceptual questions into agreed design.
+- Report the changed decisions and affected verification/review. Existing authorization
+  applies; new scope still follows the shared approval rules.
+- Subagents return proposals and evidence to the main agent; they do not concurrently
+  modify shared specs/status. Skill selection alone does not authorize delegation.
+
+## Record Verification and Review
+
+- Run read-only `pnpm workflow:harness-check` for shared structure/link checks; see [Task Records](docs/ai-workflow/README.md) for its finite contract and limits.
+- For linked tasks, record the common check via `pnpm workflow:check --script workflow:harness-check`; every PR requires current success/log evidence, including docs-only changes.
+- For linked tasks, run applicable checks via `pnpm workflow:check --script {script}`.
+- Start reviews with `pnpm workflow:review --start`, inspect the generated scope,
+  then save actual findings via `--input {path}`.
+- Follow [Task Records](docs/ai-workflow/README.md) for snapshot comparison,
+  unresolved findings, local history, and environment limits.
+- Respect explicit read-only requests; report results without writing task state.
+
+## Check PR Readiness Before Publication
+
+- Before push/PR, run read-only `pnpm workflow:pr-check --base {explicit ref}`.
+- Follow [Task Records](docs/ai-workflow/README.md) for current AC/check/review evidence,
+  blockers, manual judgments, and limitations. A phase value alone is insufficient.
+- Follow `create-pr` to prepare the concrete title/body/preview before push and reuse
+  existing publication authorization. Exceptions remain blocked technical results.
 
 ## Folder Structure (Summary)
 
@@ -95,8 +132,8 @@ keeply-client/
 │       ├── branch-review/SKILL.md
 │       ├── create-issue/SKILL.md
 │       ├── create-pr/SKILL.md
-│       ├── logic-design/SKILL.md
-│       └── start-notion-task/SKILL.md
+│       ├── logic-architecture/SKILL.md
+│       └── logic-design/SKILL.md
 │
 └── .claude/
     └── commands/                ← Claude Code slash commands (symlinks → .agents/skills)

@@ -9,10 +9,16 @@
     "check-types": "tsc -b --noEmit",
     "lint": "eslint . --max-warnings 0",
     "review:scope": "bash ./tools/branch-review/collect_scope.sh",
+    "workflow:pr-check": "node tools/ai-workflow/pr-check.mjs",
+    "workflow:resume": "node tools/ai-workflow/resume.mjs",
+    "workflow:test": "node --test tools/ai-workflow/*.test.mjs",
     "generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/shared/types/schema.d.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "workflow:check": "node tools/ai-workflow/record.mjs check",
+    "workflow:review": "node tools/ai-workflow/record.mjs review",
+    "workflow:harness-check": "node tools/ai-workflow/harness-check.mjs"
   },
   "prettier": "./packages/configs/prettier/index.json",
   "dependencies": {
@@ -48,12 +54,14 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "globals": "^17.5.0",
+    "marked": "^18.0.14",
     "openapi-typescript": "^7.13.0",
     "prettier": "^3.8.3",
     "tailwindcss": "^4.3.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.10",
-    "vite-plugin-svgr": "^5.2.0"
+    "vite-plugin-svgr": "^5.2.0",
+    "yaml": "^2.9.1"
   }
 }
