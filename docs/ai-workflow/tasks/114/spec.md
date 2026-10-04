@@ -4,7 +4,7 @@
 
 - 이슈: [#114](https://github.com/Project-Keeply/Keeply-Client/issues/114)
 - 브랜치: `chore/ai-harness-workflow/#114`
-- specRevision: 2
+- specRevision: 3
 
 ## 목적
 
@@ -35,6 +35,7 @@ PR 준비 여부를 판단할 수 있도록 기존 클라이언트 하네스를 
 ## 설계 결정
 
 - `docs/rules/ai-workflow.md`를 공통 정책의 기준으로 삼고 체크리스트·스킬에서 참조한다.
+- 도구별 진입점은 유지하되 `CLAUDE.md`는 `@AGENTS.md`만 참조한다. 공통 규칙과 스킬 목록을 중복 관리하지 않는다.
 - 남은 `create-issue`, `logic-design`, `branch-review`, `create-pr`의 책임을 유지한다.
 - 작업 명세는 `docs/ai-workflow/tasks/{issue}/spec.md`로 공유한다.
 - 실제 상태·검증 기록은 `.tmp/ai-workflow/tasks/{issue}/status.json`에 로컬로 저장한다.
@@ -85,6 +86,7 @@ PR 준비 여부를 판단할 수 있도록 기존 클라이언트 하네스를 
 |---|---|---|
 | 1 | 기존 대화의 최종 합의로 최초 명세 작성 | 작업 인계와 구현 기준을 공유하기 위해 |
 | 2 | 명세 갱신을 공통 책임으로 연결하고 복잡한 로직의 스킬 참조 조건 확정 | 스킬 재실행 없이 합의 변경을 반영하고 불필요한 패턴 검토를 줄이기 위해 |
+| 3 | CLAUDE.md를 AGENTS.md 참조 진입점으로 단순화 | 도구별 지침과 스킬 목록의 중복 관리를 없애기 위해 |
 
 최초 명세에는 Notion 제거, 공유 명세/로컬 상태 분리, 대화 기반 명세 갱신,
 필요한 로직 설계 지원을 반영했다.
