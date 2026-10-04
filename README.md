@@ -13,6 +13,8 @@
 
 ## AI 작업 하네스
 
+처음 사용할 때는 [AI 워크플로우 사용 안내](docs/ai-workflow/user-guide.md)를 읽는다.
+
 공통 진입점은 [AGENTS.md](AGENTS.md), 작업 정책과 명령은
 [AI 워크플로우](docs/rules/ai-workflow.md) 및 [작업 기록](docs/ai-workflow/README.md)을 따른다.
 `pnpm workflow:harness-check`는 공유 문서/스킬/명령/템플릿/CI 연결을 읽기 전용으로

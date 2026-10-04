@@ -30,6 +30,7 @@ const fixture = (t) => {
     '.agents',
     'docs/rules',
     'docs/ai-workflow/README.md',
+    'docs/ai-workflow/user-guide.md',
     'docs/ai-workflow/templates',
     'docs/branch-review',
     'tools',
