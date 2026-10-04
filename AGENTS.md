@@ -19,7 +19,7 @@ Read these before starting any work.
 - **[Coding Convention](docs/rules/coding-convention.md)** — component / type / function / variable / folder naming rules
 - **[Git Convention](docs/rules/git-convention.md)** — branch / commit / PR rules
 - **[AI Development Workflow](docs/rules/ai-workflow.md)** — GitHub issue-based task lifecycle
-- **[Task Records](docs/ai-workflow/README.md)** — specification templates and local status format (read when designing or resuming a task)
+- **[Task Records](docs/ai-workflow/README.md)** — specification templates, ongoing updates, and local status format
 - **[Local Branch Review](docs/branch-review/README.md)** — pre-push review tooling
 
 ## Skill Routing
@@ -30,6 +30,7 @@ Use the following skills based on task type. Natural language triggers auto-matc
 |---|---|---|
 | Create GitHub issue | [`create-issue`](.agents/skills/create-issue/SKILL.md) | "이슈 만들어줘", "이슈 올려야 해" |
 | Design implementation | [`logic-design`](.agents/skills/logic-design/SKILL.md) | "설계 좀 해줘", "구현 계획 세워줘" |
+| Review complex logic architecture | [`logic-architecture`](.agents/skills/logic-architecture/SKILL.md) | "로직 구조 검토해줘", "어떤 패턴이 적절해?" (in a concrete implementation task) |
 | Review branch (pre-push) | [`branch-review`](.agents/skills/branch-review/SKILL.md) | "리뷰해줘", "push 전 확인해줘" |
 | Create / update PR | [`create-pr`](.agents/skills/create-pr/SKILL.md) | "PR 올려줘", "PR 설명 써줘" |
 
@@ -53,7 +54,8 @@ Typical feature development order (GitHub issue-first):
 ```
 1. Create / select issue → create-issue (new issue only)
 2. Create task branch   → from develop, linked by issue number
-3. Design implementation → logic-design
+3. Design implementation → logic-design → task spec
+                           (complex logic: consult logic-architecture)
 4. Implement
 5. Review branch         → branch-review
 6. Create PR             → create-pr
@@ -77,6 +79,18 @@ separate from `create-issue`. See [AI Development Workflow](docs/rules/ai-workfl
 3. **Always include file paths** (e.g., `apps/web/src/...`)
 4. **Stay within scope** — do only what was requested
 
+## Keep Task Specifications Current
+
+- The main agent reads the linked task spec when starting or resuming work.
+- When agreed scope, requirements, design, acceptance criteria, or validation changes,
+  update that task's `spec.md` using [Task Records](docs/ai-workflow/README.md).
+  This applies during implementation, verification, and review without rerunning `logic-design`.
+- Preserve read-only requests. Do not turn speculative ideas or conceptual questions into agreed design.
+- Report the changed decisions and affected verification/review. Existing authorization
+  applies; new scope still follows the shared approval rules.
+- Subagents return proposals and evidence to the main agent; they do not concurrently
+  modify shared specs/status. Skill selection alone does not authorize delegation.
+
 ## Folder Structure (Summary)
 
 ```
@@ -97,6 +111,7 @@ keeply-client/
 │       ├── branch-review/SKILL.md
 │       ├── create-issue/SKILL.md
 │       ├── create-pr/SKILL.md
+│       ├── logic-architecture/SKILL.md
 │       └── logic-design/SKILL.md
 │
 └── .claude/

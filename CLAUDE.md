@@ -9,7 +9,7 @@
 ### Slash Commands
 
 `.claude/commands/*.md` are symlinks to `.agents/skills/*/SKILL.md`.
-Available: `/branch-review`, `/create-issue`, `/create-pr`, `/logic-design`.
+Available: `/branch-review`, `/create-issue`, `/create-pr`, `/logic-design`, `/logic-architecture`.
 
 ### Skill Auto-Matching
 
