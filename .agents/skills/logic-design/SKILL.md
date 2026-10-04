@@ -7,6 +7,11 @@ description: 브랜치 컨텍스트를 자동으로 파악하고, 사용자와 �
 
 브랜치 컨텍스트를 자동으로 파악하고, 사용자와 함께 코드 구현 계획을 수립해 체크리스트로 정리한다.
 
+Apply [AI Development Workflow](../../../docs/rules/ai-workflow.md) for task-specific
+entry conditions, approval scope, and revalidation. Use information and authorization
+already provided; ask only for missing decisions. Conditional preview steps below
+apply when the exact action and scope have not already been approved.
+
 ---
 
 ## Step 1: 컨텍스트 자동 파악
@@ -45,10 +50,8 @@ git diff develop...HEAD --name-status
 변경된 파일: {있으면 목록, 없으면 "없음"}
 ```
 
-"이 내용이 맞나요? 추가로 설명할 내용이 있으면 말씀해주세요."
-
-- 사용자가 보완 내용을 주면 컨텍스트에 반영하고 계속 진행
-- 맞다고 하면 바로 Step 2로
+이미 확인된 컨텍스트는 요약 후 바로 Step 2로 진행한다.
+범위 판단에 필요한 정보가 없거나 모순되면 해당 항목만 질문한다.
 
 ---
 

@@ -7,6 +7,11 @@ description: 현재 브랜치를 푸시하고 gh CLI로 diff를 분석해 한국
 
 사용자에게 PR 제목과 중점 컨텐츠를 입력받고, gh CLI로 diff를 분석해 한국어 PR 설명을 자동 생성한다.
 
+Apply [AI Development Workflow](../../../docs/rules/ai-workflow.md) for task-specific
+entry conditions, approval scope, and revalidation. Use information and authorization
+already provided; ask only for missing decisions. Conditional preview steps below
+apply when the exact action and scope have not already been approved.
+
 ---
 
 ## Step 1: 전제 조건 확인
@@ -89,6 +94,11 @@ git branch -r | grep -E "origin/(develop|main|master)"
 ---
 
 ## Step 4: 브랜치 푸시
+
+외부 push 권한을 먼저 확인한다. PR 본문 초안 승인만으로 미승인 push를 실행하지 않는다.
+검증·리뷰의 실패, 누락, 오래된 결과와 미커밋 변경을 확인한다. 준비가 부족하면
+해결하거나 공통 규칙에 따른 예외 승인을 받고 미확인 항목을 PR에 명시한다.
+현재 자동 PR 준비 검사기는 없으므로 실제 Git 상태와 검사·리뷰 결과로 확인한다.
 
 ### 4.1 원격 브랜치 존재 여부 확인
 ```bash
@@ -205,7 +215,8 @@ Closes #{ISSUE_NUMBER}   <!-- ISSUE_NUMBER가 null이면 이 줄 전체를 제�
 
 ## Step 8: 생성 전 프리뷰 확인
 
-생성할 PR 내용을 사용자에게 보여주고 승인을 받는다.
+미승인 상태라면 실제 PR 제목·본문·대상 브랜치를 프리뷰하고 승인받는다.
+같은 게시 범위가 이미 승인됐으면 재확인하지 않는다.
 
 ```
 ---
@@ -240,10 +251,10 @@ gh pr create \
 
 ### 9.2 PR이 이미 있는 경우
 
-본문 덮어쓰기 전에 사용자에게 확인한다.
+본문 전체 교체 범위가 승인되었는지 확인한다. 이미 승인된 교체는 반복 확인하지 않는다.
 
 1. `gh pr view ${EXISTING_PR_NUMBER} --json body`로 기존 본문 확인. 비어 있으면 확인 생략.
-2. **사용자에게 질문:** "기존 PR 본문을 이번에 생성한 내용으로 **전부 교체**할까요?"
+2. 교체 범위가 미승인일 때만 **사용자에게 질문:** "기존 PR 본문을 이번에 생성한 내용으로 **전부 교체**할까요?"
    - **예(본문 교체):**
      ```bash
      gh pr edit ${EXISTING_PR_NUMBER} \
@@ -262,5 +273,5 @@ gh pr create \
 1. **커밋되지 않은 변경사항은 절대 커밋하거나 스테이징하지 않는다**
 2. **PR 본문은 항상 한국어로 작성**
 3. **PR 머지는 절대 하지 않는다**
-4. **반드시 사용자 프리뷰 승인 후에만 PR을 생성/업데이트한다**
+4. **PR 생성/수정 권한과 범위를 확인한다** — 기존 승인은 공통 워크플로우 규칙에 따라 재사용한다
 5. **`gh pr diff --name-only`는 사용하지 않는다 — 파일 목록은 항상 `git diff --name-status`로 조회한다**

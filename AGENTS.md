@@ -36,12 +36,14 @@ Use the following skills based on task type. Natural language triggers auto-matc
 
 Every skill invocation follows this flight protocol:
 
-1. **Preflight** — [`.agents/checklists/preflight.md`](.agents/checklists/preflight.md) — verify context, branch, issue, and get user approval
+1. **Preflight** — [`.agents/checklists/preflight.md`](.agents/checklists/preflight.md) — verify task-specific context and existing authorization
 2. **Flight** — Execute skill-specific steps (from the skill's SKILL.md)
 3. **Postflight** — [`.agents/checklists/postflight.md`](.agents/checklists/postflight.md) — lint / typecheck / build / convention checks
 4. **Debrief** — Report using [`.agents/checklists/debrief.md`](.agents/checklists/debrief.md) format
 
-**Exception**: Trivial fixes (typo, missing semicolon, 1 file & ≤5 lines) may skip preflight steps 3-5, but must be explicitly declared upfront.
+Apply the task-specific entry conditions and approval rules in
+[AI Development Workflow](docs/rules/ai-workflow.md). Already-authorized work
+does not require repeated approval. Read-only tasks do not require a feature branch.
 
 ## Standard Workflow
 
@@ -69,7 +71,7 @@ separate from `create-issue`. See [AI Development Workflow](docs/rules/ai-workfl
 
 ## Work Policy (Mandatory)
 
-1. **Always preview → get approval → execute** before creating or modifying code
+1. **Explain scope before implementation; reuse existing authorization** — follow [AI Development Workflow](docs/rules/ai-workflow.md) for new scope and external actions
 2. **Respond in Korean** by default (exception only when requested)
 3. **Always include file paths** (e.g., `apps/web/src/...`)
 4. **Stay within scope** — do only what was requested

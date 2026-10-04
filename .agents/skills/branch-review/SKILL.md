@@ -7,33 +7,33 @@ description: 현재 브랜치의 diff를 focus point 기준으로 리뷰하는 �
 
 Perform a selective review for the current branch only.
 
-## 1) Collect user focus points (mandatory)
+## 1) Select review criteria
 
-Ask:
-- "Which review focus points should I use for this branch?"
+Apply [AI Development Workflow](../../../docs/rules/ai-workflow.md), including
+its default review criteria, approval rules, and revalidation conditions.
 
-Rules:
-- Do not proceed without explicit user input.
-- If the user does not provide focus points, ask again and stop.
-- Print the exact user input in the final report under `Review Focus Points (User Input)`.
+- Use additional focus points already supplied by the user.
+- If none are supplied, proceed with the default criteria; do not stop to request them.
+- Report the exact supplied input, or "기본 리뷰 기준 적용" when absent.
 
 ## 2) Build review scope
 
 Run:
 
 ```bash
-bash ./tools/branch-review/collect_scope.sh
+bash ./tools/branch-review/collect_scope.sh origin/develop
 ```
 
-Optional base ref:
+For a different PR target, pass its base ref explicitly (example):
 
 ```bash
-bash ./tools/branch-review/collect_scope.sh origin/develop
+bash ./tools/branch-review/collect_scope.sh origin/main
 ```
 
 ## 3) Review policy
 
 - Primary scope: changed lines in `.tmp/branch-review/diff.patch`
+- The current collector covers committed changes only. Check staged, unstaged, and untracked changes separately; include requested changes in the review or explicitly report exclusions.
 - Secondary scope: local context in changed files only when needed
 - Avoid style-only comments unless they affect maintainability or defects
 
@@ -45,13 +45,15 @@ Start with:
 
 Then provide:
 - `Review Focus Points (User Input)`
+- Review scope, base ref, and unverified items
 - Findings by severity (`High`, `Medium`, `Low`)
 - Each finding with `file:line`, reasoning, and short fix suggestion
 - A final **Refactoring Priority Queue**
 
 If nothing is found, output:
 - `[SKILL ACTIVE] branch-review`
-- `No blocking issues found in the current branch diff.`
+- `No blocking issues found in the reviewed changes.`
+- State the reviewed scope and any unverified items.
 
 ## 5) Rules
 

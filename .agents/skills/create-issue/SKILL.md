@@ -7,6 +7,11 @@ description: 사용자 인터뷰를 통해 이슈 내용을 채우고 gh CLI로 
 
 사용자 인터뷰를 통해 이슈 내용을 채우고, gh CLI로 GitHub 이슈를 생성한다.
 
+Apply [AI Development Workflow](../../../docs/rules/ai-workflow.md) for task-specific
+entry conditions, approval scope, and revalidation. Use information and authorization
+already provided; ask only for missing decisions. Conditional preview steps below
+apply when the exact action and scope have not already been approved.
+
 ---
 
 ## Step 1: 전제 조건 확인
@@ -35,9 +40,8 @@ gh auth status
 ```bash
 git rev-parse --abbrev-ref HEAD
 ```
-- `develop` 또는 `main` 브랜치가 아니면 경고:
-  "현재 브랜치가 `{CURRENT_BRANCH}`입니다. 이슈는 보통 `develop`에서 생성합니다. 계속 진행할까요?"
-  - 사용자가 거부하면 중단
+- 현재 브랜치는 컨텍스트로 기록한다. 이슈 생성은 코드 변경이 없으므로 작업 브랜치나 기존 이슈를 요구하지 않는다.
+- 대상 저장소와 같은 범위의 열린 이슈를 확인해 중복 생성을 피한다.
 
 ---
 
@@ -101,7 +105,7 @@ git rev-parse --abbrev-ref HEAD
 
 ## Step 5: 프리뷰 확인
 
-생성할 이슈 내용을 사용자에게 보여주고 승인을 받는다.
+미승인 상태라면 생성할 이슈 내용을 프리뷰하고 승인받는다. 이미 같은 내용과 범위의 생성이 승인됐다면 재확인하지 않는다.
 
 ```
 ---
@@ -137,5 +141,5 @@ gh issue create \
 ## 중요 규칙
 
 1. **이슈 본문은 항상 한국어로 작성**
-2. **반드시 사용자 프리뷰 승인 후에만 이슈를 생성한다**
+2. **이슈 생성 권한과 범위를 확인한다** — 기존 승인은 공통 워크플로우 규칙에 따라 재사용한다
 3. **이슈 생성 외의 작업(커밋, 브랜치 생성 등)은 절대 하지 않는다**

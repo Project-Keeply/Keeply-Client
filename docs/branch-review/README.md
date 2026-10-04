@@ -36,7 +36,14 @@ Use this marker at the top of any review response:
 
 The collector script also prints the same marker so terminal logs and agent responses stay aligned.
 
-## Mandatory input rule
+## Review criteria and completion
 
-Before any review starts, the agent must ask for user-defined review focus points.
-No focus points = no review execution.
+Apply [AI Development Workflow](../rules/ai-workflow.md).
+User focus points supplement the default criteria. If none are provided,
+proceed with the default criteria and report "기본 리뷰 기준 적용".
+
+The current collector includes committed changes only. Inspect staged,
+unstaged, and untracked changes separately, or disclose their exclusion.
+Report the base ref, reviewed scope, findings, and unverified items.
+Recheck affected findings and validations after code changes.
+Unresolved High/Medium defects prevent a PR-ready assessment.

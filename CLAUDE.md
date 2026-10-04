@@ -18,4 +18,5 @@ Examples: "PR 올려줘" → `create-pr`, "리뷰해줘" → `branch-review`.
 
 ### Memory
 
-Preview-before-work rule is enforced by memory. See `.claude/projects/.../memory/`.
+Apply the shared [workflow approval rules](docs/rules/ai-workflow.md).
+Do not require private Claude memory to interpret project policy.
